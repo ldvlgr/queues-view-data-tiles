@@ -1,12 +1,12 @@
 import * as Flex from "@twilio/flex-ui";
 import { connect } from "react-redux";
-
+import QueueDataUtil from "../utils/QueueDataUtil";
 import { ColumnDefinition, QueuesStats } from '@twilio/flex-ui';
 import QueueFilters from "./QueueFilters/QueueFilters";
-import ServiceLevelTile from "./ServiceLevelTile/ServiceLevelTile";
+import { CustomSLDataTile } from "./CustomSLDataTile/CustomSLDataTile";
+import { PieChartTile } from "./PieChartTile/PieChartTile";
 
 const PLUGIN_NAME = 'DashboardsPlugin';
-const channelList = ["chat", "sms", "voice"];
 
 export default (manager) => {
   setVisibleQueues(manager);
@@ -24,25 +24,10 @@ const addFilters = () => {
   })
 }
 
-const getTasksByGroup = (queues, group) => {
-  let activeTasks = 0;
-  let waitingTasks = 0;
-  if (queues && queues.length > 0) {
-    queues.forEach(q => {
-      if (q.friendly_name.toLowerCase().includes(group)) {
-        if (q.tasks_by_status) {
-          activeTasks += q.tasks_by_status.assigned + q.tasks_by_status.wrapping;
-          waitingTasks += q.tasks_by_status.pending + q.tasks_by_status.reserved;
-        }
-      }
-    })
-  }
-  return { activeTasks, waitingTasks }
-}
 
 const TasksTile1 = connect((state) => {
   const queues = Object.values(state.flex.realtimeQueues.queuesList);
-  return getTasksByGroup(queues, "sales");
+  return QueueDataUtil.getTasksByGroup(queues, "sales");
 })((props) => (
   <Flex.AggregatedDataTile title="Sales (Active)" content={props.activeTasks}
     description={"Waiting: " + props.waitingTasks} />
@@ -51,7 +36,7 @@ const TasksTile1 = connect((state) => {
 const GroupTasksTile = connect((state, ownProps) => {
   //console.log('Own Props: ', ownProps);
   const queues = Object.values(state.flex.realtimeQueues.queuesList);
-  return getTasksByGroup(queues, ownProps.group);
+  return QueueDataUtil.getTasksByGroup(queues, ownProps.group);
 })((props) => {
   return (
     <Flex.AggregatedDataTile
@@ -61,63 +46,9 @@ const GroupTasksTile = connect((state, ownProps) => {
   )
 });
 
-const getTaskCounts = (queues) => {
-  let taskCounts = {
-    chat: { activeTasks: 0, waitingTasks: 0 },
-    sms: { activeTasks: 0, waitingTasks: 0 },
-    voice: { activeTasks: 0, waitingTasks: 0 }
-  };
-  if (queues && queues.length > 0) {
-    queues.forEach(q => {
-      if (q.channels) {
-        q.channels.forEach(ch => {
-          //Only aggregate counts for configured channels
-          if (channelList.includes(ch.unique_name)) {
-            if (ch.tasks_now) {
-              taskCounts[ch.unique_name].activeTasks += ch?.tasks_now?.active_tasks;
-              taskCounts[ch.unique_name].waitingTasks += ch?.tasks_now?.waiting_tasks;
-            }
-          }
-        })
-      }
-    })
-  }
-  return taskCounts;
-}
-
-
-const getSLToday = (queues) => {
-  let slMetrics = {
-    chat: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 },
-    sms: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 },
-    voice: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 }
-  };
-  if (queues && queues.length > 0) {
-    queues.forEach(q => {
-      if (q.channels) {
-        q.channels.forEach(ch => {
-          if (channelList.includes(ch.unique_name)) {
-            //Not all queues/channels have SLA
-            if (ch.sla_today) {
-              slMetrics[ch.unique_name].handledTasks += ch?.sla_today?.handled_tasks_count;
-              slMetrics[ch.unique_name].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
-            }
-          }
-        })
-      }
-    })
-  }
-  channelList.forEach(ch => {
-    if (slMetrics[ch].handledTasks > 0)
-      slMetrics[ch].serviceLevelPct = Math.floor((slMetrics[ch].handledTasksWithinSL / slMetrics[ch].handledTasks) * 100);
-  })
-  return slMetrics;
-}
-
-
 const TaskCountTile = connect((state) => {
   const queues = Object.values(state.flex.realtimeQueues.queuesList);
-  return getTaskCounts(queues);
+  return QueueDataUtil.getTaskCountsByChannel(queues);
   //object returned from connect is merged into component props
   //See https://react-redux.js.org/api/connect
 })((props) => {
@@ -131,29 +62,59 @@ const TaskCountTile = connect((state) => {
 });
 
 
-const SLATile = connect((state) => {
+const HandledTasksByChannelPieChart = connect((state) => {
   const queues = Object.values(state.flex.realtimeQueues.queuesList);
-  return getSLToday(queues);
+  return QueueDataUtil.getSLTodayByChannel(queues);
+  //object returned from connect is merged into component props
+  //See https://react-redux.js.org/api/connect
+})((props) => {
+  //props has all task counts
+
+  let handledVoice = props["voice"].handledTasks;
+  let handledChat = props["chat"].handledTasks;
+  let handledSms = props["sms"].handledTasks;
+
+  let data = [];
+  if (handledVoice) data.push({ title: 'voice', value: handledVoice, color: '#ADD8E6' });
+  if (handledChat) data.push({ title: 'chat', value: handledChat, color: '#87CEFA' });
+  if (handledSms) data.push({ title: 'sms', value: handledSms, color: '#4682B4' });
+  return (<PieChartTile
+    title="Tasks Pie Chart"
+    content={data}
+    description="Tasks Today by Channel" />
+  )
+});
+
+
+const CustomSLATile = connect((state) => {
+  const queues = Object.values(state.flex.realtimeQueues.queuesList);
+  return QueueDataUtil.getSLTodayByChannel(queues);
   //object returned from connect is merged into component props
   //See https://react-redux.js.org/api/connect
 })((props) => {
   let channelName = props.channelName;
   let sla = props[channelName];
-  return (<Flex.AggregatedDataTile
+  return (<CustomSLDataTile
     title={channelName + " SLA"}
+    content={sla.serviceLevelPct}
     description={sla.handledTasksWithinSL + " / " + sla.handledTasks} >
-    <ServiceLevelTile sla={sla} />
-  </Flex.AggregatedDataTile>)
+  </CustomSLDataTile>)
 });
 
 
 const addTiles = () => {
+  //Add custom tile
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+    <HandledTasksByChannelPieChart key="custom-chart-tile" channelName="new" />,
+    { sortOrder: -7 }
+  );
+
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
     <TaskCountTile key="chat-tasks-tile" channelName="chat" />,
     { sortOrder: -6 }
   );
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <SLATile key="chat-sla-tile" channelName="chat" />,
+    <CustomSLATile key="chat-sla-tile" channelName="chat" />,
     { sortOrder: -5 }
   );
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
@@ -161,7 +122,7 @@ const addTiles = () => {
     { sortOrder: -4 }
   );
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <SLATile key="voice-sla-tile" channelName="voice" />,
+    <CustomSLATile key="voice-sla-tile" channelName="voice" />,
     { sortOrder: -3 }
   );
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
@@ -206,48 +167,4 @@ const setVisibleQueues = (manager) => {
   }
 }
 
-const RenderWaitingTasks = (workerQueue) =>
-  // QueuesDataTableCell component helps us render additional expandable rows with channel specific data
-  <QueuesStats.QueuesDataTableCell
-    // Pass the queue data down 
-    queue={workerQueue}
 
-    // Render the queue level value
-    renderQueueData={(queue) => {
-      if (!queue.friendly_name.includes("Everyone")) {
-        // Calculate number of waiting tasks by adding pending and reserved
-        const { pending, reserved } = queue.tasks_by_status;
-        const waitingTasks = pending + reserved;
-        // Return the element to render
-        return <span>{waitingTasks}</span>;
-      } else {
-        return <span> </span>;
-      }
-    }}
-    // Render a value for each active channel in the queue
-    renderChannelData={(channel, queue) => {
-      if (!queue.friendly_name.includes("Everyone")) {
-        // Calculate number of waiting tasks by adding pending and reserved
-        const { pending, reserved } = queue.tasks_by_status;
-        const waitingTasks = pending + reserved;
-        // Return the element to render
-        return <span>{waitingTasks}</span>;
-      } else {
-        return <span> </span>;
-      }
-    }}
-  />
-
-const customizeQueueStats = () => {
-  QueuesStats.QueuesDataTable.Content.remove("waiting-tasks");
-  // Create a new column with custom formatting
-  QueuesStats.QueuesDataTable.Content.add(
-    <ColumnDefinition
-      key="my-waiting-tasks"
-      header="Waiting"
-      subHeader="Now"
-      content={RenderWaitingTasks}
-    />,
-    { sortOrder: 1 } // Put this after the second column
-  );
-}
