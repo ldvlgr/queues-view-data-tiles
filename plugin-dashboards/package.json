@@ -1,0 +1,17 @@
+{
+  "name": "plugin-dashboards",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "flex-plugin pre-script-check"
+  },
+  "dependencies": {
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "@twilio/flex-plugin-scripts": "6.0.3"
+  },
+  "devDependencies": {
+    "@twilio/flex-ui": "^1",
+    "react-test-renderer": "16.5.2"
+  }
+}
