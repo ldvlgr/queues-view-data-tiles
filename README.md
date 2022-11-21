@@ -7,7 +7,6 @@ Twilio Flex Plugins allow you to customize the appearance and behavior of [Twili
 
 This plugin contains a set of enhancements for the Real-Time Queues View.
 
-### Queue Stats Dashboard
 - Filter Queues View by Agent's team_name attribute
 - Manual filter to only display a "group" of queues (based on partial queue name match).
 - Selectively remove a metric (waiting-tasks) based on the Queue Name
@@ -21,7 +20,6 @@ The [Queues Data Table](https://www.twilio.com/docs/flex/developer/ui/queues-vie
 The Flex reference docs contain a listing of all [properties for each WorkerQueue](https://assets.flex.twilio.com/docs/releases/flex-ui/1.30.2/QueuesStats%25E2%2580%25A4QueuesDataTable.html#.QueuesStats%E2%80%A4WorkerQueue) in the QueueStats data set. 
 
 Additional [DataTiles](https://www.twilio.com/docs/flex/developer/ui/queues-view-programmability#add-or-remove-individual-data-tiles) can be added to display custom metrics/KPIs.  As you can see from this example in our docs, you can connect your custom data tile to the Flex Redux store using [connect](https://react-redux.js.org/api/connect) from React-Redux. You need to provide the equivalent of a “mapStateToProps” function and return an object with props. The available Queue Stats data in Redux is documented in the [Flex Reference docs](https://assets.flex.twilio.com/docs/releases/flex-ui/1.30.2/QueuesStats%25E2%2580%25A4QueuesDataTable.html#.QueuesStats%E2%80%A4WorkerQueue) except it’s missing the Channels child object which gives you the break-down by channel (chat/voice).
-
 
 
 The example in our docs shows how to populate the `content` prop of the AggregatedDataTile but it also has a `description` label which can be used for either static text or another metric value. In this example both the Active and Waiting tasks are shown in the same Tile with the Waiting tasks value in the Description line. Using the Channels child object (per queue) you can aggregate the data by channel to display the total Active Chats & Calls and calculate the SLA % per channel. Color coding can be applied to enhance the UI for Supervisors.
@@ -55,8 +53,7 @@ Install the dependencies by running `npm install`:
 ```bash
 cd plugin-dashboards
 npm install
-cd ../dashboard-service
-npm install
+
 ```
 From the root directory, rename `public/appConfig.example.js` to `public/appConfig.js`.
 
@@ -75,8 +72,6 @@ Create the plugin config file by copying `.env.example` to `.env`.
 cd plugin-dashboards
 cp .env.example .env
 ```
-
-Edit `.env` and set the `FLEX_APP_FUNCTIONS_BASE` variable to your Twilio Functions base URL (like https://dashboard-service-xxxx-dev.twil.io). 
 
 To run the plugin locally, you can use the Twilio Flex CLI plugin. Using your command line, run the following from the root directory of the plugin.
 

@@ -19,5 +19,5 @@ export default class DashboardsPlugin extends FlexPlugin {
     //Queue Stats Dashboard enhancements
     QueuesView(manager);
   }
-
+  
 }
