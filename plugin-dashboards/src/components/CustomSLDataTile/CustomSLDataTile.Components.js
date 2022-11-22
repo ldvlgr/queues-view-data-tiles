@@ -31,9 +31,12 @@ export const Content = styled("div")`
 `;
 
 function getColor(props) {
-    if (props.content >= 90) {
+  let {content:value, greenLine, yellowLine} = props;
+  if (!greenLine) greenLine = 90;
+  if (!yellowLine) yellowLine = 60;
+    if (value >= greenLine) {
       return props.theme.colors.notificationBackgroundColorSuccess;
-    } else if (props.content > 60) {
+    } else if (value > yellowLine) {
       return props.theme.colors.notificationBackgroundColorWarning;
     } else {
       return props.theme.colors.notificationBackgroundColorError;

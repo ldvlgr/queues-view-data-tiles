@@ -1,7 +1,7 @@
 const channelList = ["chat", "sms", "voice"];
 
 class QueueDataUtil {
-  getTasksByGroup = (queues, group) => {
+  getTasksByGroup = (queues = [], group = "") => {
     let activeTasks = 0;
     let waitingTasks = 0;
     if (queues && queues.length > 0) {
@@ -18,7 +18,7 @@ class QueueDataUtil {
   }
 
   //New function to calc task counts by group
-  getTasksByQueueGroups = (queues, queueGroups) => {
+  getTasksByQueueGroups = (queues = [], queueGroups = []) => {
     //For example, queueGroups =["sales", "service"]
     let taskCounts = {};
     //Initialize return object
@@ -43,7 +43,7 @@ class QueueDataUtil {
   }
 
 
-  getTaskCountsByChannel = (queues) => {
+  getTaskCountsByChannel = (queues = []) => {
     let taskCounts = {
       chat: { activeTasks: 0, waitingTasks: 0 },
       sms: { activeTasks: 0, waitingTasks: 0 },
@@ -68,7 +68,7 @@ class QueueDataUtil {
   }
 
 
-  getSLTodayByChannel = (queues) => {
+  getSLTodayByChannel = (queues = []) => {
     let slMetrics = {
       chat: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 },
       sms: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 },

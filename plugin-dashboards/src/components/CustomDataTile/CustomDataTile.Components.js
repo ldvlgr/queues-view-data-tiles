@@ -1,7 +1,7 @@
 import styled from "react-emotion";
 
 export const TileWrapper = styled("div")`
-    background-color: ${(props) => props.theme.colors.base2};
+    background-color: ${(props) => props.bgColor || props.theme.colors.base2};
     color: ${(props) => props.theme.calculated.textColor};
     padding: 12px;
     box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;

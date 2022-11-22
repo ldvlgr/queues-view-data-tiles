@@ -31,10 +31,10 @@ import { cx } from "emotion";
  */
 export class CustomDataTile extends React.PureComponent {
     render() {
-        const { title, content, description, children, className } = this.props;
+        const { title, content, description, children, className, bgColor } = this.props;
 
         return (
-            <TileWrapper className={cx("Twilio-AggregatedDataTile", className)}>
+            <TileWrapper className={cx("Twilio-AggregatedDataTile", className)} bgColor={bgColor}>
                 <Title className="Twilio-AggregatedDataTile-Title">{title}</Title>
                 {children || <Content className="Twilio-AggregatedDataTile-Content">{content}</Content>}
                 {description && (
