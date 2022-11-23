@@ -6,7 +6,9 @@ class QueueDataUtil {
     let waitingTasks = 0;
     if (queues && queues.length > 0) {
       queues.forEach(q => {
-        if (q.friendly_name.toLowerCase().includes(group)) {
+        let qParts = q.friendly_name.toLowerCase().split(".");
+        if (group == qParts[0]) {
+          //        if (q.friendly_name.toLowerCase().includes(group)) {
           if (q.tasks_by_status) {
             activeTasks += q.tasks_by_status.assigned + q.tasks_by_status.wrapping;
             waitingTasks += q.tasks_by_status.pending + q.tasks_by_status.reserved;
@@ -96,6 +98,62 @@ class QueueDataUtil {
     return slMetrics;
   }
 
+  getSLTodayByGroup = (queues = [], group = "") => {
+    let handledTasks = 0;
+    let handledTasksWithinSL = 0;
+    let serviceLevelPct = 0;
+    if (queues && queues.length > 0) {
+      queues.forEach(q => {
+        // Match queue on "group". Use includes(), substring() or match on part of queue name
+        // if queues have syntax like support.abc.xyz use this:
+        // let qParts = q.friendly_name.toLowerCase().split(".");
+        // if (group == qParts[0]) {
+        if (q.friendly_name.toLowerCase().includes(group)) {
+          //Aggregate SL stats
+          if (q.sla_today) {
+            handledTasks += q?.sla_today?.handled_tasks_count;
+            handledTasksWithinSL += q?.sla_today?.handled_tasks_within_sl_threshold_count;
+          }
+        }
+      })
+    }
+    if (handledTasks > 0) {
+      serviceLevelPct = Math.floor((handledTasksWithinSL / handledTasks) * 100);
+    }
+    return { handledTasks, handledTasksWithinSL, serviceLevelPct };;
+  }
+
+  //Aggregate SL stats for all queue groups to display in a bar chart tile
+  getSLTodayByQueueGroups = (queues = [], queueGroups = []) => {
+    let slMetrics = {};
+    //Initialize return object
+    queueGroups.forEach(group => {
+      slMetrics[group] = { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 };
+    });
+    if (queues && queues.length > 0) {
+      queues.forEach(q => {
+        queueGroups.forEach(group => {
+          // Match queue on "group". Use includes(), substring() or match on part of queue name
+          // if queues have syntax like support.abc.xyz use this:
+          // let qParts = q.friendly_name.toLowerCase().split(".");
+          // if (group == qParts[0]) {
+          if (q.friendly_name.toLowerCase().includes(group)) {
+            //Aggregate SL stats by queue grouping
+            if (q.sla_today) {
+              slMetrics[group].handledTasks += q?.sla_today?.handled_tasks_count;
+              slMetrics[group].handledTasksWithinSL += q?.sla_today?.handled_tasks_within_sl_threshold_count;
+            }
+          }
+        });
+      })
+    }
+    //Calc SL % per group
+    queueGroups.forEach(group => {
+      if (slMetrics[group].handledTasks > 0)
+        slMetrics[group].serviceLevelPct = Math.floor((slMetrics[group].handledTasksWithinSL / slMetrics[group].handledTasks) * 100);
+    })
+    return slMetrics;
+  }
 }
 
 const queueDataUtil = new QueueDataUtil;
