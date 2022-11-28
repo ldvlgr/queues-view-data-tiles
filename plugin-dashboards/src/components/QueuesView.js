@@ -8,6 +8,7 @@ import ChannelTaskCountTile from "./ChannelTaskCountTile";
 import HandledTasksPieChart from "./HandledTasksPieChart";
 import ChannelSLATile from "./ChannelSLATile";
 import GroupSLATile from "./GroupSLATile";
+import AllChannelsSLATile from "./AllChannelsSLATile/AllChannelsSLATile";
 
 const PLUGIN_NAME = 'DashboardsPlugin';
 
@@ -35,11 +36,17 @@ const addFilters = () => {
 
 
 const addTiles = () => {
+//Add custom tile
+Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  <AllChannelsSLATile key="grid-data-tile" colors={tileColors} />,
+  { sortOrder: -11 }
+);
+
   //Add custom tile
-  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <HandledTasksPieChart key="custom-chart-tile" channelName="new" />,
-    { sortOrder: -10 }
-  );
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <HandledTasksPieChart key="custom-chart-tile" channelName="new" />,
+  //   { sortOrder: -10 }
+  // );
 
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
     <ChannelTaskCountTile key="chat-tasks-tile" channelName="chat" bgColor={tileColors.chat} />,
@@ -61,14 +68,14 @@ const addTiles = () => {
     <GroupTasksTile key="tasks-tile-1" group="sales" />,
     { sortOrder: -5 }
   );
-  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <GroupSLATile key="sales-sla-tile" group="sales" />,
-    { sortOrder: -4 }
-  );
-  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <GroupTasksTile key="tasks-tile-2" group="service" />,
-    { sortOrder: -3 }
-  );
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <GroupSLATile key="sales-sla-tile" group="sales" />,
+  //   { sortOrder: -4 }
+  // );
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <GroupTasksTile key="tasks-tile-2" group="service" />,
+  //   { sortOrder: -3 }
+  // );
   //Remove original tiles
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('active-tasks-tile');
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('waiting-tasks-tile');

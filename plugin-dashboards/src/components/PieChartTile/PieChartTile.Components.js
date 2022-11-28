@@ -7,6 +7,7 @@ export const TileWrapper = styled("div")`
     box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;
     display: flex;
     flex-direction: column;
+    min-width: 100px;
 `;
 
 export const Title = styled("h3")`
