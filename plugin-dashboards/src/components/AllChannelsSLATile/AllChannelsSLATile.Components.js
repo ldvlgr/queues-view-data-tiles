@@ -48,10 +48,9 @@ export const Label = styled("div")`
 `;
 
 export const Metric = styled("div")`
-  font-size: 10px;
+  font-size: 12px;
   padding: 2px;
-  margin-bottom: 4px;
-  width: 30px;
+  width: 40px;
   text-align: right;
   margin: 2px;
 
@@ -62,7 +61,7 @@ export const SLPct = styled("div")`
   font-size: 12px;
   font-weight: bold;
   padding: 2px;
-  width:40px;
+  width: 40px;
   text-align: right;
   margin: 2px;
 `;

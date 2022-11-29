@@ -15,9 +15,9 @@ const AllChannelsSLATile = connect((state) => {
     //props has all task counts
 
     const { className, colors } = props;
-    const handledVoice = props.voice.handledTasks;
-    const handledChat = props.chat.handledTasks;
-    const handledSMS = props.sms.handledTasks;
+    const handledVoice = props.voice.handledTasks || 0;
+    const handledChat = props.chat.handledTasks || 0;
+    const handledSMS = props.sms.handledTasks || 0;
 
     const slPctVoice = props["voice"].serviceLevelPct;
     const slPctChat = props["chat"].serviceLevelPct;
@@ -31,24 +31,35 @@ const AllChannelsSLATile = connect((state) => {
         <TileWrapper className={cx("Twilio-AggregatedDataTile", className)}>
             <Summary>
                 <Description className="Twilio-AggregatedDataTile-Description">Channel SLA Today</Description>
-                {handledVoice &&
-                    <Channel>
-                        <Label bgColor={colors.voice}>Voice:&nbsp;</Label>
+                <Channel>
+                    <Label bgColor={colors.voice}>Voice:&nbsp;</Label>
+                    {handledVoice > 0 &&
                         <SLPct value={slPctVoice}> {slPctVoice}% </SLPct>
-                    </Channel>
-                }
-                {handledChat &&
-                    <Channel>
-                        <Label bgColor={colors.chat}>Chat:&nbsp;</Label>
+                    }
+                    {!handledVoice &&
+                        <Metric> N/A </Metric>
+                    }
+                </Channel>
+                <Channel>
+                    <Label bgColor={colors.chat}>Chat:&nbsp;</Label>
+                    {handledChat > 0 &&
                         <SLPct value={slPctChat}> {slPctChat}% </SLPct>
-                    </Channel>
-                }
-                {handledSMS &&
-                    <Channel>
-                        <Label bgColor={colors.sms}>SMS:&nbsp;</Label>
+                    }
+                    {!handledChat &&
+                        <Metric> N/A </Metric>
+                    }
+                </Channel>
+
+                <Channel>
+                    <Label bgColor={colors.sms}>SMS:&nbsp;</Label>
+                    {handledSMS > 0 &&
                         <SLPct value={slPctSMS}> {slPctSMS}% </SLPct>
-                    </Channel>
-                }
+                    }
+                    {!handledSMS &&
+                        <Metric> N/A </Metric>
+                    }
+                </Channel>
+
             </Summary>
             <Chart>
                 <PieChart

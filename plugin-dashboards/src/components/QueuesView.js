@@ -68,18 +68,24 @@ Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
     <GroupTasksTile key="tasks-tile-1" group="sales" />,
     { sortOrder: -5 }
   );
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <GroupSLATile key="sales-sla-tile" group="sales" />,
-  //   { sortOrder: -4 }
-  // );
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+    <GroupSLATile key="sales-sla-tile" group="sales" />,
+    { sortOrder: -4 }
+  );
   // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
   //   <GroupTasksTile key="tasks-tile-2" group="service" />,
   //   { sortOrder: -3 }
   // );
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+    <GroupSLATile key="service-sla-tile" group="service" />,
+    { sortOrder: -2 }
+  );
+
   //Remove original tiles
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('active-tasks-tile');
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('waiting-tasks-tile');
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('longest-wait-time-tile');
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('agents-by-activity-chart-tile');
 }
 
 

@@ -16,9 +16,10 @@ const ChannelSLATile = connect((state) => {
   let sla = props[channelName];
   return (<CustomSLDataTile
     title={channelName + " SLA"}
-    content={sla.serviceLevelPct}
-    description={sla.handledTasksWithinSL + " / " + sla.handledTasks} >
-  </CustomSLDataTile>)
+    slPct={sla.serviceLevelPct}
+    handledTasks={sla.handledTasks}
+    handledTasksWithinSL={sla.handledTasksWithinSL}
+  />)
 });
 
 export default ChannelSLATile
