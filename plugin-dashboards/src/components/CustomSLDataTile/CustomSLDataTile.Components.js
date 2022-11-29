@@ -24,7 +24,7 @@ export const Description = styled("div")`
 `;
 
 export const Content = styled("div")`
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: 1px;

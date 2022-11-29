@@ -59,7 +59,7 @@ const AllChannelsSLATile = connect((state) => {
                         <Metric> N/A </Metric>
                     }
                 </Channel>
-
+                <Description className="Twilio-AggregatedDataTile-Description">Handled Task Count &rarr;</Description>
             </Summary>
             <Chart>
                 <PieChart

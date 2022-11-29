@@ -7,16 +7,16 @@ export const TileWrapper = styled("div")`
     box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;
     display: flex;
     flex-direction: row;
-    min-width: 300px;
+    min-width: 250px;
     flex: 1 1 auto;
 `;
 export const Summary = styled("div")`
   flex-direction: column;
-  padding-right: 24px;
+  padding-right: 16px;
 `;
 
 export const Chart = styled("div")`
-  width: 150px;
+  width: 120px;
   display: flex;
   justify-content: center;
 `;
