@@ -1,3 +1,4 @@
+import { Icon } from '@twilio/flex-ui';
 import * as React from "react";
 import { TileWrapper, Summary, Chart, Description, Channel, Label, Metric, SLPct } from "./AllChannelsSLATile.Components"
 import { cx } from "emotion";
@@ -32,6 +33,7 @@ const AllChannelsSLATile = connect((state) => {
             <Summary>
                 <Description className="Twilio-AggregatedDataTile-Description">Channel SLA Today</Description>
                 <Channel>
+                    <Icon icon='Call' />
                     <Label bgColor={colors.voice}>Voice:&nbsp;</Label>
                     {handledVoice > 0 &&
                         <SLPct value={slPctVoice}> {slPctVoice}% </SLPct>
@@ -41,6 +43,7 @@ const AllChannelsSLATile = connect((state) => {
                     }
                 </Channel>
                 <Channel>
+                    <Icon icon='Message' />
                     <Label bgColor={colors.chat}>Chat:&nbsp;</Label>
                     {handledChat > 0 &&
                         <SLPct value={slPctChat}> {slPctChat}% </SLPct>
@@ -51,6 +54,7 @@ const AllChannelsSLATile = connect((state) => {
                 </Channel>
 
                 <Channel>
+                    <Icon icon='Sms' />
                     <Label bgColor={colors.sms}>SMS:&nbsp;</Label>
                     {handledSMS > 0 &&
                         <SLPct value={slPctSMS}> {slPctSMS}% </SLPct>

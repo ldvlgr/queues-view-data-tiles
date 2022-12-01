@@ -33,15 +33,14 @@ display: flex;
   font-size: 12px;
   margin-bottom: 2px;
   margin-top: 2px;
-  text-align: center;
 `;
 
 export const Label = styled("div")`
   background-color: ${(props) => props.bgColor || props.theme.colors.base2};
   font-size: 12px;
   font-weight: bold;
-  width: 60px;
-  padding: 2px;
+  width: 55px;
+  padding: 2px 2px 2px 6px;
   letter-spacing: 2px;
   text-transform: uppercase;
   margin: 2px;
