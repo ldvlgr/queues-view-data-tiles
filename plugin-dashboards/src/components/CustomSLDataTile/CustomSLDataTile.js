@@ -5,7 +5,7 @@ import { cx } from "emotion";
 export class CustomSLDataTile extends React.PureComponent {
     render() {
         const { title, slPct, handledTasks, handledTasksWithinSL, className } = this.props;
-        let content = "N/A";
+        let content = "-";
         if (handledTasks && handledTasks > 0) {
             content = slPct + "%";
         }

@@ -17,7 +17,7 @@ const ChannelSLATileV2 = connect((state) => {
   const { channelName, className } = props;
   let sla = props[channelName];
 
-  let content = "--";
+  let content = "-";
   if (sla.handledTasks && sla.handledTasks > 0) {
     content = sla.serviceLevelPct + "%";
   }
