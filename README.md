@@ -24,7 +24,7 @@ Additional [DataTiles](https://www.twilio.com/docs/flex/developer/ui/queues-view
 
 The example in our docs shows how to populate the `content` prop of the AggregatedDataTile but it also has a `description` label which can be used for either static text or another metric value. In this example both the Active and Waiting tasks are shown in the same Tile with the Waiting tasks value in the Description line. Using the Channels child object (per queue) you can aggregate the data by channel to display the total Active Chats & Calls and calculate the SLA % per channel. Color coding can be applied to enhance the UI for Supervisors.
 
-<img width="800px" src="images/AllChannelsSLATile.png"/>
+<img width="800px" src="images/ChannelAndGroupSLATiles.png"/>
 
 
 # Configuration
