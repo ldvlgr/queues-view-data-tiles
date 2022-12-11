@@ -1,13 +1,8 @@
 import * as React from 'react';
 import { QueuesStats } from '@twilio/flex-ui';
-//import MenuItem from '@material-ui/core/MenuItem';
-//import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { Container, Filter } from './QueueFilters.Components';
-import { Theme } from '@twilio-paste/core/theme';
-import { Button, Text, Select, Option } from "@twilio-paste/core";
-
-
-
 const PLUGIN_NAME = "DashboardsPlugin";
 const DefaultFilter = 'ALL';
 
@@ -44,15 +39,21 @@ class QueueFilters extends React.Component {
     if (group == DefaultFilter && channel == DefaultFilter) {
       //Show all
       QueuesStats.setFilter((queue) => true);
+      QueuesStats.setSubscriptionFilter((queue) => true);
     } else if (group == DefaultFilter) {
       //Only apply channel filter
       QueuesStats.setFilter((queue) => queue.friendly_name.includes(channel));
+      QueuesStats.setSubscriptionFilter((queue) => queue.friendly_name.includes(channel));
     } else if (channel == DefaultFilter) {
       //Only apply group filter
       QueuesStats.setFilter((queue) => queue.friendly_name.includes(group));
+      QueuesStats.setSubscriptionFilter((queue) => queue.friendly_name.includes(group));
     } else {
       //Apply both filters
       QueuesStats.setFilter((queue) => queue.friendly_name.includes(group) 
+                                  && queue.friendly_name.includes(channel));
+
+      QueuesStats.setSubscriptionFilter((queue) => queue.friendly_name.includes(group) 
                                   && queue.friendly_name.includes(channel));
     }
 
@@ -62,10 +63,9 @@ class QueueFilters extends React.Component {
 
   render() {
     return (
-      <Theme.Provider theme="flex">
       <Container>
         <Filter key="channel-filter">
-          <Text>Channel:&nbsp;&nbsp;</Text>
+          Channel:&nbsp;&nbsp;
           <Select
             value={this.state.channelFilter}
             onChange={this.handleChangeChannelFilter}
@@ -74,16 +74,16 @@ class QueueFilters extends React.Component {
             key="channel"
           >
             {this.state.channelOptions.map((option) => (
-              <Option
+              <MenuItem
                 key={option}
                 value={option}
               > {option}
-              </Option>
+              </MenuItem>
             ))}
           </Select>
         </Filter>
         <Filter key="group-filter">
-          <Text>Group:&nbsp;&nbsp;</Text>
+          Group:&nbsp;&nbsp;
           <Select
             value={this.state.groupFilter}
             onChange={this.handleChangeGroupFilter}
@@ -92,16 +92,15 @@ class QueueFilters extends React.Component {
             key="group"
           >
             {this.state.groupOptions.map((option) => (
-              <Option
+              <MenuItem
                 key={option}
                 value={option}
               > {option}
-              </Option>
+              </MenuItem>
             ))}
           </Select>
         </Filter>
       </Container>
-      </Theme.Provider>
 
     );
   }

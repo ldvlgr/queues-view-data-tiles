@@ -8,6 +8,7 @@ export const Container = styled("div")`
   padding: 4px;
   text-align: left;
   border: 2px solid black;
+  height: 30px;
 `;
 
 
@@ -16,7 +17,7 @@ export const Filter = styled("div")`
   flex-direction: row;
   padding-top: 2px;
   padding-bottom: 2px;
-  margin: 0px 6px;
+  width: 200px;
   font-size: 12px;
   
 `;
