@@ -11,6 +11,7 @@ import GroupSLATile from "./GroupSLATile";
 import AllChannelsSLATile from "./AllChannelsSLATile/AllChannelsSLATile";
 import GroupsChartTile from "./GroupsChartTile/GroupsChartTile";
 import AgentActivityTile from "./AgentActivityTile/AgentActivityTile";
+import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile";
 
 const PLUGIN_NAME = 'DashboardsPlugin';
 
@@ -22,6 +23,7 @@ const tileColors = {
 
 const groupColors = ['#D8BFD8', '#DDA0DD', '#DA70D6', '#9370DB'];
 const queueGroups = ["sales", "service", "care", "fraud"];
+const teams = ["ABC123", "XYZ987", "Twilio"];
 
 export default (manager) => {
   setVisibleQueues(manager);
@@ -67,7 +69,7 @@ const addTiles = () => {
   //   <ChannelSLATile key="sms-sla-tile" channelName="sms" />,
   //   { sortOrder: -6 }
   // );
-  
+
   //GROUPS TILE
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
     <GroupsChartTile key="groups-data-tile" colors={groupColors} groups={queueGroups} />,
@@ -94,10 +96,16 @@ const addTiles = () => {
   //   { sortOrder: -1 }
   // );
 
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <AgentActivityTile key="agents-tile-1" />,
+  //   { sortOrder: -1 }
+  // );
+
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <AgentActivityTile key="agents-tile-1"  />,
+    <AgentTeamActivityTile key="agents-team-tile" teams={teams}/>,
     { sortOrder: -1 }
   );
+
 
   //Remove original tiles
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.remove('active-tasks-tile');

@@ -8,32 +8,16 @@ import { connect } from "react-redux";
 import PieChart from 'react-minimal-pie-chart';
 const _manager = Manager.getInstance();
 
-/**
- * @param {props} props.teamName The teamName (for example "XYZ")
- */
-const AgentActivityTile = connect((state, ownProps) => {
-    if (!ownProps.agentTeamName) {
-        //No teamName, use Workspace stats 
+
+const AgentActivityTile = connect((state) => {
+        // use Workspace stats 
         let workerActivityCounts = {};
         const activityStats = state.flex.realtimeQueues.workspaceStats?.activity_statistics || [];
         activityStats.forEach((activity) => {
             workerActivityCounts[activity.friendly_name] = activity.workers;
         });
         return workerActivityCounts;
-    } else {
-        //teamName provided, filter worker data on teamName
-        //Note: max 200 workers will be loaded for teams view
-        let activityCounts = {};
-        const workers = state.flex.supervisor.workers;
-        workers.forEach((wk) => {
-            if (wk.worker?.attributes?.team_name == ownProps.agentTeamName) {
-                let activity = wk.worker.activityName;
-                let count = activityCounts[activity] ? activityCounts[activity] : 0;
-                activityCounts[activity] = count + 1;
-            }
-        });
-        return activityCounts;
-    }
+    
 
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
@@ -69,10 +53,7 @@ const AgentActivityTile = connect((state, ownProps) => {
             <Summary>
                 {/* <Description className="Twilio-AggregatedDataTile-Description">  */}
                 <Title className="Twilio-AggregatedDataTile-Title">
-                    {agentTeamName ?
-                        <div> {_manager.strings.QueuesStatsHeaderAgentsActivity}: {agentTeamName} </div> :
                         <div> {_manager.strings.QueuesStatsHeaderAgentsActivity}: All </div>
-                    }
                     {/* </Description> */}
                 </Title>
                 <AgentActivity>
