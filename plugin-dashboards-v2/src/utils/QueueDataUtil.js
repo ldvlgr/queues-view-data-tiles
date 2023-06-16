@@ -56,11 +56,9 @@ class QueueDataUtil {
         if (q.channels) {
           q.channels.forEach(ch => {
             //Only aggregate counts for configured channels
-            if (channelList.includes(ch.unique_name)) {
-              if (ch.tasks_now) {
-                taskCounts[ch.unique_name].activeTasks += ch?.tasks_now?.active_tasks;
-                taskCounts[ch.unique_name].waitingTasks += ch?.tasks_now?.waiting_tasks;
-              }
+            if (channelList.includes(ch.unique_name) && (ch.tasks_now)) {
+              taskCounts[ch.unique_name].activeTasks += ch?.tasks_now?.active_tasks;
+              taskCounts[ch.unique_name].waitingTasks += ch?.tasks_now?.waiting_tasks;
             }
           })
         }
@@ -80,12 +78,9 @@ class QueueDataUtil {
       queues.forEach(q => {
         if (q.channels) {
           q.channels.forEach(ch => {
-            if (channelList.includes(ch.unique_name)) {
-              //Not all queues/channels have SLA
-              if (ch.sla_today) {
-                slMetrics[ch.unique_name].handledTasks += ch?.sla_today?.handled_tasks_count;
-                slMetrics[ch.unique_name].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
-              }
+            if (channelList.includes(ch.unique_name) && (ch.sla_today)) {
+              slMetrics[ch.unique_name].handledTasks += ch?.sla_today?.handled_tasks_count;
+              slMetrics[ch.unique_name].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
             }
           })
         }

@@ -42,53 +42,58 @@ const addFilters = () => {
 const addTiles = () => {
   //Add custom tile
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <AllChannelsSLATile key="combo-data-tile" colors={tileColors} />,
-    { sortOrder: -10 }
+    <ChannelTaskCountTile key="voice-tasks" channelName="voice" bgColor={tileColors.voice} />,
+    { sortOrder: -6 }
+  );
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+    <ChannelTaskCountTile key="chat-tasks" channelName="chat" bgColor={tileColors.chat} />,
+    { sortOrder: -5 }
+  );
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+    <ChannelTaskCountTile key="sms-tasks" channelName="sms" bgColor={tileColors.sms} />,
+    { sortOrder: -4 }
   );
 
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <ChannelTaskCountTile key="chat-tasks-tile" channelName="chat" bgColor={tileColors.chat} />,
-    { sortOrder: -9 }
+    <ChannelSLATile key="voice-sla-tile" channelName="voice" />,
+    { sortOrder: -3 }
   );
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
     <ChannelSLATile key="chat-sla-tile" channelName="chat" />,
-    { sortOrder: -8 }
+    { sortOrder: -2 }
   );
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <ChannelTaskCountTile key="voice-tasks-tile" channelName="voice" bgColor={tileColors.voice} />,
-    { sortOrder: -7 }
+    <ChannelSLATile key="sms-sla-tile" channelName="sms" />,
+    { sortOrder: -1 }
   );
+
   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <ChannelSLATile key="voice-sla-tile" channelName="voice" />,
-    { sortOrder: -6 }
+    <AllChannelsSLATile key="combo-data-tile" colors={tileColors} />,
+    { sortOrder: 0 }
   );
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <ChannelSLATile key="sms-sla-tile" channelName="sms" />,
-  //   { sortOrder: -6 }
-  // );
   
   //GROUPS TILE
-  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <GroupsChartTile key="groups-data-tile" colors={groupColors} groups={queueGroups} />,
-    { sortOrder: -5 }
-  );
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <GroupsChartTile key="groups-data-tile" colors={groupColors} groups={queueGroups} />,
+  //   { sortOrder: 1 }
+  // );
 
   // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
   //   <GroupTasksTile key="tasks-tile-1" group="sales" />,
-  //   { sortOrder: -4 }
+  //   { sortOrder: 2 }
   // );
-  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <GroupSLATile key="sales-sla-tile" group="sales" />,
-    { sortOrder: -3 }
-  );
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <GroupSLATile key="sales-sla-tile" group="sales" />,
+  //   { sortOrder: 3 }
+  // );
   // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
   //   <GroupTasksTile key="tasks-tile-2" group="service" />,
-  //   { sortOrder: -2 }
+  //   { sortOrder: 4 }
   // );
-  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-    <GroupSLATile key="service-sla-tile" group="service" />,
-    { sortOrder: -1 }
-  );
+  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //   <GroupSLATile key="service-sla-tile" group="service" />,
+  //   { sortOrder: 5 }
+  // );
 
 
   //Remove original tiles
