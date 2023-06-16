@@ -46,46 +46,46 @@ class QueueDataUtil {
 
 
   getTaskCountsByChannel = (queues = []) => {
+    const initCounts = { activeTasks: 0, waitingTasks: 0 };
     let taskCounts = {
-      chat: { activeTasks: 0, waitingTasks: 0 },
-      sms: { activeTasks: 0, waitingTasks: 0 },
-      voice: { activeTasks: 0, waitingTasks: 0 }
+      chat: { ...initCounts },
+      sms: { ...initCounts },
+      voice: { ...initCounts }
     };
-    if (queues && queues.length > 0) {
-      queues.forEach(q => {
-        if (q.channels) {
-          q.channels.forEach(ch => {
-            //Only aggregate counts for configured channels
-            if (channelList.includes(ch.unique_name) && (ch.tasks_now)) {
-              taskCounts[ch.unique_name].activeTasks += ch?.tasks_now?.active_tasks;
-              taskCounts[ch.unique_name].waitingTasks += ch?.tasks_now?.waiting_tasks;
-            }
-          })
-        }
-      })
-    }
+    if (queues.length === 0) return taskCounts;
+    queues.forEach(q => {
+      if (q.channels) {
+        q.channels.forEach(ch => {
+          //Only aggregate counts for configured channels
+          if (channelList.includes(ch.unique_name) && (ch.tasks_now)) {
+            taskCounts[ch.unique_name].activeTasks += ch?.tasks_now?.active_tasks;
+            taskCounts[ch.unique_name].waitingTasks += ch?.tasks_now?.waiting_tasks;
+          }
+        })
+      }
+    })
     return taskCounts;
   }
 
 
   getSLTodayByChannel = (queues = []) => {
+    const initSLMetrics = { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 }
     let slMetrics = {
-      chat: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 },
-      sms: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 },
-      voice: { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 }
+      chat: { ...initSLMetrics },
+      sms: { ...initSLMetrics },
+      voice: { ...initSLMetrics }
     };
-    if (queues && queues.length > 0) {
-      queues.forEach(q => {
-        if (q.channels) {
-          q.channels.forEach(ch => {
-            if (channelList.includes(ch.unique_name) && (ch.sla_today)) {
-              slMetrics[ch.unique_name].handledTasks += ch?.sla_today?.handled_tasks_count;
-              slMetrics[ch.unique_name].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
-            }
-          })
-        }
-      })
-    }
+    if (queues.length === 0) return slMetrics;
+    queues.forEach(q => {
+      if (q.channels) {
+        q.channels.forEach(ch => {
+          if (channelList.includes(ch.unique_name) && (ch.sla_today)) {
+            slMetrics[ch.unique_name].handledTasks += ch?.sla_today?.handled_tasks_count;
+            slMetrics[ch.unique_name].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
+          }
+        })
+      }
+    })
     channelList.forEach(ch => {
       if (slMetrics[ch].handledTasks > 0)
         slMetrics[ch].serviceLevelPct = Math.floor((slMetrics[ch].handledTasksWithinSL / slMetrics[ch].handledTasks) * 100);
@@ -125,23 +125,22 @@ class QueueDataUtil {
     queueGroups.forEach(group => {
       slMetrics[group] = { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 };
     });
-    if (queues && queues.length > 0) {
-      queues.forEach(q => {
-        queueGroups.forEach(group => {
-          // Match queue on "group". Use includes(), substring() or match on part of queue name
-          // if queues have syntax like support.abc.xyz use this:
-          // let qParts = q.friendly_name.toLowerCase().split(".");
-          // if (group == qParts[0]) {
-          if (q.friendly_name.toLowerCase().includes(group)) {
-            //Aggregate SL stats by queue grouping
-            if (q.sla_today) {
-              slMetrics[group].handledTasks += q?.sla_today?.handled_tasks_count;
-              slMetrics[group].handledTasksWithinSL += q?.sla_today?.handled_tasks_within_sl_threshold_count;
-            }
+    if (queues.length === 0) return slMetrics;
+    queues.forEach(q => {
+      queueGroups.forEach(group => {
+        // Match queue on "group". Use includes(), substring() or match on part of queue name
+        // if queues have syntax like support.abc.xyz use this:
+        // let qParts = q.friendly_name.toLowerCase().split(".");
+        // if (group == qParts[0]) {
+        if (q.friendly_name.toLowerCase().includes(group)) {
+          //Aggregate SL stats by queue grouping
+          if (q.sla_today) {
+            slMetrics[group].handledTasks += q?.sla_today?.handled_tasks_count;
+            slMetrics[group].handledTasksWithinSL += q?.sla_today?.handled_tasks_within_sl_threshold_count;
           }
-        });
-      })
-    }
+        }
+      });
+    })
     //Calc SL % per group
     queueGroups.forEach(group => {
       if (slMetrics[group].handledTasks > 0)
