@@ -4,7 +4,7 @@ import { ColumnDefinition } from '@twilio/flex-ui';
 import QueueFilters from "./QueueFilters/QueueFilters";
 
 import GroupTasksTile from "./GroupTasksTile";
-import ChannelTaskCountTile from "./ChannelTaskCountTile";
+import ChannelTaskCountTile from "./ChannelTaskCountTile/ChannelTaskCountTile";
 import HandledTasksPieChart from "./HandledTasksPieChart";
 import ChannelSLATile from "./ChannelSLATile/ChannelSLATile";
 import GroupSLATile from "./GroupSLATile";

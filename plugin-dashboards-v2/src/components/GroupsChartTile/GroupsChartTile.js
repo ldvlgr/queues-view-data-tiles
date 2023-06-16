@@ -43,7 +43,7 @@ const GroupsChartTile = connect((state, ownProps) => {
     if (handled1) data.push({ title: groups[0], value: handled1, color: colors[0] });
     if (handled2) data.push({ title: groups[1], value: handled2, color: colors[1] });
     if (handled3) data.push({ title: groups[2], value: handled3, color: colors[2] });
-    if (handled4) data.push({ title: groups[3], value: handled4, color: colors[2] });
+    if (handled4) data.push({ title: groups[3], value: handled4, color: colors[3] });
 
     return (
         <TileWrapper className={cx("Twilio-AggregatedDataTile", className)}>
