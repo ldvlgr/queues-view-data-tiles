@@ -3,6 +3,8 @@ import * as React from "react";
 import { TileWrapper, Summary, Chart, Description, Channel, Label, Metric, SLPct } from "./AllChannelsSLATile.Components"
 import { cx } from "emotion";
 
+import { mockQueuesData } from '../../utils/mockQueuesData';
+
 import { connect } from "react-redux";
 import QueueDataUtil from "../../utils/QueueDataUtil";
 import PieChart from 'react-minimal-pie-chart';

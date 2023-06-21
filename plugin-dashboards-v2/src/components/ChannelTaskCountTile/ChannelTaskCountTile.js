@@ -4,6 +4,8 @@ import QueueDataUtil from "../../utils/QueueDataUtil";
 import { TileWrapper, Title, Content, Description } from './ChannelTaskCountTile.Components';
 import { cx } from "emotion";
 
+import { mockQueuesData } from '../../utils/mockQueuesData';
+
 /**
  * @param {props} props.channelName The channelName ("voice", "chat", "sms" etc.)
  * @param {props} props.bgColor The tile background color

@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import QueueDataUtil from "../../utils/QueueDataUtil";
 import { TileWrapper, Title, Channel, ChannelIcon, Content, Description } from './ChannelSLATile.Components';
 import { cx } from "emotion";
+
+import { mockQueuesData } from '../../utils/mockQueuesData';
+
 // Version 2 with icon
 
 /**

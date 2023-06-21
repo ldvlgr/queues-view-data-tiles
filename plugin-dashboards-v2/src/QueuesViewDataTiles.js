@@ -1,5 +1,6 @@
 import { FlexPlugin } from '@twilio/flex-plugin';
 import QueuesView from './components/QueuesView';
+import TeamsView from './components/TeamsView';
 
 const PLUGIN_NAME = 'QueuesViewDataTiles';
 
@@ -18,6 +19,7 @@ export default class DashboardsPlugin extends FlexPlugin {
   async init(flex, manager) {
     //Queue Stats Dashboard enhancements
     QueuesView(manager);
+    TeamsView(manager)
   }
   
 }
