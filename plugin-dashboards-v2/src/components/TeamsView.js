@@ -1,6 +1,8 @@
 import * as Flex from "@twilio/flex-ui";
 import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile";
-import AgentActivityTile from "./AgentActivityTile/AgentActivityTile";
+//import AgentActivityTile from "./AgentActivityTile/AgentActivityTile";
+import AgentStatusPieChartTile from "./AgentActivityTile/AgentStatusPieChartTile";
+
 //import styled from "react-emotion";
 import { styled } from "@twilio/flex-ui";
 const teams = ["ABC123", "DEF456", "XYZ789"];
@@ -39,16 +41,15 @@ const addTeamsViewTiles = () => {
 
   Flex.TeamsView.Content.addWrapper(
     (OriginalComponent) => (originalProps) => {
-      const updatedProps = { ...originalProps, logoUrl: "custom_url" };
-      const TeamsViewTiles = () => <div>Add Agent Activity Tile here</div>;
-    
+      const updatedProps = { ...originalProps };
+      
       return (
         <TeamsWrapper>
           <TeamsViewDataTiles>
-            <AgentTeamActivityTile teams={teams}/>
-            <AgentActivityTile team="ABC123" teams={teams}/>
-            <AgentActivityTile team="DEF456" teams={teams}/>
-            <AgentActivityTile team="XYZ789" teams={teams}/>
+            {/* <AgentTeamActivityTile teams={teams}/> */}
+            <AgentStatusPieChartTile team="ABC123" teams={teams}/>
+            <AgentStatusPieChartTile team="DEF456" teams={teams}/>
+            <AgentStatusPieChartTile team="XYZ789" teams={teams}/>
           </TeamsViewDataTiles>
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>

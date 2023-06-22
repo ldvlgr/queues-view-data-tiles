@@ -3,12 +3,19 @@ export const mockWorkersData = [
     "worker":
     {
       "friendly_name": "Agent10",
-      "activityName": "Offline",
+      "activityName": "Available",
       "attributes": {
         "team_name": "ABC123",
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
   },
   {
     "worker":
@@ -52,7 +59,14 @@ export const mockWorkersData = [
         "team_name": "ABC123",
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
   },
   {
     "worker":
@@ -87,7 +101,14 @@ export const mockWorkersData = [
         "team_name": "DEF456",
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
   },
   {
     "worker":
@@ -99,7 +120,7 @@ export const mockWorkersData = [
 
       }
     }
-  },{
+  }, {
     "worker":
     {
       "friendly_name": "Agent21",
@@ -109,7 +130,7 @@ export const mockWorkersData = [
 
       }
     }
-  },{
+  }, {
     "worker":
     {
       "friendly_name": "Agent21",
@@ -119,7 +140,7 @@ export const mockWorkersData = [
 
       }
     }
-  },{
+  }, {
     "worker":
     {
       "friendly_name": "Agent21",
@@ -162,7 +183,7 @@ export const mockWorkersData = [
 
       }
     }
-  },{
+  }, {
     "worker":
     {
       "friendly_name": "Agent31",
@@ -172,7 +193,7 @@ export const mockWorkersData = [
 
       }
     }
-  },{
+  }, {
     "worker":
     {
       "friendly_name": "Agent31",
