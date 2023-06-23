@@ -51,7 +51,7 @@ const addTeamsViewTiles = () => {
             <AgentStatusByTeamTile team="ABC123" teams={teams} />
             <AgentStatusByTeamTile team="DEF456" teams={teams} />
             <AgentStatusByTeamTile team="XYZ789" teams={teams} /> */}
-            <AgentTeamActivityTile teams={teams} />
+            {/* <AgentTeamActivityTile teams={teams} /> */}
           </TeamsViewDataTiles>
 
           <TeamsViewDataTiles>

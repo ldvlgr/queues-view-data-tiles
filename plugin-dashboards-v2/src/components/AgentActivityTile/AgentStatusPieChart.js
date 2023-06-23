@@ -61,13 +61,13 @@ const AgentStatusPieChart = (props) => {
                 </AgentActivity>
                 <AgentActivity>
                     <Icon icon='Close' />
-                    <Label bgColor={colors.unavailable}> {labelStatusUnavailable}:</Label>
-                    <Metric> {agentsUnavailable} </Metric>
+                    <Label bgColor={colors.break}> {labelStatusBreak}:</Label>
+                    <Metric> {agentsBreak} </Metric>
                 </AgentActivity>
                 <AgentActivity>
                     <Icon icon='Close' />
-                    <Label bgColor={colors.break}> {labelStatusBreak}:</Label>
-                    <Metric> {agentsBreak} </Metric>
+                    <Label bgColor={colors.unavailable}> {labelStatusUnavailable}:</Label>
+                    <Metric> {agentsUnavailable} </Metric>
                 </AgentActivity>
                 <AgentActivity>
                     <Icon icon='Minus' />

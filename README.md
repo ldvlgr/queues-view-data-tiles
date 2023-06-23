@@ -24,8 +24,16 @@ Additional [DataTiles](https://www.twilio.com/docs/flex/developer/ui/queues-view
 
 The example in our docs shows how to populate the `content` prop of the AggregatedDataTile but it also has a `description` label which can be used for either static text or another metric value. In this example both the Active and Waiting tasks are shown in the same Tile with the Waiting tasks value in the Description line. Using the Channels child object (per queue) you can aggregate the data by channel to display the total Active Chats & Calls and calculate the SLA % per channel. Color coding can be applied to enhance the UI for Supervisors.
 
-<img width="800px" src="images/ChannelAndGroupSLATiles.png"/>
+<img width="800px" src="images/ActiveWaitingAndSLATiles.png"/>
 
+SLA Metrics can also be combined into a single Pie Chart Data Tile.
+
+<img width="700px" src="images/SLAPieChartTile.png"/>
+
+
+June 2023 Update.  This plugin now also sample code to add "Data Tiles" to the Flex Teams View.  Using the Worker data in the Flex Redux store associated with the Team View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
+
+<img width="800px" src="images/AgentStatusByTeamTiles.png"/>
 
 # Configuration
 
