@@ -50,7 +50,7 @@ export const Label = styled("div")`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
   font-weight: bold;
-  width: 60px;
+  width: 130px;
   padding: 2px;
   margin-left: 1px;
 `;
@@ -66,17 +66,15 @@ export const Legend = styled("div")`
 
 
 export const BarChart = styled("div")`
-background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
-min-width: 360px;
+  background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
+  width : ${(props) => getWidth(props)};
 `;
 
-//Make bar width variable?
-//width : ${(props) => getWidth(props)};
 
 function getWidth(props) {
-  let {teamAgentCount, totalAgents, maxWidth} = props;
+  let {agentCount, totalAgents, maxWidth} = props;
   //console.log('BarChart props:', props);
   if (!maxWidth) maxWidth = 600;
-  return (teamAgentCount / totalAgents) * maxWidth;
+  return ((agentCount / totalAgents) * maxWidth) + "px";
 
 }

@@ -17,6 +17,43 @@ export const mockWorkersData = [
     ]
 
   },
+
+  {
+    "worker":
+    {
+      "friendly_name": "Agent10",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+
+      }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent10",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+
+      }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
+  },
   {
     "worker":
     {

@@ -43,15 +43,17 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     const labelStatusBusy = "Busy";
     const labelStatusIdle = "Idle";
 
+    let totalAgents = props?.All?.totalAgentCount || 0;
+
     let barChartsProps = new Map;
     teams.forEach((team, index) => {
         let teamActivitydata = props[team];
         const teamBarCharProps = [
-            { value: teamActivitydata.Idle, label: labelStatusIdle, color: colors.idle },
-            { value: teamActivitydata.Busy, label: labelStatusBusy, color: colors.busy },
-            { value: teamActivitydata.Break, label: labelStatusBreak, color: colors.break },
-            { value: teamActivitydata.Unavailable, label: labelStatusUnavailable, color: colors.unavailable },
-            { value: teamActivitydata.Offline, label: labelStatusOffline, color: colors.offline }
+            { value: teamActivitydata.Idle || 0, label: labelStatusIdle, color: colors.idle },
+            { value: teamActivitydata.Busy || 0, label: labelStatusBusy, color: colors.busy },
+            { value: teamActivitydata.Break || 0, label: labelStatusBreak, color: colors.break },
+            { value: teamActivitydata.Unavailable || 0, label: labelStatusUnavailable, color: colors.unavailable },
+            { value: teamActivitydata.Offline || 0, label: labelStatusOffline, color: colors.offline }
         ];
         //Add to map
         barChartsProps.set(team, teamBarCharProps);
@@ -64,10 +66,12 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
             </Title>
             {teams.map((team) => {
                 let chartProps = barChartsProps.get(team);
+                let agentCount = 0;
+                chartProps.forEach( (c)=> { agentCount += c.value } );
                 return (
                     <AgentTeam key={team}>
-                        <Label> {team} </Label>
-                        <BarChart>
+                        <Label> {team} [{agentCount} Agents] </Label>
+                        <BarChart agentCount={agentCount} totalAgents={totalAgents} >
                             <StackedBarChart key={team} items={chartProps} />
                         </BarChart>
                     </AgentTeam>

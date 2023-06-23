@@ -40,10 +40,10 @@ export function getAgentStatusCounts(workers = [], teams = []) {
     //If task count == 0, Status = "Idle"
     //If task count > 0, Status = "Busy" 
     let activityCounts = {};
-    activityCounts["All"] = { teamName: "All" };
+    activityCounts["All"] = { teamName: "All", totalAgentCount: 0 };
     //Init activity counts
     teams.forEach((team) => {
-        activityCounts[team] = { teamName: team };
+        activityCounts[team] = { teamName: team, totalAgentCount: 0 };
         workerActivities.forEach((value, key) => {
             activityCounts[team][value.name] = 0;
             activityCounts["All"][value.name] = 0;
@@ -63,10 +63,12 @@ export function getAgentStatusCounts(workers = [], teams = []) {
         if (teams.includes(tm)) {   
             let count = activityCounts[tm][workerStatus] ? activityCounts[tm][workerStatus] : 0;
             activityCounts[tm][workerStatus] = count + 1;
+            activityCounts[tm].totalAgentCount += 1;
         }
         // Total Count for All Workers/Teams
         let count = activityCounts.All[workerStatus] ? activityCounts.All[workerStatus] : 0;
         activityCounts.All[workerStatus] = count + 1;
+        activityCounts.All.totalAgentCount += 1;
     });
 
     return activityCounts;
