@@ -50,32 +50,47 @@ export function getAgentStatusCounts(workers = [], teams = []) {
         workerActivities.forEach((value, key) => {
             activityCounts[team][value.name] = 0;
         });
+        //Aggregate Activity/Status by Team
         workers.forEach((wk) => {
-            let activity = wk.worker.activityName;
+            let workerStatus = wk.worker.activityName;
             let tm = wk.worker?.attributes?.team_name || "Other";
             if (team == tm) {
-                if (activity === STATUS_AVAILABLE) {
+                if (workerStatus === STATUS_AVAILABLE) {
                     // Break out Busy (1+ tasks) vs.  Idle (0 tasks)
                     const tasks = wk?.tasks || [];
-                    if (tasks.length === 0) {
-                        let count = activityCounts[tm][STATUS_IDLE] ? activityCounts[tm][STATUS_IDLE] : 0;
-                        activityCounts[tm][STATUS_IDLE] = count + 1;
-                    } else {
-                        let count = activityCounts[tm][STATUS_BUSY] ? activityCounts[tm][STATUS_BUSY] : 0;
-                         activityCounts[tm][STATUS_BUSY] = count + 1;
-                    }
-                } else {
-                    let count = activityCounts[tm][activity] ? activityCounts[tm][activity] : 0;
-                    activityCounts[tm][activity] = count + 1;
+                    workerStatus = STATUS_IDLE;
+                    if (tasks.length > 0) workerStatus = STATUS_BUSY
                 }
+                let count = activityCounts[tm][workerStatus] ? activityCounts[tm][workerStatus] : 0;
+                activityCounts[tm][workerStatus] = count + 1;
 
             } else {
-                let count = activityCounts.Other[activity] ? activityCounts.Other[activity] : 0;
-                activityCounts.Other[activity] = count + 1;
+                let count = activityCounts.Other[workerStatus] ? activityCounts.Other[workerStatus] : 0;
+                activityCounts.Other[workerStatus] = count + 1;
             }
         });
-        //console.log('ACTIVITY COUNTS:', activityCounts);
+
     });
+    //Aggregate Activity/Status for all workers
+    activityCounts["All"] = { teamName: "All" };
+    workerActivities.forEach((value, key) => {
+        activityCounts["All"][value.name] = 0;
+    });
+
+    workers.forEach((wk) => {
+        let workerStatus = wk.worker.activityName;
+        if (workerStatus === STATUS_AVAILABLE) {
+            // Break out Busy (1+ tasks) vs.  Idle (0 tasks)
+            const tasks = wk?.tasks || [];
+            workerStatus = STATUS_IDLE;
+            if (tasks.length > 0) workerStatus = STATUS_BUSY
+        }
+        let count = activityCounts.All[workerStatus] ? activityCounts.All[workerStatus] : 0;
+        activityCounts.All[workerStatus] = count + 1;
+    });
+    //console.log('ACTIVITY COUNTS:', activityCounts);
+
+
     return activityCounts;
 }
 

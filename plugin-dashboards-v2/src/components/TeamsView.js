@@ -1,23 +1,24 @@
 import * as Flex from "@twilio/flex-ui";
-import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile";
-//import AgentActivityTile from "./AgentActivityTile/AgentActivityTile";
-import AgentStatusPieChartTile from "./AgentActivityTile/AgentStatusPieChartTile";
-
-//import styled from "react-emotion";
 import { styled } from "@twilio/flex-ui";
+
+// import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile";
+import AgentStatusByTeamTile from "./AgentActivityTile/AgentStatusByTeamTile";
+import AgentStatusAllTeamsTile from "./AgentActivityTile/AgentStatusAllTeamsTile";
+
 const teams = ["ABC123", "DEF456", "XYZ789"];
+
 export default (manager) => {
   addTeamsViewTiles();
 }
 
 const TeamsWrapper = styled("div")`
-display: flex;
+  display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   padding: 12px;
   `;
 
-  const TeamsViewDataTiles = styled("div")`
+const TeamsViewDataTiles = styled("div")`
   
   display: flex;
   width: 100%;
@@ -42,19 +43,23 @@ const addTeamsViewTiles = () => {
   Flex.TeamsView.Content.addWrapper(
     (OriginalComponent) => (originalProps) => {
       const updatedProps = { ...originalProps };
-      
+
       return (
         <TeamsWrapper>
+          {/* <TeamsViewDataTiles>
+            <AgentStatusByTeamTile team="All" teams={teams} />
+            <AgentStatusByTeamTile team="ABC123" teams={teams} />
+            <AgentStatusByTeamTile team="DEF456" teams={teams} />
+            <AgentStatusByTeamTile team="XYZ789" teams={teams} />
+          </TeamsViewDataTiles> */}
+
           <TeamsViewDataTiles>
-            {/* <AgentTeamActivityTile teams={teams}/> */}
-            <AgentStatusPieChartTile team="ABC123" teams={teams}/>
-            <AgentStatusPieChartTile team="DEF456" teams={teams}/>
-            <AgentStatusPieChartTile team="XYZ789" teams={teams}/>
+            <AgentStatusAllTeamsTile teams={teams} />
           </TeamsViewDataTiles>
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>
       );
     }
-   );
+  );
 
 }

@@ -1,44 +1,26 @@
 import { Manager, Icon, withTheme } from '@twilio/flex-ui';
 
 import * as React from "react";
-import { TileWrapper, Summary, Chart, Description, Title, AgentActivity, Label, Metric } from "./AgentActivityTile.Components"
-import { cx } from "emotion";
-import { getAgentActivityCounts, getAgentStatusCounts } from '../../utils/ActivityUtil';
-import { mockWorkersData } from '../../utils/mockWorkersData';
-import { connect } from "react-redux";
+import { TeamTile, Summary, Chart, Description, AgentActivity, Label, Metric } from "./AgentActivityTile.Components"
 import PieChart from 'react-minimal-pie-chart';
 const _manager = Manager.getInstance();
 
 /**
- * @param {props} props.teams All team names array (for example ["ABC123", "XYZ987"])
+ * @param {props} props.agentStatusCounts Agent Status Counts
  * @param {props} props.team Specific team name (for example "ABC123" or "XYZ987")
  */
 
-const AgentStatusPieChartTile = connect((state, ownProps) => {
-    const team = ownProps.team;
-    
-        //Note: max 200 workers will be loaded for teams view
-        //const workers = state.flex.supervisor.workers;
-        const workers = mockWorkersData;
-        const teams = ownProps.teams;
-        let activityCounts = getAgentStatusCounts(workers, teams);
-        console.log('ActivityCounts:', activityCounts);
-        return activityCounts[team];
-
-    //object returned from connect is merged into component props
-    //See https://react-redux.js.org/api/connect
-})((props) => {
-
-    const { className, team } = props;
-    const agentsAvailable = props.Available || 0;
-    const agentsUnavailable = props.Unavailable || 0;
-    const agentsOffline = props.Offline || 0;
+const AgentStatusPieChart = (props) => {
+    const { agentStatusCounts, team, hideSummary } = props;
+    const agentsAvailable = agentStatusCounts.Available || 0;
+    const agentsUnavailable = agentStatusCounts.Unavailable || 0;
+    const agentsOffline = agentStatusCounts.Offline || 0;
     // const agentsOffline = props["custom activity"] || 0;
     // Other custom status values
-    const agentsBreak = props.Break || 0;
+    const agentsBreak = agentStatusCounts.Break || 0;
 
-    const agentsBusy = props.Busy || 0;
-    const agentsIdle = props.Idle || 0;
+    const agentsBusy = agentStatusCounts.Busy || 0;
+    const agentsIdle = agentStatusCounts.Idle || 0;
 
     const colors = {
         available: "green",
@@ -64,14 +46,9 @@ const AgentStatusPieChartTile = connect((state, ownProps) => {
     if (agentsBusy) data.push({ title: labelStatusBusy, value: agentsBusy, color: colors.busy });
     if (agentsIdle) data.push({ title: labelStatusIdle, value: agentsIdle, color: colors.idle });
 
-
-
     return (
-        <TileWrapper className={cx("Twilio-AggregatedDataTile", className)}>
-            <Summary>
-                <Description className="Twilio-AggregatedDataTile-Description"> 
-                    <div> { team ? "Team: " + team : "All Agents"} </div>
-                </Description>
+        <TeamTile>
+            { !hideSummary && <Summary>
                 <AgentActivity>
                     <Icon icon='Accept' />
                     <Label bgColor={colors.idle}> {labelStatusIdle}:</Label>
@@ -97,8 +74,7 @@ const AgentStatusPieChartTile = connect((state, ownProps) => {
                     <Label bgColor={colors.offline}> {labelStatusOffline}:</Label>
                     <Metric> {agentsOffline} </Metric>
                 </AgentActivity>
-
-            </Summary>
+            </Summary> }
             <Chart>
                 <PieChart
                     labelStyle={{
@@ -107,10 +83,13 @@ const AgentStatusPieChartTile = connect((state, ownProps) => {
                     data={data}
                     label={true}
                 />
+                <Description>
+                    <div> {team ? "Team: " + team : "All Agents"} </div>
+                </Description>
             </Chart>
 
-        </TileWrapper>
+        </TeamTile>
     )
-});
+};
 
-export default withTheme(AgentStatusPieChartTile);
+export default withTheme(AgentStatusPieChart);

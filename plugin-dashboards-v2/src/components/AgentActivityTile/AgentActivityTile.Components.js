@@ -13,6 +13,20 @@ export const TileWrapper = styled("div")`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
+export const TeamTile = styled("div")`
+    margin: 2px;
+    display: flex;
+    flex-direction: row;
+    
+    padding: ${({ theme }) => theme.tokens.spacings.space40};
+    border-style: solid;
+    border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
+    border-radius: ${({ theme }) => theme.tokens.radii.borderRadius20};
+    border-color: ${({ theme }) => theme.tokens.borderColors.colorBorderWeaker};
+    background-color: ${({ theme }) => theme.tokens.backgroundColors.colorBackgroundBody};
+    color: ${({ theme }) => theme.tokens.textColors.colorText};
+`;
+
 export const Title = styled("p")`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
@@ -31,6 +45,9 @@ export const Content = styled("div")`
 export const Description = styled("div")`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
+    justify-content: center;
+    display: flex;
+    padding: 4px;
 `;
 
 export const Summary = styled("div")`
@@ -39,6 +56,8 @@ export const Summary = styled("div")`
 `;
 
 export const Chart = styled("div")`
+  display: flex;
+  flex-direction: column;
   width: 130px;
   display: flex;
   justify-content: center;
