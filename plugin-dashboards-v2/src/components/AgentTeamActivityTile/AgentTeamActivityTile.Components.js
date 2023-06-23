@@ -33,6 +33,8 @@ export const Description = styled("div")`
     display: flex;
   flex: 1 1 auto;
   flex-direction: row;
+  margin-bottom: 1px;
+  margin-top: 1px;
 `;
 
 export const AgentTeam = styled("div")`
@@ -65,8 +67,16 @@ export const Legend = styled("div")`
 
 export const BarChart = styled("div")`
 background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
-min-width: 160px;
+min-width: 360px;
 `;
 
+//Make bar width variable?
+//width : ${(props) => getWidth(props)};
 
+function getWidth(props) {
+  let {teamAgentCount, totalAgents, maxWidth} = props;
+  //console.log('BarChart props:', props);
+  if (!maxWidth) maxWidth = 600;
+  return (teamAgentCount / totalAgents) * maxWidth;
 
+}

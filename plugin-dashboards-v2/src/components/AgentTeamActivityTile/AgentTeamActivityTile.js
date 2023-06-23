@@ -3,7 +3,7 @@ import { Manager, Icon, withTheme, StackedBarChart } from '@twilio/flex-ui';
 import * as React from "react";
 import { TileWrapper, Description, Title, AgentTeam, BarChart, Label, Legend } from "./AgentTeamActivityTile.Components"
 import { cx } from "emotion";
-import { getAgentActivityCounts } from '../../utils/ActivityUtil';
+import { getAgentStatusCounts } from '../../utils/ActivityUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
 
 import { connect } from "react-redux";
@@ -15,10 +15,10 @@ const _manager = Manager.getInstance();
  */
 const AgentTeamActivityTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
-    const workers = state.flex.supervisor.workers;
-    //const workers = mockWorkersData;
+    //const workers = state.flex.supervisor.workers;
+    const workers = mockWorkersData;
     const teams = ownProps.teams;
-    let activityCounts = getAgentActivityCounts(workers, teams);
+    let activityCounts = getAgentStatusCounts(workers, teams);
     console.log('ActivityCounts:', activityCounts);
     return activityCounts;
 
@@ -29,22 +29,26 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
 
     const colors = {
         available: "green",
-        unavailable:"red",
+        unavailable: "red",
         offline: "grey",
-        break: "orange"
+        break: "orange",
+        busy: "greenyellow",
+        idle: "green"
     }
 
-    //use for icon title or hover
     const labelStatusAvailable = _manager.strings.AgentStatusAvailable;
     const labelStatusUnavailable = _manager.strings.AgentStatusUnavailable;
     const labelStatusOffline = _manager.strings.AgentStatusOffline;
     const labelStatusBreak = "Break";
+    const labelStatusBusy = "Busy";
+    const labelStatusIdle = "Idle";
 
     let barChartsProps = new Map;
     teams.forEach((team, index) => {
         let teamActivitydata = props[team];
         const teamBarCharProps = [
-            { value: teamActivitydata.Available, label: labelStatusAvailable, color: colors.available },
+            { value: teamActivitydata.Idle, label: labelStatusIdle, color: colors.idle },
+            { value: teamActivitydata.Busy, label: labelStatusBusy, color: colors.busy },
             { value: teamActivitydata.Break, label: labelStatusBreak, color: colors.break },
             { value: teamActivitydata.Unavailable, label: labelStatusUnavailable, color: colors.unavailable },
             { value: teamActivitydata.Offline, label: labelStatusOffline, color: colors.offline }
@@ -70,12 +74,13 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
                 );
             })
             }
-            <Description key="legend">
-                <Legend bgColor={colors.available}> {labelStatusAvailable} </Legend>
+            {/* <Description key="legend">
+                <Legend bgColor={colors.idle}> {labelStatusIdle} </Legend>
+                <Legend bgColor={colors.busy}> {labelStatusBusy} </Legend>
                 <Legend bgColor={colors.break}> {labelStatusBreak} </Legend>
                 <Legend bgColor={colors.unavailable}> {labelStatusUnavailable} </Legend>
                 <Legend bgColor={colors.offline}> {labelStatusOffline} </Legend>
-            </Description>
+            </Description> */}
         </TileWrapper>
     )
 });

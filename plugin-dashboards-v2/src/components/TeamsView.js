@@ -1,7 +1,7 @@
 import * as Flex from "@twilio/flex-ui";
 import { styled } from "@twilio/flex-ui";
 
-// import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile";
+import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile";
 import AgentStatusByTeamTile from "./AgentActivityTile/AgentStatusByTeamTile";
 import AgentStatusAllTeamsTile from "./AgentActivityTile/AgentStatusAllTeamsTile";
 
@@ -46,12 +46,13 @@ const addTeamsViewTiles = () => {
 
       return (
         <TeamsWrapper>
-          {/* <TeamsViewDataTiles>
-            <AgentStatusByTeamTile team="All" teams={teams} />
+          <TeamsViewDataTiles>
+            {/* <AgentStatusByTeamTile team="All" teams={teams} />
             <AgentStatusByTeamTile team="ABC123" teams={teams} />
             <AgentStatusByTeamTile team="DEF456" teams={teams} />
-            <AgentStatusByTeamTile team="XYZ789" teams={teams} />
-          </TeamsViewDataTiles> */}
+            <AgentStatusByTeamTile team="XYZ789" teams={teams} /> */}
+            <AgentTeamActivityTile teams={teams} />
+          </TeamsViewDataTiles>
 
           <TeamsViewDataTiles>
             <AgentStatusAllTeamsTile teams={teams} />
