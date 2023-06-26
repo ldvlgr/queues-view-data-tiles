@@ -3,7 +3,7 @@ import { Manager, Icon, withTheme, StackedBarChart } from '@twilio/flex-ui';
 import * as React from "react";
 import { TileWrapper, Description, Title, AgentTeam, BarChart, Label, Legend } from "./AgentTeamActivityTile.Components"
 import { cx } from "emotion";
-import { getAgentStatusCounts } from '../../utils/ActivityUtil';
+import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
 
 import { connect } from "react-redux";

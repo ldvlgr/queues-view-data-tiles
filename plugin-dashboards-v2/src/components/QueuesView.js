@@ -67,10 +67,10 @@ const addTiles = () => {
     { sortOrder: -1 }
   );
 
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <AllChannelsSLATile key="combo-data-tile" colors={tileColors} />,
-  //   { sortOrder: 0 }
-  // );
+  Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+    <AllChannelsSLATile key="combo-data-tile" colors={tileColors} />,
+    { sortOrder: 0 }
+  );
   
   //GROUPS TILE
   // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(

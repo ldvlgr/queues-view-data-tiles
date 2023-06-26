@@ -10,7 +10,8 @@ import QueueDataUtil from "../../utils/QueueDataUtil";
 import PieChart from 'react-minimal-pie-chart';
 
 const AllChannelsSLATile = connect((state) => {
-    const queues = Object.values(state.flex.realtimeQueues.queuesList);
+    //const queues = Object.values(state.flex.realtimeQueues.queuesList);
+    const queues = mockQueuesData;
     return QueueDataUtil.getSLTodayByChannel(queues);
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect

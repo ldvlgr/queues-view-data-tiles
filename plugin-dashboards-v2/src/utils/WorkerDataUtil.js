@@ -3,34 +3,6 @@ import { Manager } from '@twilio/flex-ui';
 const _manager = Manager.getInstance();
 const workerActivities = _manager.store.getState().flex?.worker?.activities || new Map();
 
-// export function getAgentActivityCounts(workers = [], teams = []) {
-//     let activityCounts = {};
-//     //All Teams, init activity counts
-//     activityCounts["Other"] = { teamName: "Other" };
-//     workerActivities.forEach((value, key) => {
-//         activityCounts["Other"][value.name] = 0;
-//     });
-//     teams.forEach((team) => {
-//         activityCounts[team] = { teamName: team };
-//         workerActivities.forEach((value, key) => {
-//             activityCounts[team][value.name] = 0;
-//         });
-//         workers.forEach((wk) => {
-//             let activity = wk.worker.activityName;
-//             let tm = wk.worker?.attributes?.team_name || "Other";
-//             if (team == tm) {
-//                 let count = activityCounts[tm][activity] ? activityCounts[tm][activity] : 0;
-//                 activityCounts[tm][activity] = count + 1;
-//             } else {
-//                 let count = activityCounts.Other[activity] ? activityCounts.Other[activity] : 0;
-//                 activityCounts.Other[activity] = count + 1;
-//             }
-//         });
-//         //console.log('ACTIVITY COUNTS:', activityCounts);
-//     });
-//     return activityCounts;
-// }
-
 const STATUS_AVAILABLE = "Available";
 const STATUS_BUSY = "Busy";
 const STATUS_IDLE = "Idle";
@@ -60,7 +32,7 @@ export function getAgentStatusCounts(workers = [], teams = []) {
             workerStatus = STATUS_IDLE;
             if (tasks.length > 0) workerStatus = STATUS_BUSY
         }
-        if (teams.includes(tm)) {   
+        if (teams.includes(tm)) {
             let count = activityCounts[tm][workerStatus] ? activityCounts[tm][workerStatus] : 0;
             activityCounts[tm][workerStatus] = count + 1;
             activityCounts[tm].totalAgentCount += 1;
@@ -74,4 +46,26 @@ export function getAgentStatusCounts(workers = [], teams = []) {
     return activityCounts;
 }
 
+
+export function getSkillsCounts(workers = [], teams = []) {
+    let skillCounts = {};
+    skillCounts["All"] = { };
+    teams.forEach((team) => {
+        skillCounts[team] = { };
+    });
+    //Aggregate Skills
+    workers.forEach((wk) => {
+        let tm = wk.worker?.attributes?.team_name || "Other";
+        let wkSkills = wk.worker?.attributes?.routing?.skills || [];
+        wkSkills.forEach((sk) => {
+            if (teams.includes(tm)) {
+                let count = skillCounts[tm][sk] ? skillCounts[tm][sk] : 0;
+                skillCounts[tm][sk] = count + 1;
+            }
+            let count = skillCounts.All[sk] ? skillCounts.All[sk] : 0;
+            skillCounts.All[sk] = count + 1;
+        })
+    });
+    return skillCounts;
+}
 

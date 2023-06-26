@@ -1,7 +1,6 @@
 import { Manager, Icon, withTheme } from '@twilio/flex-ui';
-
 import * as React from "react";
-import { TeamTile, Summary, Chart, Description, AgentActivity, Label, Metric } from "./AgentActivityTile.Components"
+import { TeamTile, Summary, Chart, Description, Title, AgentActivity, Label, Metric } from "./AgentActivityTile.Components"
 import PieChart from 'react-minimal-pie-chart';
 const _manager = Manager.getInstance();
 
@@ -76,6 +75,9 @@ const AgentStatusPieChart = (props) => {
                 </AgentActivity>
             </Summary> }
             <Chart>
+                <Title>
+                    Activity (Status)
+                </Title>
                 <PieChart
                     labelStyle={{
                         fontSize: '14px', fill: 'White'

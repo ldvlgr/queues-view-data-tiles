@@ -6,6 +6,9 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "ABC123",
+        "routing": {
+          "skills": ["sales", "service", "fraud", "membership", "collections", "returns"]
+        }
 
       }
     },
@@ -25,6 +28,9 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "ABC123",
+        "routing": {
+          "skills": [ "service",    "collections", "returns"]
+        }
 
       }
     },
@@ -43,6 +49,10 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "ABC123",
+
+        "routing": {
+          "skills": ["collections", "returns"]
+        }
 
       }
     },
@@ -61,6 +71,152 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "ABC123",
+        "routing": {
+          "skills": ["sales"]
+        }
+
+      }
+    }
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent12",
+      "activityName": "Unavailable",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["service", "fraud", "returns"]
+        }
+
+      }
+    }
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent12",
+      "activityName": "Unavailable",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["membership", "collections", "returns"]
+        }
+
+      }
+    }
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent12",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["sales", "service", "fraud"]
+        }
+
+      }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent12",
+      "activityName": "Break",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["fraud", "membership", "collections", "returns"]
+        }
+
+      }
+    }
+  },
+
+
+  {
+    "worker":
+    {
+      "friendly_name": "Agent10",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": [ "fraud", "warranty"]
+        }
+
+      }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
+  },
+
+  {
+    "worker":
+    {
+      "friendly_name": "Agent10",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["sales", "service", "fraud",  "membership", "collections", "returns"]
+        }
+
+      }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent10",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["warranty", "membership", "collections", "returns"]
+        }
+
+      }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "sms",
+      }
+    ]
+
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent11",
+      "activityName": "Available",
+      "attributes": {
+        "team_name": "ABC123",
+        "routing": {
+          "skills": ["sales", "service", "fraud", "warranty", "membership"]
+        }
 
       }
     }
@@ -83,6 +239,9 @@ export const mockWorkersData = [
       "activityName": "Unavailable",
       "attributes": {
         "team_name": "ABC123",
+        "routing": {
+          "skills": ["sales", "service", "fraud", "warranty", "membership", "collections", "returns"]
+        }
 
       }
     }
@@ -116,6 +275,7 @@ export const mockWorkersData = [
       }
     }
   },
+
 
 
   {
@@ -125,6 +285,9 @@ export const mockWorkersData = [
       "activityName": "Offline",
       "attributes": {
         "team_name": "DEF456",
+        "routing": {
+          "skills": ["sales", "service", "fraud", "warranty", "collections", "returns"]
+        }
 
       }
     }
@@ -136,6 +299,9 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "DEF456",
+        "routing": {
+          "skills": ["sales", "service", "fraud", "warranty", "membership"]
+        }
 
       }
     },
@@ -154,6 +320,9 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "DEF456",
+        "routing": {
+          "skills": ["sales","membership", "collections", "returns"]
+        }
 
       }
     }
@@ -164,6 +333,9 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "DEF456",
+        "routing": {
+          "skills": [ "warranty", "membership", "collections", "returns"]
+        }
 
       }
     }
@@ -174,6 +346,9 @@ export const mockWorkersData = [
       "activityName": "Break",
       "attributes": {
         "team_name": "DEF456",
+        "routing": {
+          "skills": ["sales", "warranty", "membership", "collections"]
+        }
 
       }
     }
@@ -184,6 +359,9 @@ export const mockWorkersData = [
       "activityName": "Break",
       "attributes": {
         "team_name": "DEF456",
+        "routing": {
+          "skills": ["sales", "service", "collections", "returns"]
+        }
 
       }
     }
@@ -195,6 +373,9 @@ export const mockWorkersData = [
       "activityName": "Offline",
       "attributes": {
         "team_name": "XYZ789",
+        "routing": {
+          "skills": ["sales", "fraud", "warranty", "membership", "collections", "returns"]
+        }
 
       }
     }
@@ -237,6 +418,9 @@ export const mockWorkersData = [
       "activityName": "Available",
       "attributes": {
         "team_name": "XYZ789",
+        "routing": {
+          "skills": [ "membership", "collections"]
+        }
 
       }
     }
@@ -260,6 +444,9 @@ export const mockWorkersData = [
       "activityName": "Break",
       "attributes": {
         "team_name": "XYZ789",
+        "routing": {
+          "skills": ["sales", "fraud", "collections"]
+        }
 
       }
     }
