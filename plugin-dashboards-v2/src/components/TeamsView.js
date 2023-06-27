@@ -5,7 +5,7 @@ import AgentTeamActivityTile from "./AgentTeamActivityTile/AgentTeamActivityTile
 import AgentStatusByTeamTile from "./AgentActivityTile/AgentStatusByTeamTile";
 import AgentStatusAllTeamsTile from "./AgentActivityTile/AgentStatusAllTeamsTile";
 import AgentSkillsAllTeamsTile from './AgentSkillsTile/AgentSkillsAllTeamsTile';
-
+import SkillsByTeamTile from "./SkillsByTeamBarChartTile/SkillsByTeamTile";
 const teams = ["ABC123", "DEF456", "XYZ789"];
 
 export default (manager) => {
@@ -55,11 +55,11 @@ const addTeamsViewTiles = () => {
             <AgentTeamActivityTile teams={teams} />
           </TeamsViewDataTiles>
 
-          <TeamsViewDataTiles>
+          {/* <TeamsViewDataTiles>
             <AgentStatusAllTeamsTile teams={teams} />
-          </TeamsViewDataTiles>
+          </TeamsViewDataTiles> */}
           <TeamsViewDataTiles>
-          <AgentSkillsAllTeamsTile teams={teams} />
+            <SkillsByTeamTile teams={teams} />
           </TeamsViewDataTiles>
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>

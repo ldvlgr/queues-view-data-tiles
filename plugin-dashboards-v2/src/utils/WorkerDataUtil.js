@@ -59,8 +59,8 @@ export function getSkillsCounts(workers = [], teams = []) {
         let wkSkills = wk.worker?.attributes?.routing?.skills || [];
         wkSkills.forEach((sk) => {
             if (teams.includes(tm)) {
-                let count = skillCounts[tm][sk] ? skillCounts[tm][sk] : 0;
-                skillCounts[tm][sk] = count + 1;
+                let count = skillCounts[sk][tm] ? skillCounts[sk][tm] : 0;
+                skillCounts[sk][tm] = count + 1;
             }
             let count = skillCounts.All[sk] ? skillCounts.All[sk] : 0;
             skillCounts.All[sk] = count + 1;
@@ -69,3 +69,21 @@ export function getSkillsCounts(workers = [], teams = []) {
     return skillCounts;
 }
 
+export function getSkillsByTeamCounts(workers = [], teams = []) {
+    let skillCounts = {};
+    //Aggregate Skills
+    workers.forEach((wk) => {
+        let tm = wk.worker?.attributes?.team_name || "Other";
+        let wkSkills = wk.worker?.attributes?.routing?.skills || [];
+        wkSkills.forEach((sk) => {
+            if (!skillCounts[sk]) skillCounts[sk] = {};
+            if (teams.includes(tm)) {
+                let count = skillCounts[sk][tm] ? skillCounts[sk][tm] : 0;
+                skillCounts[sk][tm] = count + 1;
+            }
+            let count = skillCounts[sk].All ? skillCounts[sk].All : 0;
+            skillCounts[sk].All = count + 1;
+        })
+    });
+    return skillCounts;
+}
