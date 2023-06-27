@@ -33,14 +33,21 @@ To be able to display the Active and Waiting Tasks for a specific Task Channel (
 
 ### Channel SLA Data Tiles
 
-The Flex Real Time Queues View shows the SLA % for each Queue (and further broken down by Channel, if available). If there are a large number of queues, it may be preferable to display the SLA % aggregated by Channel across all queues. The code for this aggregation is contained in the `QueueDataUtil.getSLTOdayByChannel` method.  Leveraging this utility method, we can now create our custom Channel SLA Data Tiles:
+The Flex Real Time Queues View shows the SLA % for each Queue (and further broken down by Channel, if available). If there are a large number of queues, it may be preferable to display the SLA % aggregated by Channel across all queues. The code for this aggregation is contained in the `QueueDataUtil.getSLTodayByChannel` method.  Leveraging this utility method, we can now create our custom Channel SLA Data Tiles:
 
 <img width="800px" src="images/QueuesView6DataTiles.png"/>
 
 ### Custom pie chart Data Tiles
 Since there is limited screen space at the top of the Queues View to add new Data Tiles, it may make sense to combine several SLA metrics into a single data tile. For example:
 
-<img width="800px" src="images/ChannelSLACombotile.png"/>
+<img width="800px" src="images/ChannelSLAComboTile.png"/>
+
+This pie chart Data Tile is just one possible visualization of this data. Other options include vertical bar charts or donut charts. There are a variety of chart libraries available in npm for inclusion in your plugin. 
+
+### Queue Group Data Tile
+Furthermore, for large Flex implementations with dozens or even 100s of Queues, it may make sense to aggregate the data across a group of related Queues and calculate the SLA % for this group of Queues.  To be able to aggregate the data across all Queues into groups, you would need to have a consistent Queue naming format where the `group` is a predetermined part of the queue name (for example <strong>sales</strong>.mobile.voice.en). Here is an example of what this could look like:
+
+<img width="300px" src="images/GroupsSLATile.png"/>
 
 
 June 2023 Update.  This plugin now also sample code to add "Data Tiles" to the Flex Teams View.  Using the Worker data in the Flex Redux store associated with the Team View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
