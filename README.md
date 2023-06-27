@@ -17,18 +17,30 @@ The Flex [Real-Time Queues View](https://www.twilio.com/docs/flex/end-user-guide
 
 The [Queues Data Table](https://www.twilio.com/docs/flex/developer/ui/queues-view-programmability#modify-the-queuesdatatable) can be modifed by removing and (re)adding columns with metrics.
 
-The Flex reference docs contain a listing of all [properties for each WorkerQueue](https://assets.flex.twilio.com/docs/releases/flex-ui/1.30.2/QueuesStats%25E2%2580%25A4QueuesDataTable.html#.QueuesStats%E2%80%A4WorkerQueue) in the QueueStats data set. 
+### Flex Queues View data
+As you can see from [this example in our Flex documentation](https://www.twilio.com/docs/flex/developer/ui/queues-view-programmability#add-or-remove-individual-data-tiles), you can connect a custom Data Tile to the Flex Redux application store using [connect](https://react-redux.js.org/api/connect) from React-Redux. You need to provide the equivalent of a [mapStateToProps](https://react-redux.js.org/using-react-redux/connect-mapstate) function and return an object with props. Alternatively, in Flex v2 you can now leverage the [useFlexSelector](https://www.twilio.com/docs/flex/developer/ui/overview-of-flex-ui-programmability-options#useflexselector) wrapper method to extract the real time queues data from the Flex Redux store for use in a React component.
 
-Additional [DataTiles](https://www.twilio.com/docs/flex/developer/ui/queues-view-programmability#add-or-remove-individual-data-tiles) can be added to display custom metrics/KPIs.  As you can see from this example in our docs, you can connect your custom data tile to the Flex Redux store using [connect](https://react-redux.js.org/api/connect) from React-Redux. You need to provide the equivalent of a “mapStateToProps” function and return an object with props. The available Queue Stats data in Redux is documented in the [Flex Reference docs](https://assets.flex.twilio.com/docs/releases/flex-ui/2.2.0/QueuesStats%25E2%2580%25A4QueuesDataTable.html#.QueuesStats%E2%80%A4WorkerQueue) except it’s missing the Channels child object which gives you the break-down by channel (chat/voice).
+To better understand the queues data that is available in the Flex Redux store, you can either use the Redux Dev Tools in Chrome or use this command in the Chrome console to inspect the real-time Queue data in the Flex Redux store via the Flex Manager:
 
+```
+Twilio.Flex.Manager.getInstance().store.getState().flex.realtimeQueues
+```
 
-The example in our docs shows how to populate the `content` prop of the AggregatedDataTile but it also has a `description` label which can be used for either static text or another metric value. In this example both the Active and Waiting tasks are shown in the same Tile with the Waiting tasks value in the Description line. Using the Channels child object (per queue) you can aggregate the data by channel to display the total Active Chats & Calls and calculate the SLA % per channel. Color coding can be applied to enhance the UI for Supervisors.
+### Active and waiting tasks by channel Data Tiles
+To be able to display the Active and Waiting Tasks for a specific Task Channel (e.g voice, chat, sms), we would first need to calculate these totals by aggregating the Channels data for all Queues. See code for this is contained in the `QueueDataUtil.getTaskCountsByChannel` method.  Leveraging the `getTaskCountsByChannel` utility method, we can create our custom Channel Data Tile component. This component is similar to the `AggregatedDataTile` component available in Flex with the a small enhancement to be able to change the tile background color:
 
-<img width="800px" src="images/ActiveWaitingAndSLATiles.png"/>
+<img width="800px" src="images/QueuesViewChannelDataTiles.png"/>
 
-SLA Metrics can also be combined into a single Pie Chart Data Tile.
+### Channel SLA Data Tiles
 
-<img width="700px" src="images/SLAPieChartTile.png"/>
+The Flex Real Time Queues View shows the SLA % for each Queue (and further broken down by Channel, if available). If there are a large number of queues, it may be preferable to display the SLA % aggregated by Channel across all queues. The code for this aggregation is contained in the `QueueDataUtil.getSLTOdayByChannel` method.  Leveraging this utility method, we can now create our custom Channel SLA Data Tiles:
+
+<img width="800px" src="images/QueuesView6DataTiles.png"/>
+
+### Custom pie chart Data Tiles
+Since there is limited screen space at the top of the Queues View to add new Data Tiles, it may make sense to combine several SLA metrics into a single data tile. For example:
+
+<img width="800px" src="images/ChannelSLACombotile.png"/>
 
 
 June 2023 Update.  This plugin now also sample code to add "Data Tiles" to the Flex Teams View.  Using the Worker data in the Flex Redux store associated with the Team View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
