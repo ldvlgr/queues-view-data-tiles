@@ -20,12 +20,12 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     const teams = ownProps.teams;
     let activityCounts = getAgentStatusCounts(workers, teams);
     console.log('ActivityCounts:', activityCounts);
-    return activityCounts;
+    return { activityCounts };
 
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, theme, teams } = props;
+    const { className, teams, activityCounts } = props;
 
     const colors = {
         available: "green",
@@ -43,11 +43,14 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     const labelStatusBusy = "Busy";
     const labelStatusIdle = "Idle";
 
-    let totalAgents = props?.All?.totalAgentCount || 0;
+    let totalAgents = activityCounts?.All?.totalAgentCount || 0;
+    let maxAgents = 0;
+    teams.forEach((tm) => {
+        if (activityCounts[tm].totalAgentCount > maxAgents) maxAgents = activityCounts[tm].totalAgentCount;
+    });
 
-    let barChartsProps = new Map;
-    teams.forEach((team, index) => {
-        let teamActivitydata = props[team];
+    const getChartProps = (tm) => {
+        let teamActivitydata = activityCounts[tm];
         const teamBarCharProps = [
             { value: teamActivitydata.Idle || 0, label: labelStatusIdle, color: colors.idle },
             { value: teamActivitydata.Busy || 0, label: labelStatusBusy, color: colors.busy },
@@ -55,9 +58,8 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
             { value: teamActivitydata.Unavailable || 0, label: labelStatusUnavailable, color: colors.unavailable },
             { value: teamActivitydata.Offline || 0, label: labelStatusOffline, color: colors.offline }
         ];
-        //Add to map
-        barChartsProps.set(team, teamBarCharProps);
-    });
+        return teamBarCharProps;
+    }
 
     return (
         <TileWrapper className={cx("Twilio-AggregatedDataTile", className)}>
@@ -65,13 +67,13 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
                 Activity by Team
             </Title>
             {teams.map((team) => {
-                let chartProps = barChartsProps.get(team);
+                let chartProps = getChartProps(team);
                 let agentCount = 0;
                 chartProps.forEach( (c)=> { agentCount += c.value } );
                 return (
                     <AgentTeam key={team}>
                         <Label> {team} [{agentCount} Agents] </Label>
-                        <BarChart agentCount={agentCount} totalAgents={totalAgents} >
+                        <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
                             <StackedBarChart key={team} items={chartProps} />
                         </BarChart>
                     </AgentTeam>

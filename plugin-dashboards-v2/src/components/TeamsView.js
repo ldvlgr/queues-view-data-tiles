@@ -53,14 +53,13 @@ const addTeamsViewTiles = () => {
             <AgentStatusByTeamTile team="DEF456" teams={teams} />
             <AgentStatusByTeamTile team="XYZ789" teams={teams} /> */}
             <AgentTeamActivityTile teams={teams} />
+            <SkillsByTeamTile teams={teams} />
           </TeamsViewDataTiles>
 
           {/* <TeamsViewDataTiles>
             <AgentStatusAllTeamsTile teams={teams} />
           </TeamsViewDataTiles> */}
-          <TeamsViewDataTiles>
-            <SkillsByTeamTile teams={teams} />
-          </TeamsViewDataTiles>
+          
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>
       );

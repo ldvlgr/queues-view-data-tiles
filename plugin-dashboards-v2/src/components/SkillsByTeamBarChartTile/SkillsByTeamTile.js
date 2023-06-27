@@ -59,14 +59,13 @@ const SkillsByTeamTile = connect((state, ownProps) => {
                 Skills Summary
             </Title>
             {skillNames.map((sk) => {
-                //let chartProps = barChartsProps.get(sk);
                 let chartProps = getChartProps(sk);
                 let agentCount = 0;
                 chartProps.forEach((c) => { agentCount += c.value });
                 return (
                     <Skill key={sk}>
                         <Label> {sk} [{agentCount}] </Label>
-                        <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={500}>
+                        <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
                             <StackedBarChart key={sk} items={chartProps} />
                         </BarChart>
                     </Skill>
