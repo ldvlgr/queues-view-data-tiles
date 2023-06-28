@@ -52,7 +52,7 @@ Furthermore, for large Flex implementations with dozens or even 100s of Queues, 
 
 June 2023 Update.  This plugin now also sample code to add "Data Tiles" to the Flex Teams View.  Using the Worker data in the Flex Redux store associated with the Team View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
 
-<img width="800px" src="images/AgentStatusByTeamTiles.png"/>
+<img width="800px" src="images/TeamsViewStatusAndSkills.png"/>
 
 # Configuration
 
