@@ -11,13 +11,14 @@ const _manager = Manager.getInstance();
 
 
 /**
- * @param {props} props.teams The team names (for example ["ABC123", "XYZ987"])
+ * @param {props} props.teamsData The teams data {"teamName": {color: "grey"}}
  */
 const SkillsByTeamTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
     //const workers = state.flex.supervisor.workers;
     const workers = mockWorkersData;
-    const teams = ownProps.teams;
+    const teamsData = ownProps.teamsData;
+    const teams = Object.keys(teamsData);
     let skillCounts = getSkillsByTeamCounts(workers, teams);
     console.log('SkillsByTeamCounts:', skillCounts);
     return { skillCounts };
@@ -25,14 +26,9 @@ const SkillsByTeamTile = connect((state, ownProps) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, teams, skillCounts } = props;
+    const { className, teamsData, skillCounts } = props;
+    const teams = Object.keys(teamsData);
     const skillNames = Object.keys(skillCounts);
-
-    const teamColors = {
-        ABC123: "wheat",
-        DEF456: "tan",
-        XYZ789: "sienna"
-    }
 
     //Calc max agents per skill
     let maxAgents = 0;
@@ -46,7 +42,7 @@ const SkillsByTeamTile = connect((state, ownProps) => {
             let barChartSection = {
                 value: skillCounts[sk][tm] || 0,
                 label: tm,
-                color: teamColors[tm]
+                color: teamsData[tm].color
             }
             skillBarChart.push(barChartSection);
         })

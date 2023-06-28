@@ -52,7 +52,7 @@ export const Label = styled("div")`
   font-weight: bold;
   width: 130px;
   padding: 2px;
-  margin-left: 1px;
+  margin-bottom: 6px;
 `;
 
 export const Legend = styled("div")`

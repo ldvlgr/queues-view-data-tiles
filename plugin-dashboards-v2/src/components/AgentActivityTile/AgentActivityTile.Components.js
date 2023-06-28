@@ -36,6 +36,7 @@ export const Title = styled("p")`
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
     justify-content: center;
     display: flex;
+    margin-bottom: 4px;
 `;
 
 export const Content = styled("div")`
@@ -45,11 +46,14 @@ export const Content = styled("div")`
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
 export const Description = styled("div")`
+    background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
     justify-content: center;
     display: flex;
-    padding: 4px;
+    padding: 2px;
+    margin-top: 6px;
+    margin-bottom: 2px;
 `;
 
 export const Summary = styled("div")`

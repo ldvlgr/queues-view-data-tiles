@@ -7,22 +7,24 @@ import { connect } from "react-redux";
 import AgentStatusPieChart from './AgentStatusPieChart';
 
 /**
- * @param {props} props.teams All team names array (for example ["ABC123", "XYZ987"])
+ * @param {props} props.teamsData The teams data {"teamName": {color: "grey"}}
  */
 
 const AgentStatusAllTeamsTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
     //const workers = state.flex.supervisor.workers;
     const workers = mockWorkersData;
-    const teams = ownProps.teams;
+    const teamsData = ownProps.teamsData;
+    const teams = Object.keys(teamsData);
     let activityCounts = getAgentStatusCounts(workers, teams);
     //console.log('ActivityCounts:', activityCounts);
-    return activityCounts;
+    return { activityCounts };
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    let { teams } = props;
-    const totalStatusCounts = props.All;
+    let { teamsData, activityCounts } = props;
+    const teams = Object.keys(teamsData);
+    const totalStatusCounts = activityCounts.All;
     return (
         <TileWrapper>
             <AgentStatusPieChart
@@ -31,13 +33,14 @@ const AgentStatusAllTeamsTile = connect((state, ownProps) => {
                 team="All"
             />
             {teams?.map((tm) => {
-                const agentStatusCounts = props[tm];
+                const agentStatusCounts = activityCounts[tm];
                 return (
                     <AgentStatusPieChart
                         key={tm}
                         agentStatusCounts={agentStatusCounts}
                         team={tm}
-                        hideSummary="true" />
+                        hideSummary="true"
+                        bgColor={teamsData[tm].color} />
                 )
             })}
         </TileWrapper>

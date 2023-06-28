@@ -11,13 +11,14 @@ const _manager = Manager.getInstance();
 
 
 /**
- * @param {props} props.teams The team names (for example ["ABC123", "XYZ987"])
+ * @param {props} props.teamsData The teams data {"teamName": {color: "grey"}}
  */
 const AgentTeamActivityTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
     //const workers = state.flex.supervisor.workers;
     const workers = mockWorkersData;
-    const teams = ownProps.teams;
+    const teamsData = ownProps.teamsData;
+    const teams = Object.keys(teamsData);
     let activityCounts = getAgentStatusCounts(workers, teams);
     console.log('ActivityCounts:', activityCounts);
     return { activityCounts };
@@ -25,8 +26,8 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, teams, activityCounts } = props;
-
+    const { className, teamsData, activityCounts } = props;
+    const teams = Object.keys(teamsData);
     const colors = {
         available: "green",
         unavailable: "red",
@@ -72,7 +73,7 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
                 chartProps.forEach( (c)=> { agentCount += c.value } );
                 return (
                     <AgentTeam key={team}>
-                        <Label> {team} [{agentCount} Agents] </Label>
+                        <Label bgColor={teamsData[team].color}> {team} [{agentCount} Agents] </Label>
                         <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
                             <StackedBarChart key={team} items={chartProps} />
                         </BarChart>

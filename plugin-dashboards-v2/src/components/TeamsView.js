@@ -6,7 +6,13 @@ import AgentStatusByTeamTile from "./AgentActivityTile/AgentStatusByTeamTile";
 import AgentStatusAllTeamsTile from "./AgentActivityTile/AgentStatusAllTeamsTile";
 import AgentSkillsAllTeamsTile from './AgentSkillsTile/AgentSkillsAllTeamsTile';
 import SkillsByTeamTile from "./SkillsByTeamBarChartTile/SkillsByTeamTile";
-const teams = ["ABC123", "DEF456", "XYZ789"];
+
+const teamsData = {
+  ABC123: { color: "wheat" },
+  DEF456: { color: "peachpuff" },
+  XYZ789: { color: "tan" }
+}
+const teams = Object.keys(teamsData);
 
 export default (manager) => {
   addTeamsViewTiles();
@@ -48,18 +54,21 @@ const addTeamsViewTiles = () => {
       return (
         <TeamsWrapper>
           <TeamsViewDataTiles>
-            {/* <AgentStatusByTeamTile team="All" teams={teams} />
-            <AgentStatusByTeamTile team="ABC123" teams={teams} />
-            <AgentStatusByTeamTile team="DEF456" teams={teams} />
-            <AgentStatusByTeamTile team="XYZ789" teams={teams} /> */}
-            <AgentTeamActivityTile teams={teams} />
-            <SkillsByTeamTile teams={teams} />
+            <AgentTeamActivityTile teamsData={teamsData} />
+            <SkillsByTeamTile teamsData={teamsData} />
           </TeamsViewDataTiles>
 
           {/* <TeamsViewDataTiles>
-            <AgentStatusAllTeamsTile teams={teams} />
+            <AgentStatusByTeamTile team="All" teams={teams} />
+            <AgentStatusByTeamTile team="ABC123" teams={teams} />
+            <AgentStatusByTeamTile team="DEF456" teams={teams} />
+            <AgentStatusByTeamTile team="XYZ789" teams={teams} />
           </TeamsViewDataTiles> */}
-          
+
+          <TeamsViewDataTiles>
+            <AgentStatusAllTeamsTile teamsData={teamsData} />
+          </TeamsViewDataTiles>
+
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>
       );

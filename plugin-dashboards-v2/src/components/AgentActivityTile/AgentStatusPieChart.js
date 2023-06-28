@@ -10,7 +10,7 @@ const _manager = Manager.getInstance();
  */
 
 const AgentStatusPieChart = (props) => {
-    const { agentStatusCounts, team, hideSummary } = props;
+    const { agentStatusCounts, team, hideSummary, bgColor } = props;
     const agentsAvailable = agentStatusCounts.Available || 0;
     const agentsUnavailable = agentStatusCounts.Unavailable || 0;
     const agentsOffline = agentStatusCounts.Offline || 0;
@@ -85,7 +85,7 @@ const AgentStatusPieChart = (props) => {
                     data={data}
                     label={true}
                 />
-                <Description>
+                <Description bgColor={bgColor}>
                     <div> {team ? "Team: " + team : "All Agents"} </div>
                 </Description>
             </Chart>
