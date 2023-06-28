@@ -1,14 +1,12 @@
-import { Manager, Icon, withTheme, StackedBarChart } from '@twilio/flex-ui';
-
+import { withTheme, StackedBarChart } from '@twilio/flex-ui';
 import * as React from "react";
-import { TileWrapper, Description, Title, Skill, BarChart, Label } from "./SkillsByTeamTile.Components"
+import { TileWrapper, Title, BarChart, Label } from "./SkillsByTeamTile.Components"
 import { cx } from "emotion";
 import { getSkillsByTeamCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
+import { Table, THead, TBody, Th, Tr, Td } from "@twilio-paste/core";
 
 import { connect } from "react-redux";
-const _manager = Manager.getInstance();
-
 
 /**
  * @param {props} props.teamsData The teams data {"teamName": {color: "grey"}}
@@ -54,20 +52,34 @@ const SkillsByTeamTile = connect((state, ownProps) => {
             <Title className="Twilio-AggregatedDataTile-Title">
                 Skills Summary
             </Title>
-            {skillNames.map((sk) => {
-                let chartProps = getChartProps(sk);
-                let agentCount = 0;
-                chartProps.forEach((c) => { agentCount += c.value });
-                return (
-                    <Skill key={sk}>
-                        <Label> {sk} [{agentCount}] </Label>
-                        <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
-                            <StackedBarChart key={sk} items={chartProps} />
-                        </BarChart>
-                    </Skill>
-                );
-            })
-            }
+            <Table variant="default">
+                <THead>
+                    <Tr>
+                        <Th><Label> Skill </Label></Th>
+                        <Th textAlign="center"><Label> # </Label></Th>
+                        <Th><Label> Agent Teams </Label></Th>
+                    </Tr>
+                </THead>
+                <TBody>
+                    {skillNames.map((sk) => {
+                        let chartProps = getChartProps(sk);
+                        let agentCount = 0;
+                        chartProps.forEach((c) => { agentCount += c.value });
+                        return (
+                            <Tr key={sk}>
+                                <Td><Label> {sk} </Label></Td>
+                                <Td textAlign="center"><Label>{agentCount} </Label></Td>
+                                <Td>
+                                    <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
+                                        <StackedBarChart key={sk} items={chartProps} />
+                                    </BarChart>
+                                </Td>
+                            </Tr>
+                        );
+                    })
+                    }
+                </TBody>
+            </Table>
         </TileWrapper>
     )
 });

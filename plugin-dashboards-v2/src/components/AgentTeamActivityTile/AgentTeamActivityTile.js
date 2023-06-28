@@ -1,10 +1,11 @@
-import { Manager, Icon, withTheme, StackedBarChart } from '@twilio/flex-ui';
+import { Manager, withTheme, StackedBarChart } from '@twilio/flex-ui';
 
 import * as React from "react";
-import { TileWrapper, Description, Title, AgentTeam, BarChart, Label, Legend } from "./AgentTeamActivityTile.Components"
+import { TileWrapper, Title, BarChart, Label, Legend } from "./AgentTeamActivityTile.Components"
 import { cx } from "emotion";
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
+import { Table, THead, TBody, Th, Tr, Td } from "@twilio-paste/core";
 
 import { connect } from "react-redux";
 const _manager = Manager.getInstance();
@@ -67,20 +68,38 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
             <Title className="Twilio-AggregatedDataTile-Title">
                 Activity by Team
             </Title>
-            {teams.map((team) => {
-                let chartProps = getChartProps(team);
-                let agentCount = 0;
-                chartProps.forEach( (c)=> { agentCount += c.value } );
-                return (
-                    <AgentTeam key={team}>
-                        <Label bgColor={teamsData[team].color}> {team} [{agentCount} Agents] </Label>
-                        <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
-                            <StackedBarChart key={team} items={chartProps} />
-                        </BarChart>
-                    </AgentTeam>
-                );
-            })
-            }
+            <Table variant="default">
+                <THead>
+                    <Tr>
+                        <Th><Label> Agent Team </Label></Th>
+                        <Th textAlign="center"><Label> # </Label></Th>
+                        <Th><Label> Status/Activity </Label></Th>
+                    </Tr>
+                </THead>
+                <TBody>
+                    {teams.map((team) => {
+                        let chartProps = getChartProps(team);
+                        let agentCount = 0;
+                        chartProps.forEach((c) => { agentCount += c.value });
+                        return (
+                            <Tr key={team}>
+                                <Td>
+                                    <Label bgColor={teamsData[team].color}> {team}  </Label>
+                                </Td>
+                                <Td textAlign="center"><Label>{agentCount} </Label></Td>
+                                <Td>
+                                    <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
+                                        <StackedBarChart key={team} items={chartProps} />
+                                    </BarChart>
+                                </Td>
+                            </Tr>
+
+
+                        );
+                    })
+                    }
+                </TBody>
+            </Table>
             {/* <Description key="legend">
                 <Legend bgColor={colors.idle}> {labelStatusIdle} </Legend>
                 <Legend bgColor={colors.busy}> {labelStatusBusy} </Legend>

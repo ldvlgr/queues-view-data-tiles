@@ -27,32 +27,12 @@ export const Content = styled("div")`
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
-export const Description = styled("div")`
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
-    line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
-    display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  margin-bottom: 1px;
-  margin-top: 1px;
-`;
-
-export const AgentTeam = styled("div")`
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  font-size: 12px;
-  margin-bottom: 1px;
-  margin-top: 1px;
-`;
 
 export const Label = styled("div")`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
-  width: 130px;
-  padding: 2px;
-  margin-bottom: 6px;
+  padding: 4px;
 `;
 
 export const Legend = styled("div")`

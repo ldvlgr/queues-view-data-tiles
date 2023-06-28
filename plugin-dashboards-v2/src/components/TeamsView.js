@@ -8,8 +8,8 @@ import AgentSkillsAllTeamsTile from './AgentSkillsTile/AgentSkillsAllTeamsTile';
 import SkillsByTeamTile from "./SkillsByTeamBarChartTile/SkillsByTeamTile";
 
 const teamsData = {
-  ABC123: { color: "wheat" },
-  DEF456: { color: "peachpuff" },
+  ABC123: { color: "beige" },
+  DEF456: { color: "wheat" },
   XYZ789: { color: "tan" }
 }
 const teams = Object.keys(teamsData);
