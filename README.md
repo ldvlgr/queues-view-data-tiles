@@ -50,9 +50,19 @@ Furthermore, for large Flex implementations with dozens or even 100s of Queues, 
 <img width="300px" src="images/GroupsSLATile.png"/>
 
 
-June 2023 Update.  This plugin now also sample code to add "Data Tiles" to the Flex Teams View.  Using the Worker data in the Flex Redux store associated with the Team View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
+### Enhanced Agent Activity Breakdown Chart
+The native Agent Activity Tile adds up all Unavailable activities into 1 category (Unavailable) and does not show the agent counts for each specific Unavailable activity (for example, Break, Training, Lunch etc).  The Workspace agent activity data can be aggregated by Activity to display this more granular breakdown.
+
+<img width="450px" src="images/AgentActivityPieChartV2.png"/>
+
+
+### Teams View Data Tiles (Activity & Skills)
+
+June 2023 Update.  This plugin now also includes sample code to add "Data Tiles" to the Flex [Teams View](https://www.twilio.com/docs/flex/end-user-guide/insights/monitor-agent-activity).  Using the Worker data in the Flex Redux store associated with the Teams View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
 
 <img width="800px" src="images/TeamsViewStatusAndSkillsV2.png"/>
+
+Note: The Teams View can only display up to 200 agents, so the worker data available for aggregation is limited to this data set.
 
 # Configuration
 
