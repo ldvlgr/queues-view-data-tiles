@@ -3,7 +3,7 @@ import { styled } from "@twilio/flex-ui";
 export const TileWrapper = styled("div")`
     display: flex;
     flex-direction: row;
-    min-width: 275px;
+    min-width: 300px;
     padding: ${({ theme }) => theme.tokens.spacings.space40};
     border-style: solid;
     border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
@@ -74,7 +74,7 @@ export const Label = styled("div")`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
   font-weight: bold;
-  width: 60px;
+  width: 70px;
   padding: 2px 2px 2px 4px;
   margin: 1px;
   color: #ffffff
@@ -85,9 +85,8 @@ export const AgentActivity = styled("div")`
 display: flex;
   flex: 1 1 auto;
   flex-direction: row;
-  font-size: 12px;
+  font-size: 11px;
   margin-bottom: 1px;
-  margin-top: 1px;
 `;
 
 export const Metric = styled("div")`
