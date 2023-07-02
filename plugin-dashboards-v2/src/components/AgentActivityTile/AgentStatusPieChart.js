@@ -11,68 +11,43 @@ const _manager = Manager.getInstance();
 
 const AgentStatusPieChart = (props) => {
     const { agentStatusCounts, team, hideSummary, bgColor } = props;
-    const agentsAvailable = agentStatusCounts.Available || 0;
-    const agentsUnavailable = agentStatusCounts.Unavailable || 0;
-    const agentsOffline = agentStatusCounts.Offline || 0;
-    // const agentsOffline = props["custom activity"] || 0;
-    // Other custom status values
-    const agentsBreak = agentStatusCounts.Break || 0;
 
-    const agentsBusy = agentStatusCounts.Busy || 0;
-    const agentsIdle = agentStatusCounts.Idle || 0;
-
-    const colors = {
-        available: "green",
-        unavailable: "red",
-        offline: "grey",
-        break: "orange",
-        busy: "greenyellow",
-        idle: "green"
+    //Available Flex icons:
+    //https://www.twilio.com/docs/flex/developer/ui/v1/icons
+    const activityConfig = {
+        Idle: { color: "green", icon: "Accept" },
+        Busy: { color: "limegreen", icon: "GenericTask" },
+        Outbound: { color: "greenyellow", icon: "Call" },
+        Break: { color: "goldenrod", icon: "Hold" },
+        Lunch: { color: "darkorange", icon: "Hamburger" },
+        Training: { color: "red", icon: "Bulb" },
+        Unavailable: { color: "darkred", icon: "Close" },
+        Offline: { color: "grey", icon: "Minus" },
     }
-
-    const labelStatusAvailable = _manager.strings.AgentStatusAvailable;
-    const labelStatusUnavailable = _manager.strings.AgentStatusUnavailable;
-    const labelStatusOffline = _manager.strings.AgentStatusOffline;
-    const labelStatusBreak = "Break";
-    const labelStatusBusy = "Busy";
-    const labelStatusIdle = "Idle";
+    const activityNames = Object.keys(activityConfig);
+    //Note: Idle and Busy are special Status values based on agent task counts
 
     let data = [];
-    if (agentsAvailable) data.push({ title: labelStatusAvailable, value: agentsAvailable, color: colors.available });
-    if (agentsUnavailable) data.push({ title: labelStatusUnavailable, value: agentsUnavailable, color: colors.unavailable });
-    if (agentsOffline) data.push({ title: labelStatusOffline, value: agentsOffline, color: colors.offline });
-    if (agentsBreak) data.push({ title: labelStatusBreak, value: agentsBreak, color: colors.break });
-    if (agentsBusy) data.push({ title: labelStatusBusy, value: agentsBusy, color: colors.busy });
-    if (agentsIdle) data.push({ title: labelStatusIdle, value: agentsIdle, color: colors.idle });
+    activityNames.forEach((activity) => {
+        let count = agentStatusCounts[activity] || 0;
+        if ((count) && activityConfig[activity]) data.push({ title: activity, value: count, color: activityConfig[activity].color });
+    })
 
     return (
         <TeamTile>
             { !hideSummary && <Summary>
-                <AgentActivity>
-                    <Icon icon='Accept' />
-                    <Label bgColor={colors.idle}> {labelStatusIdle}:</Label>
-                    <Metric> {agentsIdle} </Metric>
-                </AgentActivity>
-                <AgentActivity>
-                    <Icon icon='Accept' />
-                    <Label bgColor={colors.busy}> {labelStatusBusy}:</Label>
-                    <Metric> {agentsBusy} </Metric>
-                </AgentActivity>
-                <AgentActivity>
-                    <Icon icon='Close' />
-                    <Label bgColor={colors.break}> {labelStatusBreak}:</Label>
-                    <Metric> {agentsBreak} </Metric>
-                </AgentActivity>
-                <AgentActivity>
-                    <Icon icon='Close' />
-                    <Label bgColor={colors.unavailable}> {labelStatusUnavailable}:</Label>
-                    <Metric> {agentsUnavailable} </Metric>
-                </AgentActivity>
-                <AgentActivity>
-                    <Icon icon='Minus' />
-                    <Label bgColor={colors.offline}> {labelStatusOffline}:</Label>
-                    <Metric> {agentsOffline} </Metric>
-                </AgentActivity>
+                {activityNames.map((activity) => {
+                    let count = agentStatusCounts[activity] || 0;
+                    return (
+                        <AgentActivity>
+                            <Icon icon={activityConfig[activity]?.icon} />
+                            <Label bgColor={activityConfig[activity]?.color}>
+                                {activity}:
+                            </Label>
+                            <Metric> {count} </Metric>
+                        </AgentActivity>
+                    )
+                })}
             </Summary> }
             <Chart>
                 <Title>

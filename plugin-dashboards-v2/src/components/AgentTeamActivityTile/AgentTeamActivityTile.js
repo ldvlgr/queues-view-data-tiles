@@ -1,5 +1,4 @@
-import { Manager, withTheme, StackedBarChart } from '@twilio/flex-ui';
-
+import { withTheme, StackedBarChart } from '@twilio/flex-ui';
 import * as React from "react";
 import { TileWrapper, Title, BarChart, Label, Legend } from "./AgentTeamActivityTile.Components"
 import { cx } from "emotion";
@@ -8,8 +7,6 @@ import { mockWorkersData } from '../../utils/mockWorkersData';
 import { Table, THead, TBody, Th, Tr, Td } from "@twilio-paste/core";
 
 import { connect } from "react-redux";
-const _manager = Manager.getInstance();
-
 
 /**
  * @param {props} props.teamsData The teams data {"teamName": {color: "grey"}}
@@ -29,21 +26,21 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
 })((props) => {
     const { className, teamsData, activityCounts } = props;
     const teams = Object.keys(teamsData);
-    const colors = {
-        available: "green",
-        unavailable: "red",
-        offline: "grey",
-        break: "orange",
-        busy: "greenyellow",
-        idle: "green"
-    }
 
-    const labelStatusAvailable = _manager.strings.AgentStatusAvailable;
-    const labelStatusUnavailable = _manager.strings.AgentStatusUnavailable;
-    const labelStatusOffline = _manager.strings.AgentStatusOffline;
-    const labelStatusBreak = "Break";
-    const labelStatusBusy = "Busy";
-    const labelStatusIdle = "Idle";
+    //Available Flex icons:
+    //https://www.twilio.com/docs/flex/developer/ui/v1/icons
+    const activityConfig = {
+        Idle: { color: "green", icon: "Accept" },
+        Busy: { color: "limegreen", icon: "GenericTask" },
+        Outbound: { color: "greenyellow", icon: "Call" },
+        Break: { color: "goldenrod", icon: "Hold" },
+        Lunch: { color: "darkorange", icon: "Hamburger" },
+        Training: { color: "red", icon: "Bulb" },
+        Unavailable: { color: "darkred", icon: "Close" },
+        Offline: { color: "grey", icon: "Minus" },
+    }
+    const activityNames = Object.keys(activityConfig);
+    //Note: Idle and Busy are special Status values based on agent task counts
 
     let totalAgents = activityCounts?.All?.totalAgentCount || 0;
     let maxAgents = 0;
@@ -53,13 +50,11 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
 
     const getChartProps = (tm) => {
         let teamActivitydata = activityCounts[tm];
-        const teamBarCharProps = [
-            { value: teamActivitydata.Idle || 0, label: labelStatusIdle, color: colors.idle },
-            { value: teamActivitydata.Busy || 0, label: labelStatusBusy, color: colors.busy },
-            { value: teamActivitydata.Break || 0, label: labelStatusBreak, color: colors.break },
-            { value: teamActivitydata.Unavailable || 0, label: labelStatusUnavailable, color: colors.unavailable },
-            { value: teamActivitydata.Offline || 0, label: labelStatusOffline, color: colors.offline }
-        ];
+        let teamBarCharProps = [];
+        activityNames.forEach((activity) => {
+            let count = teamActivitydata[activity] || 0;
+            if ((count) && activityConfig[activity]) teamBarCharProps.push({ label: activity, value: count, color: activityConfig[activity].color });
+        })
         return teamBarCharProps;
     }
 
@@ -100,13 +95,6 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
                     }
                 </TBody>
             </Table>
-            {/* <Description key="legend">
-                <Legend bgColor={colors.idle}> {labelStatusIdle} </Legend>
-                <Legend bgColor={colors.busy}> {labelStatusBusy} </Legend>
-                <Legend bgColor={colors.break}> {labelStatusBreak} </Legend>
-                <Legend bgColor={colors.unavailable}> {labelStatusUnavailable} </Legend>
-                <Legend bgColor={colors.offline}> {labelStatusOffline} </Legend>
-            </Description> */}
         </TileWrapper>
     )
 });

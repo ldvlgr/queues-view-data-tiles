@@ -68,7 +68,7 @@ export const mockWorkersData = [
     "worker":
     {
       "friendly_name": "Agent11",
-      "activityName": "Available",
+      "activityName": "Outbound",
       "attributes": {
         "team_name": "ABC123",
         "routing": {
@@ -169,7 +169,7 @@ export const mockWorkersData = [
     "worker":
     {
       "friendly_name": "Agent10",
-      "activityName": "Available",
+      "activityName": "Training",
       "attributes": {
         "team_name": "ABC123",
         "routing": {
@@ -179,10 +179,7 @@ export const mockWorkersData = [
       }
     },
     "tasks": [
-      {
-        "status": "accepted",
-        "task_channel_unique_name": "sms",
-      }
+      
     ]
 
   },
@@ -190,7 +187,7 @@ export const mockWorkersData = [
     "worker":
     {
       "friendly_name": "Agent10",
-      "activityName": "Available",
+      "activityName": "Lunch",
       "attributes": {
         "team_name": "ABC123",
         "routing": {
@@ -200,10 +197,7 @@ export const mockWorkersData = [
       }
     },
     "tasks": [
-      {
-        "status": "accepted",
-        "task_channel_unique_name": "sms",
-      }
+      
     ]
 
   },
@@ -415,7 +409,7 @@ export const mockWorkersData = [
     "worker":
     {
       "friendly_name": "Agent31",
-      "activityName": "Available",
+      "activityName": "Outbound",
       "attributes": {
         "team_name": "XYZ789",
         "routing": {
@@ -429,14 +423,46 @@ export const mockWorkersData = [
     "worker":
     {
       "friendly_name": "Agent31",
-      "activityName": "Offline",
+      "activityName": "Training",
       "attributes": {
         "team_name": "XYZ789",
 
       }
     }
   },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent31",
+      "activityName": "Lunch",
+      "attributes": {
+        "team_name": "XYZ789",
 
+      }
+    }
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent31",
+      "activityName": "Training",
+      "attributes": {
+        "team_name": "XYZ789",
+
+      }
+    }
+  },
+  {
+    "worker":
+    {
+      "friendly_name": "Agent31",
+      "activityName": "Lunch",
+      "attributes": {
+        "team_name": "XYZ789",
+
+      }
+    }
+  },
   {
     "worker":
     {
