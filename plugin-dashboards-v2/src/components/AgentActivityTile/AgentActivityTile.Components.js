@@ -74,26 +74,16 @@ export const Label = styled("div")`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
   font-weight: bold;
-  width: 70px;
   padding: 2px 2px 2px 4px;
   margin: 1px;
   color: #ffffff
 `;
 
 
-export const AgentActivity = styled("div")`
-display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  font-size: 11px;
-  margin-bottom: 1px;
-`;
-
 export const Metric = styled("div")`
   font-size: 10px;
   padding: 2px;
-  width: 20px;
-  text-align: right;
+  min-width: 20px;
   margin: 1px;
   font-weight: bold;
 `;

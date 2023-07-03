@@ -1,9 +1,10 @@
 import { Icon, withTheme } from '@twilio/flex-ui';
 import * as React from "react";
-import { TileWrapper, Summary, Chart, Description, Title, AgentActivity, Label, Metric } from "./AgentActivityTile.Components"
+import { TileWrapper, Summary, Chart, Description, Title, Label, Metric } from "./AgentActivityTile.Components"
 import { cx } from "emotion";
 import { connect } from "react-redux";
 import PieChart from 'react-minimal-pie-chart';
+import { Table, THead, TBody, Th, Tr, Td } from "@twilio-paste/core";
 
 const AgentActivityTile = connect((state) => {
     let workerActivityCounts = {};
@@ -38,18 +39,24 @@ const AgentActivityTile = connect((state) => {
     return (
         <TileWrapper className={cx("Twilio-AggregatedDataTile", className)}>
             <Summary>
-                {activityNames.map((activity) => {
-                    let count = workerActivityCounts[activity] || 0;
-                    return (
-                        <AgentActivity>
-                            <Icon icon={activityConfig[activity]?.icon} />
-                            <Label bgColor={activityConfig[activity]?.color}>
-                                {activity}:
-                            </Label>
-                            <Metric> {count} </Metric>
-                        </AgentActivity>
-                    )
-                })}
+                <Table>
+                    <TBody>
+                    {activityNames.map((activity) => {
+                        let count = workerActivityCounts[activity] || 0;
+                        return (
+                            <Tr key={activity} verticalAlign="middle">
+                                <Td> <Icon icon={activityConfig[activity]?.icon} /></Td> 
+                                <Td>
+                                    <Label bgColor={activityConfig[activity]?.color}>
+                                        {activity}:
+                                    </Label>
+                                </Td>
+                                <Td textAlign="center"><Metric>{count} </Metric></Td>
+                            </Tr>
+                        )
+                    })}
+                    </TBody>
+                    </Table>
             </Summary>
             <Chart>
                 <PieChart

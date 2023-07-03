@@ -1,8 +1,8 @@
 import { Manager, Icon, withTheme } from '@twilio/flex-ui';
 import * as React from "react";
-import { TeamTile, Summary, Chart, Description, Title, AgentActivity, Label, Metric } from "./AgentActivityTile.Components"
+import { TeamTile, Summary, Chart, Description, Title, Label, Metric } from "./AgentActivityTile.Components"
 import PieChart from 'react-minimal-pie-chart';
-const _manager = Manager.getInstance();
+import { Table, THead, TBody, Th, Tr, Td } from "@twilio-paste/core";
 
 /**
  * @param {props} props.agentStatusCounts Agent Status Counts
@@ -35,20 +35,26 @@ const AgentStatusPieChart = (props) => {
 
     return (
         <TeamTile>
-            { !hideSummary && <Summary>
-                {activityNames.map((activity) => {
-                    let count = agentStatusCounts[activity] || 0;
-                    return (
-                        <AgentActivity>
-                            <Icon icon={activityConfig[activity]?.icon} />
-                            <Label bgColor={activityConfig[activity]?.color}>
-                                {activity}:
-                            </Label>
-                            <Metric> {count} </Metric>
-                        </AgentActivity>
-                    )
-                })}
-            </Summary> }
+            {!hideSummary && <Summary>
+                <Table>
+                    <TBody>
+                        {activityNames.map((activity) => {
+                            let count = agentStatusCounts[activity] || 0;
+                            return (
+                                <Tr key={activity}>
+                                   <Td> <Icon icon={activityConfig[activity]?.icon} /> </Td>
+                                    <Td>
+                                        <Label bgColor={activityConfig[activity]?.color}>
+                                            {activity}:
+                                        </Label>
+                                    </Td>
+                                    <Td textAlign="center"><Metric>{count} </Metric></Td>
+                                </Tr>
+                            )
+                        })}
+                    </TBody>
+                </Table>
+            </Summary>}
             <Chart>
                 <Title>
                     Activity (Status)
