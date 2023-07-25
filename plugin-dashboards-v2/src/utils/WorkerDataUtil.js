@@ -6,6 +6,7 @@ const workerActivities = _manager.store.getState().flex?.worker?.activities || n
 const STATUS_AVAILABLE = "Available";
 const STATUS_BUSY = "Busy";
 const STATUS_IDLE = "Idle";
+const TASK_CHANNEL_VOICE = "voice";
 
 export function getAgentStatusCounts(workers = [], teams = []) {
     //Version 2: Also consider if worker has tasks
@@ -49,9 +50,9 @@ export function getAgentStatusCounts(workers = [], teams = []) {
 
 export function getSkillsCounts(workers = [], teams = []) {
     let skillCounts = {};
-    skillCounts["All"] = { };
+    skillCounts["All"] = {};
     teams.forEach((team) => {
-        skillCounts[team] = { };
+        skillCounts[team] = {};
     });
     //Aggregate Skills
     workers.forEach((wk) => {
@@ -86,4 +87,32 @@ export function getSkillsByTeamCounts(workers = [], teams = []) {
         })
     });
     return skillCounts;
+}
+
+export function getTasksByTeamCounts(workers = [], teams = []) {
+    let taskCounts = {};
+    taskCounts["All"] = { teamName: "All", voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 };
+    //Init task counts
+    teams.forEach((team) => {
+        taskCounts[team] = { teamName: team, voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 };
+    });
+    workers.forEach((wk) => {
+        let tm = wk.worker?.attributes?.team_name || "Other";
+        let channel = "";
+        const tasks = wk?.tasks || [];
+        tasks.forEach((task) => {
+            if (task.task_channel_unique_name == TASK_CHANNEL_VOICE) {
+                channel = "voice_" + (task.attributes?.direction || "inbound");
+            } else {
+                channel = task.task_channel_unique_name;
+            }
+            if (teams.includes(tm)) {
+                let count = taskCounts[tm][channel] ? taskCounts[tm][channel] : 0;
+                taskCounts[tm][channel] = count + 1;
+            }
+            let count = taskCounts.All[channel] ? taskCounts.All[channel] : 0;
+            taskCounts.All[channel] = count + 1;
+        });
+    });
+    return taskCounts;
 }

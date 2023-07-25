@@ -24,7 +24,7 @@ const SkillsByTeamTile = connect((state, ownProps) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, teamsData, skillCounts } = props;
+    const { className, teamsData, skillCounts, maxWidth } = props;
     const teams = Object.keys(teamsData);
     const skillNames = Object.keys(skillCounts);
 
@@ -70,7 +70,7 @@ const SkillsByTeamTile = connect((state, ownProps) => {
                                 <Td><Label> {sk} </Label></Td>
                                 <Td textAlign="center"><Label>{agentCount} </Label></Td>
                                 <Td>
-                                    <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
+                                    <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={maxWidth || 300}>
                                         <StackedBarChart key={sk} items={chartProps} />
                                     </BarChart>
                                 </Td>

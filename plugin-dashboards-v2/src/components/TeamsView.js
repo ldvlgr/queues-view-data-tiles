@@ -6,6 +6,7 @@ import AgentStatusByTeamTile from "./AgentActivityTile/AgentStatusByTeamTile";
 import AgentStatusAllTeamsTile from "./AgentActivityTile/AgentStatusAllTeamsTile";
 import AgentSkillsAllTeamsTile from './AgentSkillsTile/AgentSkillsAllTeamsTile';
 import SkillsByTeamTile from "./SkillsByTeamBarChartTile/SkillsByTeamTile";
+import TaskSummaryTile from "./TaskSummaryTile/TaskSummaryTile";
 
 const teamsData = {
   ABC123: { color: "beige" },
@@ -16,6 +17,12 @@ const teams = Object.keys(teamsData);
 
 export default (manager) => {
   addTeamsViewTiles();
+  //manager.strings.SupervisorTaskCardHeader = "{{task.attributes.direction}} {{task.defaultFrom}}";  
+  window.Handlebars.registerHelper('showDirection', (taskAttributes) => {
+    if (taskAttributes.direction == 'inbound') return 'IN'
+    else return "OUT";
+  });
+  manager.strings.SupervisorTaskCardHeader = "{{showDirection task.attributes}} {{task.defaultFrom}}";
 }
 
 const TeamsWrapper = styled("div")`
@@ -55,6 +62,7 @@ const addTeamsViewTiles = () => {
         <TeamsWrapper>
           <TeamsViewDataTiles>
             <AgentTeamActivityTile teamsData={teamsData} />
+            <TaskSummaryTile teamsData={teamsData} />
             <SkillsByTeamTile teamsData={teamsData} />
           </TeamsViewDataTiles>
 

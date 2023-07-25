@@ -24,7 +24,7 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, teamsData, activityCounts } = props;
+    const { className, teamsData, activityCounts, maxWidth } = props;
     const teams = Object.keys(teamsData);
 
     //Available Flex icons:
@@ -83,7 +83,7 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
                                 </Td>
                                 <Td textAlign="center"><Label>{agentCount} </Label></Td>
                                 <Td>
-                                    <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={400}>
+                                    <BarChart agentCount={agentCount} totalAgents={maxAgents} maxWidth={maxWidth || 300}>
                                         <StackedBarChart key={team} items={chartProps} />
                                     </BarChart>
                                 </Td>

@@ -15,7 +15,11 @@ export const mockWorkersData = [
     "tasks": [
       {
         "status": "accepted",
-        "task_channel_unique_name": "sms",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "inbound"
+        }
       }
     ]
 
@@ -29,7 +33,7 @@ export const mockWorkersData = [
       "attributes": {
         "team_name": "ABC123",
         "routing": {
-          "skills": [ "service",    "collections", "returns"]
+          "skills": ["service", "collections", "returns"]
         }
 
       }
@@ -37,7 +41,11 @@ export const mockWorkersData = [
     "tasks": [
       {
         "status": "accepted",
-        "task_channel_unique_name": "sms",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Outbound Calls",
+        "attributes": {
+          "direction": "outbound"
+        }
       }
     ]
 
@@ -151,7 +159,7 @@ export const mockWorkersData = [
       "attributes": {
         "team_name": "ABC123",
         "routing": {
-          "skills": [ "fraud", "warranty"]
+          "skills": ["fraud", "warranty"]
         }
 
       }
@@ -173,13 +181,13 @@ export const mockWorkersData = [
       "attributes": {
         "team_name": "ABC123",
         "routing": {
-          "skills": ["sales", "service", "fraud",  "membership", "collections", "returns"]
+          "skills": ["sales", "service", "fraud", "membership", "collections", "returns"]
         }
 
       }
     },
     "tasks": [
-      
+
     ]
 
   },
@@ -197,7 +205,7 @@ export const mockWorkersData = [
       }
     },
     "tasks": [
-      
+
     ]
 
   },
@@ -315,7 +323,7 @@ export const mockWorkersData = [
       "attributes": {
         "team_name": "DEF456",
         "routing": {
-          "skills": ["sales","membership", "collections", "returns"]
+          "skills": ["sales", "membership", "collections", "returns"]
         }
 
       }
@@ -328,11 +336,21 @@ export const mockWorkersData = [
       "attributes": {
         "team_name": "DEF456",
         "routing": {
-          "skills": [ "warranty", "membership", "collections", "returns"]
+          "skills": ["warranty", "membership", "collections", "returns"]
         }
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "outbound"
+        }
+      }
+    ]
   }, {
     "worker":
     {
@@ -345,7 +363,17 @@ export const mockWorkersData = [
         }
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "outbound"
+        }
+      }
+    ]
   }, {
     "worker":
     {
@@ -358,7 +386,17 @@ export const mockWorkersData = [
         }
 
       }
-    }
+    }, 
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "outbound"
+        }
+      }
+    ]
   },
   {
     "worker":
@@ -372,7 +410,33 @@ export const mockWorkersData = [
         }
 
       }
-    }
+    },
+     "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "chat",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "inbound"
+        }
+      },
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "chat",
+        "queue_name": "Service",
+        "attributes": {
+          "direction": "inbound"
+        }
+      },
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "outbound"
+        }
+      }
+    ]
   },
   {
     "worker":
@@ -413,7 +477,7 @@ export const mockWorkersData = [
       "attributes": {
         "team_name": "XYZ789",
         "routing": {
-          "skills": [ "membership", "collections"]
+          "skills": ["membership", "collections"]
         }
 
       }
@@ -461,7 +525,33 @@ export const mockWorkersData = [
         "team_name": "XYZ789",
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "chat",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "inbound"
+        }
+      },
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "chat",
+        "queue_name": "Service",
+        "attributes": {
+          "direction": "inbound"
+        }
+      },
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "outbound"
+        }
+      }
+    ]
   },
   {
     "worker":
@@ -475,7 +565,26 @@ export const mockWorkersData = [
         }
 
       }
-    }
+    },
+    "tasks": [
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "inbound"
+        }
+      },
+      {
+        "status": "accepted",
+        "task_channel_unique_name": "voice",
+        "queue_name": "Sales",
+        "attributes": {
+          "direction": "inbound"
+        }
+      }
+    ]
+
   }
 
 ]
