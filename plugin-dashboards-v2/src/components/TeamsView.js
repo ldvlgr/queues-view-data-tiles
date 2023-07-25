@@ -22,7 +22,10 @@ export default (manager) => {
     if (taskAttributes.direction == 'inbound') return 'IN'
     else return "OUT";
   });
-  manager.strings.SupervisorTaskCardHeader = "{{showDirection task.attributes}} {{task.defaultFrom}}";
+  //default string
+  //manager.strings.SupervisorTaskCardHeader = ""{{task.defaultFrom}}";
+  //manager.strings.SupervisorTaskCardHeader = "{{showDirection task.attributes}} {{task.defaultFrom}}";
+  manager.strings.SupervisorTaskCardHeader = "{{task.queueName}}";
 }
 
 const TeamsWrapper = styled("div")`
@@ -73,9 +76,9 @@ const addTeamsViewTiles = () => {
             <AgentStatusByTeamTile team="XYZ789" teams={teams} />
           </TeamsViewDataTiles> */}
 
-          <TeamsViewDataTiles>
+          {/* <TeamsViewDataTiles>
             <AgentStatusAllTeamsTile teamsData={teamsData} />
-          </TeamsViewDataTiles>
+          </TeamsViewDataTiles> */}
 
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>
