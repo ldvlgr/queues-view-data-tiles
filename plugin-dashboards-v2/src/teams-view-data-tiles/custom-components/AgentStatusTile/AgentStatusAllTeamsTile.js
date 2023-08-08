@@ -1,13 +1,13 @@
 import { withTheme } from '@twilio/flex-ui';
-import * as React from "react";
-import { TileWrapper } from "./AgentActivityTile.Components"
+import * as React from 'react';
+import { TileWrapper } from './AgentStatusTile.Components'
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
-import { mockWorkersData } from '../../teams-view-data-tiles/utils/mockWorkersData';
-import { connect } from "react-redux";
+import { mockWorkersData } from '../../utils/mockWorkersData';
+import { connect } from 'react-redux';
 import AgentStatusPieChart from './AgentStatusPieChart';
 
 /**
- * @param {props} props.teamsData The teams data {"teamName": {color: "grey"}}
+ * @param {props} props.teamsData The teams data {'teamName': {color: 'grey'}}
  */
 
 const AgentStatusAllTeamsTile = connect((state, ownProps) => {
@@ -28,9 +28,9 @@ const AgentStatusAllTeamsTile = connect((state, ownProps) => {
     return (
         <TileWrapper>
             <AgentStatusPieChart
-                key="All"
+                key='All'
                 agentStatusCounts={totalStatusCounts}
-                team="All"
+                team='All'
             />
             {teams?.map((tm) => {
                 const agentStatusCounts = activityCounts[tm];
@@ -39,7 +39,7 @@ const AgentStatusAllTeamsTile = connect((state, ownProps) => {
                         key={tm}
                         agentStatusCounts={agentStatusCounts}
                         team={tm}
-                        hideSummary="true"
+                        hideSummary='true'
                         bgColor={teamsData[tm].color} />
                 )
             })}

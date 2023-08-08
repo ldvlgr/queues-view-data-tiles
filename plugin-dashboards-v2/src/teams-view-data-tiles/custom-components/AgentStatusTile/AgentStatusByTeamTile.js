@@ -1,14 +1,14 @@
 import { withTheme } from '@twilio/flex-ui';
-import * as React from "react";
-import { TileWrapper } from "./AgentActivityTile.Components"
+import * as React from 'react';
+import { TileWrapper } from './AgentStatusTile.Components'
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
-import { mockWorkersData } from '../../teams-view-data-tiles/utils/mockWorkersData';
-import { connect } from "react-redux";
+import { mockWorkersData } from '../../utils/mockWorkersData';
+import { connect } from 'react-redux';
 import AgentStatusPieChart from './AgentStatusPieChart';
 
 /**
- * @param {props} props.teams All team names array (for example ["ABC123", "XYZ987"])
- * @param {props} props.team Specific team name (for example "ABC123" or "XYZ987")
+ * @param {props} props.teams All team names array (for example ['ABC123', 'XYZ987'])
+ * @param {props} props.team Specific team name (for example 'ABC123' or 'XYZ987')
  */
 
 const AgentStatusByTeamTile = connect((state, ownProps) => {
@@ -25,7 +25,7 @@ const AgentStatusByTeamTile = connect((state, ownProps) => {
 })((props) => {
     let { team } = props;
     //If no team provided, show totals for All Workers
-    if (!team) team = "All";
+    if (!team) team = 'All';
     const agentStatusCounts = props[team];
     return (
         <TileWrapper>

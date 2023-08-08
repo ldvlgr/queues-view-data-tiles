@@ -1,6 +1,6 @@
 import { FlexPlugin } from '@twilio/flex-plugin';
-import QueuesView from './components/QueuesView';
-import TeamsView from './components/TeamsView';
+import QueuesView from './queues-view-data-tiles/flex-hooks/components/QueuesView';
+import TeamsView from './teams-view-data-tiles/flex-hooks/components/TeamsView';
 
 const PLUGIN_NAME = 'QueuesViewDataTiles';
 
