@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import { styled } from '@twilio/flex-ui';
 
 export const TileWrapper = styled('div')`
     background-color: ${(props) => props.theme.colors.base2};

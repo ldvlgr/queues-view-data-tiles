@@ -36,11 +36,11 @@ const tileColors = {
 }
 
 export default (manager) => {
-  setVisibleQueues(manager);
+  //setVisibleQueues(manager);
   //customizeQueueStats();
   console.log(PLUGIN_NAME, 'Adding Tiles');
   addTiles();
-  addFilters();
+  //addFilters();
 }
 
 const addFilters = () => {
