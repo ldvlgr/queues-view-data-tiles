@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TileWrapper, Title, Content, Description } from './PieChartTile.Components';
 import { cx } from 'emotion';
-import PieChart from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 
 export class PieChartTile extends React.PureComponent {
     render() {
@@ -13,7 +13,7 @@ export class PieChartTile extends React.PureComponent {
                         fontSize: '14px', fill: 'Black'
                     }}
                     data={content}
-                    label={true}
+                    label={({ dataEntry }) => dataEntry.value}
                 />
                 {description && (
                     <Description className='Twilio-AggregatedDataTile-Description'>{description}</Description>

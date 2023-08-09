@@ -1,7 +1,7 @@
 import { Manager, Icon, withTheme } from '@twilio/flex-ui';
 import * as React from 'react';
 import { TeamTile, Summary, Chart, Description, Title, Label, Metric } from './AgentStatusTile.Components'
-import PieChart from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
 
 /**
@@ -64,7 +64,7 @@ const AgentStatusPieChart = (props) => {
                         fontSize: '14px', fill: 'White'
                     }}
                     data={data}
-                    label={true}
+                    label={({ dataEntry }) => dataEntry.value}
                 />
                 <Description bgColor={bgColor}>
                     <div> {team ? 'Team: ' + team : 'All Agents'} </div>

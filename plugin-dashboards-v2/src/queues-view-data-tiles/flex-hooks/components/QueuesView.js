@@ -18,6 +18,9 @@ import {
   isWaitingTasksEnabled,
   isLongestWaitTimeEnabled,
   isAgentsByActivityEnabled,
+  getChannelVoice_Color,
+  getChannelChat_Color,
+  getChannelSMS_Color,
   isChannelVoice_CountsEnabled,
   isChannelChat_CountsEnabled,
   isChannelSMS_CountsEnabled,
@@ -30,9 +33,9 @@ import {
 } from '../../config';
 
 const tileColors = {
-  'voice': '#ADD8E6',
-  'chat': '#87CEFA',
-  'sms': '#4682B4'
+  'voice': getChannelVoice_Color(),
+  'chat': getChannelChat_Color(),
+  'sms': getChannelSMS_Color()
 }
 
 export default (manager) => {

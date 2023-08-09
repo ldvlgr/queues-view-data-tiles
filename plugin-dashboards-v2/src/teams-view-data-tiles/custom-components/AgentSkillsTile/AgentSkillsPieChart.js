@@ -1,7 +1,7 @@
 import { Manager, withTheme } from '@twilio/flex-ui';
 import * as React from 'react';
 import { TeamTile, Summary, Chart, Description, Title, AgentSkill, Label, Metric } from './AgentSkillsTile.Components'
-import PieChart from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 const _manager = Manager.getInstance();
 
 /**
@@ -39,7 +39,7 @@ const AgentSkillsPieChart = (props) => {
                         fontSize: '14px', fill: 'White'
                     }}
                     data={skillsData}
-                    label={true}
+                    label={({ dataEntry }) => dataEntry.value}
                 />
                 <Description>
                     <div> {team ? 'Team: ' + team : 'All Agents'} </div>

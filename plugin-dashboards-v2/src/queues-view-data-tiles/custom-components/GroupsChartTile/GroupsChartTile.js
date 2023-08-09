@@ -5,7 +5,7 @@ import { cx } from 'emotion';
 
 import { connect } from 'react-redux';
 import QueueDataUtil from '../../utils/QueueDataUtil';
-import PieChart from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 
 /**
  * @param {props} props.groups The queue groupings (for example ['sales', 'service'])
@@ -85,7 +85,7 @@ const GroupsChartTile = connect((state, ownProps) => {
                         fontSize: '14px', fill: 'Black'
                     }}
                     data={data}
-                    label={true}
+                    label={({ dataEntry }) => dataEntry.value}
                 />
             </Chart>
 

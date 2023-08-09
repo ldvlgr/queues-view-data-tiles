@@ -3,7 +3,7 @@ import * as React from 'react';
 import { TileWrapper, Summary, Chart, Description, Title, Label, Metric } from './AgentActivityTile.Components'
 import { cx } from 'emotion';
 import { connect } from 'react-redux';
-import PieChart from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
 
 const AgentActivityTile = connect((state) => {
@@ -64,7 +64,7 @@ const AgentActivityTile = connect((state) => {
                         fontSize: '14px', fill: 'White'
                     }}
                     data={data}
-                    label={true}
+                    label={({ dataEntry }) => dataEntry.value}
                 />
             </Chart>
         </TileWrapper>
