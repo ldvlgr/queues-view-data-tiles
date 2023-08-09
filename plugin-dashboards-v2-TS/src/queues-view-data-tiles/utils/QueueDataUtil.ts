@@ -68,10 +68,13 @@ class QueueDataUtil {
           //Only aggregate counts for configured channels
           const wqChannelName = ch.unique_name ? ch.unique_name : "unknown";
           if (channelList.includes(wqChannelName) && (ch.tasks_now)) {
-            //active = assigned
+            //active = assigned + wrapping
             taskCounts[wqChannelName].activeTasks += ch?.tasks_now?.assigned_tasks;
-            //waiting = pending
+            taskCounts[wqChannelName].activeTasks += ch?.tasks_now?.wrapping_tasks;
+            //waiting = pending + reserved
             taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.pending_tasks;
+            taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.reserved_tasks;
+
           }
         })
       }
