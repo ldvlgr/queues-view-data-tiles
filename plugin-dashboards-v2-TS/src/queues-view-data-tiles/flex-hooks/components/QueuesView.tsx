@@ -1,7 +1,5 @@
+import React from 'react';
 import * as Flex from '@twilio/flex-ui';
-
-import { ColumnDefinition } from '@twilio/flex-ui';
-import QueueFilters from '../../custom-components/QueueFilters/QueueFilters';
 
 import GroupTasksTile from '../../custom-components/GroupTasksTile/GroupTasksTile';
 import ChannelTaskCountTile from '../../custom-components/ChannelTaskCountTile/ChannelTaskCountTile';
@@ -31,35 +29,24 @@ import {
   isEnhancedAgentsByActivityPieChartEnabled
 } from '../../config';
 
+
 const tileColors = {
   'voice': getChannelVoice_Color(),
   'chat': getChannelChat_Color(),
   'sms': getChannelSMS_Color()
 }
 
-export default (manager) => {
-  //setVisibleQueues(manager);
-  //customizeQueueStats();
-  console.log(PLUGIN_NAME, 'Adding Tiles');
+export default (manager: Flex.Manager) => {
   addTiles();
-  //addFilters();
 }
-
-const addFilters = () => {
-
-  Flex.QueuesStatsView.Content.add(<QueueFilters key='queue-filters' />, {
-    align: 'start',
-    sortOrder: 0,
-  })
-}
-
 
 const addTiles = () => {
   //Add custom tile
   if (isChannelVoice_CountsEnabled()) {
+    const options: Flex.ContentFragmentProps = { sortOrder: -6 };
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
       <ChannelTaskCountTile key='voice-tasks' channelName='voice' bgColor={tileColors.voice} />,
-      { sortOrder: -6 }
+      options
     );
   }
   if (isChannelChat_CountsEnabled()) {
@@ -98,14 +85,14 @@ const addTiles = () => {
       { sortOrder: 0 }
     );
   }
-  if (isQueueGroups_SLAEnabled()) {
-    const groupColors = ['#D8BFD8', '#DDA0DD', '#DA70D6', '#9370DB'];
-    const queueGroups = ['sales', 'service', 'care', 'fraud'];
-    Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <GroupsChartTile key='groups-data-tile' colors={groupColors} groups={queueGroups} />,
-      { sortOrder: 1 }
-    );
-  }
+  // if (isQueueGroups_SLAEnabled()) {
+  //   const groupColors = ['#D8BFD8', '#DDA0DD', '#DA70D6', '#9370DB'];
+  //   const queueGroups = ['sales', 'service', 'care', 'fraud'];
+  //   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+  //     <GroupsChartTile key='groups-data-tile' colors={groupColors} groups={queueGroups} />,
+  //     { sortOrder: 1 }
+  //   );
+  // }
   // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
   //   <GroupTasksTile key='tasks-tile-1' group='sales' />,
   //   { sortOrder: 2 }
@@ -144,74 +131,3 @@ const addTiles = () => {
   }
 }
 
-const setVisibleQueues = (manager) => {
-  const TEAM_TWILIO = 'TwilioPS';
-  const TEAM_BPO1 = 'BPO1';
-  const TEAM_BPO2 = 'BPO2';
-
-  let team_name = manager.workerClient.attributes?.team_name || 'None';
-  console.log(PLUGIN_NAME, 'Worker team:', team_name);
-
-  if (team_name == TEAM_TWILIO) {
-    //No filter - Show All Queues
-    console.log(PLUGIN_NAME, 'Show all queues');
-  } else if (team_name == TEAM_BPO1) {
-    let prefix = TEAM_BPO1;
-    QueuesStats.setFilter((queue) => queue.friendly_name.substring(0, prefix.length) == prefix);
-  } else if (team_name == TEAM_BPO2) {
-    let prefix = TEAM_BPO2;
-    QueuesStats.setFilter((queue) => queue.friendly_name.substring(0, prefix.length) == prefix);
-  } else {
-    //Only show Anyone queue
-    //QueuesStats.setSubscriptionFilter((queue) => queue.friendly_name == 'Everyone');
-
-  }
-
-  const RenderWaitingTasks = (workerQueue) =>
-    // QueuesDataTableCell component helps us render additional expandable rows with channel specific data
-    <QueuesStats.QueuesDataTableCell
-      // Pass the queue data down 
-      queue={workerQueue}
-
-      // Render the queue level value
-      renderQueueData={(queue) => {
-        if (!queue.friendly_name.includes('Everyone')) {
-          // Calculate number of waiting tasks by adding pending and reserved
-          const { pending, reserved } = queue.tasks_by_status;
-          const waitingTasks = pending + reserved;
-          // Return the element to render
-          return <span>{waitingTasks}</span>;
-        } else {
-          return <span> </span>;
-        }
-      }}
-      // Render a value for each active channel in the queue
-      renderChannelData={(channel, queue) => {
-        if (!queue.friendly_name.includes('Everyone')) {
-          // Calculate number of waiting tasks by adding pending and reserved
-          const { pending, reserved } = queue.tasks_by_status;
-          const waitingTasks = pending + reserved;
-          // Return the element to render
-          return <span>{waitingTasks}</span>;
-        } else {
-          return <span> </span>;
-        }
-      }}
-    />
-
-  const customizeQueueStats = () => {
-    QueuesStats.QueuesDataTable.Content.remove('waiting-tasks');
-    // Create a new column with custom formatting
-    QueuesStats.QueuesDataTable.Content.add(
-      <ColumnDefinition
-        key='my-waiting-tasks'
-        header='Waiting'
-        subHeader='Now'
-        content={RenderWaitingTasks}
-      />,
-      { sortOrder: 1 } // Put this after the second column
-    );
-
-  }
-
-}
