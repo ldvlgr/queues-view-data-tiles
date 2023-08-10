@@ -1,6 +1,6 @@
 import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Summary, Chart, Description, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components'
+import { TileWrapper, Title, Summary, Chart, Description, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components'
 import { cx } from 'emotion';
 
 import { mockQueuesData } from '../../utils/mockQueuesData';
@@ -31,7 +31,7 @@ const AllChannelsSLATile = connect((state) => {
     return (
         <TileWrapper className={cx('Twilio-AggregatedDataTile', className)}>
             <Summary>
-                <Description className='Twilio-AggregatedDataTile-Description'>Channel SLA Today</Description>
+                <Title>SLA Today</Title>
                 <Channel>
                     <Icon icon='Call' />
                     <Label bgColor={colors.voice}>Voice:</Label>
@@ -56,9 +56,9 @@ const AllChannelsSLATile = connect((state) => {
                         : <Metric> - </Metric>
                     }
                 </Channel>
-                <Description className='Twilio-AggregatedDataTile-Description'>Handled Tasks &rarr;</Description>
             </Summary>
             <Chart>
+                <Title>Handled Today</Title>
                 <PieChart
                     labelStyle={{
                         fontSize: '14px', fill: 'Black'

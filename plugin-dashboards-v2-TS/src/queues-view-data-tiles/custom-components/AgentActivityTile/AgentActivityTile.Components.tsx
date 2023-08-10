@@ -1,6 +1,11 @@
 import { styled } from '@twilio/flex-ui';
 
-export const TileWrapper = styled('div')`
+export interface ThemeOnlyProps {
+  theme?: any;
+  bgColor?: string;
+}
+
+export const TileWrapper = styled('div')<ThemeOnlyProps>`
     display: flex;
     flex-direction: row;
     min-width: 300px;
@@ -13,7 +18,7 @@ export const TileWrapper = styled('div')`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
-export const TeamTile = styled('div')`
+export const TeamTile = styled('div')<ThemeOnlyProps>`
     margin: 2px;
     display: flex;
     flex-direction: row;
@@ -27,7 +32,7 @@ export const TeamTile = styled('div')`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
-export const Title = styled('p')`
+export const Title = styled('p')<ThemeOnlyProps>`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
     margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
@@ -39,13 +44,13 @@ export const Title = styled('p')`
     margin-bottom: 4px;
 `;
 
-export const Content = styled('div')`
+export const Content = styled('div')<ThemeOnlyProps>`
     margin-top: ${({ theme }) => theme.tokens.spacings.space50};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
-export const Description = styled('div')`
+export const Description = styled('div')<ThemeOnlyProps>`
     background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
@@ -70,7 +75,7 @@ export const Chart = styled('div')`
 `;
 
 
-export const Label = styled('div')`
+export const Label = styled('div')<ThemeOnlyProps>`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
   font-weight: bold;

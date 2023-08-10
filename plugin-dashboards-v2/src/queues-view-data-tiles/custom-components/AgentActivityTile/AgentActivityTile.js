@@ -1,7 +1,6 @@
-import { Icon, withTheme } from '@twilio/flex-ui';
+import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
 import { TileWrapper, Summary, Chart, Description, Title, Label, Metric } from './AgentActivityTile.Components'
-import { cx } from 'emotion';
 import { connect } from 'react-redux';
 import { PieChart } from 'react-minimal-pie-chart';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
@@ -16,7 +15,7 @@ const AgentActivityTile = connect((state) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, workerActivityCounts } = props;
+    const { workerActivityCounts } = props;
     //Available Flex icons:
     //https://www.twilio.com/docs/flex/developer/ui/v1/icons
     const activityConfig = {
@@ -33,11 +32,12 @@ const AgentActivityTile = connect((state) => {
     let data = [];
     activityNames.forEach((activity) => {
         let count = workerActivityCounts[activity] || 0;
-        if ((count) && activityConfig[activity]) data.push({ title: activity, value: count, color: activityConfig[activity].color });
+        const dataEntry = { title: activity, value: count, color: activityConfig[activity].color };
+        if ((count) && activityConfig[activity]) data.push(dataEntry);
     })
 
     return (
-        <TileWrapper className={cx('Twilio-AggregatedDataTile', className)}>
+        <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
                 <Table>
                     <TBody>
@@ -59,6 +59,9 @@ const AgentActivityTile = connect((state) => {
                     </Table>
             </Summary>
             <Chart>
+                <Title>
+                    Agent Activity
+                </Title>
                 <PieChart
                     labelStyle={{
                         fontSize: '14px', fill: 'White'
@@ -71,4 +74,4 @@ const AgentActivityTile = connect((state) => {
     )
 });
 
-export default withTheme(AgentActivityTile);
+export default AgentActivityTile;

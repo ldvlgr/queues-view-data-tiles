@@ -17,9 +17,11 @@ export const Title = styled('p')`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
     margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize40};
+    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize30};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight40};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+    justify-content: center;
+    display: flex;
 `;
 
 export const Content = styled('div')`
@@ -50,6 +52,8 @@ export const Summary = styled('div')`
 `;
 
 export const Chart = styled('div')`
+  display: flex;
+  flex-direction: column;
   width: 130px;
   display: flex;
   justify-content: center;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, useFlexSelector } from '@twilio/flex-ui';
-import { TileWrapper, Summary, Chart, Description, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components';
+import { TileWrapper, Title, Summary, Chart, Description, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { mockQueuesData } from '../../utils/mockQueuesData';
 import { PieChart } from "react-minimal-pie-chart";
@@ -32,7 +32,7 @@ const AllChannelsSLATile = (props: ComponentProps) => {
     return (
         <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
-                <Description className='Twilio-AggregatedDataTile-Description'>Channel SLA Today</Description>
+                <Title>SLA Today</Title>
                 <Channel>
                     <Icon icon='Call' />
                     <Label bgColor={colors.voice}>Voice:</Label>
@@ -57,9 +57,9 @@ const AllChannelsSLATile = (props: ComponentProps) => {
                         : <Metric> - </Metric>
                     }
                 </Channel>
-                <Description className='Twilio-AggregatedDataTile-Description'>Handled Tasks &rarr;</Description>
             </Summary>
             <Chart>
+                <Title>Handled Today</Title>
                 <PieChart
                     labelStyle={{
                         fontSize: '14px', fill: 'Black'
