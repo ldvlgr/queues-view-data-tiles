@@ -1,6 +1,8 @@
 export interface ChannelTaskCounts {
   activeTasks: number; 
   waitingTasks: number; 
+  assignedTasks: number;
+  wrappingTasks: number;
 }
 
 export interface TaskCounts { 

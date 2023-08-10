@@ -34,7 +34,7 @@ class QueueDataUtil {
     let taskCounts: TaskCounts = {};
     //Initialize return object
     queueGroups.forEach(group => {
-      taskCounts[group] = { activeTasks: 0, waitingTasks: 0 };
+      taskCounts[group] = { activeTasks: 0, assignedTasks: 0, wrappingTasks: 0, waitingTasks: 0 };
     });
     if (queues && queues.length > 0) {
       queues.forEach(q => {
@@ -55,7 +55,7 @@ class QueueDataUtil {
 
 
   getTaskCountsByChannel = (queues: WorkerQueue[] = []) => {
-    const initCounts = { activeTasks: 0, waitingTasks: 0 };
+    const initCounts = { activeTasks: 0, assignedTasks: 0, wrappingTasks: 0, waitingTasks: 0 };
     let taskCounts: TaskCounts = {
       chat: { ...initCounts },
       sms: { ...initCounts },
@@ -68,9 +68,12 @@ class QueueDataUtil {
           //Only aggregate counts for configured channels
           const wqChannelName = ch.unique_name ? ch.unique_name : "unknown";
           if (channelList.includes(wqChannelName) && (ch.tasks_now)) {
+            const assignedTasks = ch?.tasks_now?.assigned_tasks;
+            const wrappingTasks = ch?.tasks_now?.wrapping_tasks;
+            taskCounts[wqChannelName].assignedTasks += assignedTasks;
+            taskCounts[wqChannelName].wrappingTasks += wrappingTasks;
             //active = assigned + wrapping
-            taskCounts[wqChannelName].activeTasks += ch?.tasks_now?.assigned_tasks;
-            taskCounts[wqChannelName].activeTasks += ch?.tasks_now?.wrapping_tasks;
+            taskCounts[wqChannelName].activeTasks += assignedTasks + wrappingTasks;
             //waiting = pending + reserved
             taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.pending_tasks;
             taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.reserved_tasks;

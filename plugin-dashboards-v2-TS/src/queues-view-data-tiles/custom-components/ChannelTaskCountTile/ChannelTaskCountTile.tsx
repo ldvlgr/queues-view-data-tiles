@@ -28,8 +28,14 @@ const ChannelTaskCountTile = (props: ComponentProps) => {
         {taskCounts.activeTasks}
       </Content>
       <Description className='Twilio-AggregatedDataTile-Description'>
-        {'Waiting: ' + taskCounts.waitingTasks}
+        {'Assigned: ' + taskCounts.assignedTasks}
       </Description>
+      <Description className='Twilio-AggregatedDataTile-Description'>
+        {'Wrapping: ' + taskCounts.wrappingTasks}
+      </Description>
+      <Title className='Twilio-AggregatedDataTile-Title'>
+        {'Waiting: ' + taskCounts.waitingTasks}
+      </Title>
     </TileWrapper>
   );
 };

@@ -39,7 +39,7 @@ const tileColors = {
 
 export default (manager) => {
   //setVisibleQueues(manager);
-  //customizeQueueStats();
+  customizeQueueStats();
   console.log(PLUGIN_NAME, 'Adding Tiles');
   addTiles();
   //addFilters();
@@ -166,52 +166,34 @@ const setVisibleQueues = (manager) => {
     //QueuesStats.setSubscriptionFilter((queue) => queue.friendly_name == 'Everyone');
 
   }
-
-  const RenderWaitingTasks = (workerQueue) =>
-    // QueuesDataTableCell component helps us render additional expandable rows with channel specific data
-    <QueuesStats.QueuesDataTableCell
-      // Pass the queue data down 
-      queue={workerQueue}
-
-      // Render the queue level value
-      renderQueueData={(queue) => {
-        if (!queue.friendly_name.includes('Everyone')) {
-          // Calculate number of waiting tasks by adding pending and reserved
-          const { pending, reserved } = queue.tasks_by_status;
-          const waitingTasks = pending + reserved;
-          // Return the element to render
-          return <span>{waitingTasks}</span>;
-        } else {
-          return <span> </span>;
-        }
-      }}
-      // Render a value for each active channel in the queue
-      renderChannelData={(channel, queue) => {
-        if (!queue.friendly_name.includes('Everyone')) {
-          // Calculate number of waiting tasks by adding pending and reserved
-          const { pending, reserved } = queue.tasks_by_status;
-          const waitingTasks = pending + reserved;
-          // Return the element to render
-          return <span>{waitingTasks}</span>;
-        } else {
-          return <span> </span>;
-        }
-      }}
-    />
-
-  const customizeQueueStats = () => {
-    QueuesStats.QueuesDataTable.Content.remove('waiting-tasks');
-    // Create a new column with custom formatting
-    QueuesStats.QueuesDataTable.Content.add(
-      <ColumnDefinition
-        key='my-waiting-tasks'
-        header='Waiting'
-        subHeader='Now'
-        content={RenderWaitingTasks}
-      />,
-      { sortOrder: 1 } // Put this after the second column
-    );
-
-  }
-
 }
+
+
+const customizeQueueStats = () => {
+  Flex.QueuesStats.QueuesDataTable.Content.add(
+    <ColumnDefinition
+      key='assigned-tasks'
+      header='Assigned'
+      subHeader='Now'
+      content={(queue) => {
+        const assignedTasks  = queue.tasks_by_status?.assigned || 0;
+        return <span>{assignedTasks}</span>;
+      }}
+    />,
+    { sortOrder: -10 }
+  );
+  Flex.QueuesStats.QueuesDataTable.Content.add(
+    <ColumnDefinition
+      key='wrapping-tasks'
+      header='Wrapping'
+      subHeader='Now'
+      content={(queue) => {
+        const wrappingTasks  = queue.tasks_by_status?.wrapping || 0;
+        return <span>{wrappingTasks}</span>;
+      }}
+    />,
+    { sortOrder: -9 }
+  );
+}
+
+
