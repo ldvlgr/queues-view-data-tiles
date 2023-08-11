@@ -31,3 +31,9 @@ export const Description = styled('div')`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
 `;
+
+export const Label = styled('div')`
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px;
+`;

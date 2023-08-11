@@ -2,9 +2,10 @@ import React from 'react';
 import { useFlexSelector } from '@twilio/flex-ui';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { mockQueuesData } from '../../utils/mockQueuesData';
-import { TileWrapper, Title, Content, Description } from './ChannelTaskCountTile.Components';
+import { TileWrapper, Title, Content, Label } from './ChannelTaskCountTile.Components';
 import { AppState } from '../../flex-hooks/states';
 import { ChannelTaskCounts, TaskCounts } from '../../types';
+import { Table, TBody, Tr, Td } from '@twilio-paste/core';
 
 interface ComponentProps {
   channelName: string;
@@ -27,15 +28,23 @@ const ChannelTaskCountTile = (props: ComponentProps) => {
       <Content className='Twilio-AggregatedDataTile-Content'>
         {taskCounts.activeTasks}
       </Content>
-      <Description className='Twilio-AggregatedDataTile-Description'>
-        {'Assigned: ' + taskCounts.assignedTasks}
-      </Description>
-      <Description className='Twilio-AggregatedDataTile-Description'>
-        {'Wrapping: ' + taskCounts.wrappingTasks}
-      </Description>
-      <Title className='Twilio-AggregatedDataTile-Title'>
-        {'Waiting: ' + taskCounts.waitingTasks}
-      </Title>
+      <Table variant='default'>
+        <TBody>
+          <Tr>
+            <Td> <Label>Assigned:</Label>  </Td>
+            <Td textAlign='center'> <Label> {taskCounts.assignedTasks} </Label></Td>
+          </Tr>
+          <Tr>
+            <Td> <Label>Wrapping:</Label>  </Td>
+            <Td textAlign='center'> <Label> {taskCounts.wrappingTasks} </Label></Td>
+          </Tr>
+          <Tr><Td colSpan={2}><hr/></Td></Tr> 
+          <Tr>
+            <Td> <Label>Waiting:</Label>  </Td>
+            <Td textAlign='center'> <Label> {taskCounts.waitingTasks} </Label></Td>
+          </Tr>
+        </TBody>
+      </Table>
     </TileWrapper>
   );
 };

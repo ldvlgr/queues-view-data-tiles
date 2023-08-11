@@ -28,7 +28,9 @@ import {
   isChannelSMS_SLAEnabled,
   isAllChannels_SLAEnabled,
   isQueueGroups_SLAEnabled,
-  isEnhancedAgentsByActivityPieChartEnabled
+  isEnhancedAgentsByActivityPieChartEnabled,
+  isAssignedTasksColumnEnabled,
+  isWrappingTasksColumnEnabled
 } from '../../config';
 
 const tileColors = {
@@ -170,30 +172,34 @@ const setVisibleQueues = (manager) => {
 
 
 const customizeQueueStats = () => {
-  Flex.QueuesStats.QueuesDataTable.Content.add(
-    <ColumnDefinition
-      key='assigned-tasks'
-      header='Assigned'
-      subHeader='Now'
-      content={(queue) => {
-        const assignedTasks  = queue.tasks_by_status?.assigned || 0;
-        return <span>{assignedTasks}</span>;
-      }}
-    />,
-    { sortOrder: -10 }
-  );
-  Flex.QueuesStats.QueuesDataTable.Content.add(
-    <ColumnDefinition
-      key='wrapping-tasks'
-      header='Wrapping'
-      subHeader='Now'
-      content={(queue) => {
-        const wrappingTasks  = queue.tasks_by_status?.wrapping || 0;
-        return <span>{wrappingTasks}</span>;
-      }}
-    />,
-    { sortOrder: -9 }
-  );
+  if (isAssignedTasksColumnEnabled()) {
+    Flex.QueuesStats.QueuesDataTable.Content.add(
+      <ColumnDefinition
+        key='assigned-tasks'
+        header='Assigned'
+        subHeader='Now'
+        content={(queue) => {
+          const assignedTasks = queue.tasks_by_status?.assigned || 0;
+          return <span>{assignedTasks}</span>;
+        }}
+      />,
+      { sortOrder: -10 }
+    );
+  }
+  if (isWrappingTasksColumnEnabled()) {
+    Flex.QueuesStats.QueuesDataTable.Content.add(
+      <ColumnDefinition
+        key='wrapping-tasks'
+        header='Wrapping'
+        subHeader='Now'
+        content={(queue) => {
+          const wrappingTasks = queue.tasks_by_status?.wrapping || 0;
+          return <span>{wrappingTasks}</span>;
+        }}
+      />,
+      { sortOrder: -9 }
+    );
+  }
 }
 
 
