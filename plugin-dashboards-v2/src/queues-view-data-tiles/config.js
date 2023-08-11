@@ -24,7 +24,7 @@ const config = {
   allChannelsDataTile: true,
   enhancedAgentByActivityPieChart: true,
   queuesStatsColumns: {
-    assignedTasksColumn: false,
+    assignedTasksColumn: true,
     wrappingTaskColumn: true
   }
 }
