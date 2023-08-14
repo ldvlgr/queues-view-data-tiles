@@ -2,10 +2,8 @@ import React from 'react';
 import * as Flex from '@twilio/flex-ui';
 import { WorkerQueue } from '@twilio/flex-ui/src/state/QueuesState';
 
-import GroupTasksTile from '../../custom-components/GroupTasksTile/GroupTasksTile';
 import ChannelTaskCountTile from '../../custom-components/ChannelTaskCountTile/ChannelTaskCountTile';
 import ChannelSLATile from '../../custom-components/ChannelSLATile/ChannelSLATile';
-import GroupSLATile from '../../custom-components/GroupSLATile/GroupSLATile';
 import AllChannelsSLATile from '../../custom-components/AllChannelsSLATile/AllChannelsSLATile';
 import GroupsChartTile from '../../custom-components/GroupsChartTile/GroupsChartTile';
 import AgentActivityTile from '../../custom-components/AgentActivityTile/AgentActivityTile';
@@ -97,22 +95,7 @@ const addTiles = () => {
       { sortOrder: 1 }
     );
   }
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <GroupTasksTile key='tasks-tile-1' group='sales' />,
-  //   { sortOrder: 2 }
-  // );
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <GroupSLATile key='sales-sla-tile' group='sales' />,
-  //   { sortOrder: 3 }
-  // );
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <GroupTasksTile key='tasks-tile-2' group='service' />,
-  //   { sortOrder: 4 }
-  // );
-  // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //   <GroupSLATile key='service-sla-tile' group='service' />,
-  //   { sortOrder: 5 }
-  // );
+  
   if (isEnhancedAgentsByActivityPieChartEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
       <AgentActivityTile key='agent-activity-tile' />,

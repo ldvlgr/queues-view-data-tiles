@@ -22,8 +22,8 @@ const config = {
     },
   },
   allChannelsDataTile: true,
-  groupsChartTile: false,
-  enhancedAgentByActivityPieChart: true,
+  groupsChartTile: true,
+  enhancedAgentByActivityPieChart: false,
   queuesStatsColumns: {
     assignedTasksColumn: true,
     wrappingTasksColumn: true
