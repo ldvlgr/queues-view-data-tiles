@@ -68,6 +68,7 @@ display: flex;
 `;
 
 export const Label = styled('div')`
+  color: #121C2D;  
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 12px;
   font-weight: bold;
@@ -77,6 +78,7 @@ export const Label = styled('div')`
 `;
 
 export const Metric = styled('div')`
+  color: #121C2D;
   font-size: 12px;
   padding: 2px;
   width: 40px;
@@ -86,6 +88,7 @@ export const Metric = styled('div')`
 `;
 
 export const SLPct = styled('div')`
+  color: #121C2D;
   background-color: ${(props) => getColor(props)};
   font-size: 12px;
   font-weight: bold;

@@ -1,11 +1,8 @@
 import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Title, Summary, Chart, Description, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components'
-import { cx } from 'emotion';
-
-import { mockQueuesData } from '../../utils/mockQueuesData';
-
 import { connect } from 'react-redux';
+import { TileWrapper, Title, Summary, Chart, Description, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components'
+import { mockQueuesData } from '../../utils/mockQueuesData';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { PieChart } from "react-minimal-pie-chart";
 
@@ -17,7 +14,7 @@ const AllChannelsSLATile = connect((state) => {
     //See https://react-redux.js.org/api/connect
 })((props) => {
     //props has all task counts
-    const { className, colors } = props;
+    const { colors } = props;
     const handledVoice = props.voice.handledTasks || 0;
     const handledChat = props.chat.handledTasks || 0;
     const handledSMS = props.sms.handledTasks || 0;
@@ -29,7 +26,7 @@ const AllChannelsSLATile = connect((state) => {
     if (handledChat) data.push({ title: 'chat', value: handledChat, color: colors.chat });
     if (handledSMS) data.push({ title: 'sms', value: handledSMS, color: colors.sms });
     return (
-        <TileWrapper className={cx('Twilio-AggregatedDataTile', className)}>
+        <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
                 <Title>SLA Today</Title>
                 <Channel>

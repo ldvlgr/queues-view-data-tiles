@@ -19,6 +19,9 @@ export const Title = styled('p')`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize40};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight40};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+    color: #121C2D;
+    justify-content: center;
+    display: flex;
 `;
 
 export const Content = styled('div')`
@@ -26,7 +29,11 @@ export const Content = styled('div')`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+    color: #121C2D;
+    justify-content: center;
+    display: flex;
 `;
+
 export const Description = styled('div')`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
@@ -48,14 +55,22 @@ export const Channel = styled('div')`
   flex-direction: row;
   height: 30px;
   vertical-align: top;
+  justify-content: center;
 `;
 
 export const ChannelIcon = styled('div')`
+  color: #121C2D;
   margin-top: 0px;
   margin-bottom: 0px;
   height: 24px;
 `;
 
+export const Label = styled('div')`
+    color: #121C2D;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px;
+`;
 
 
 function getColor(props) {

@@ -27,6 +27,9 @@ export const Title = styled('p')<ThemeOnlyProps>`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize40};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight40};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+    color: #121C2D;
+    justify-content: center;
+    display: flex;
 `;
 
 export const Content = styled('div')<ThemeOnlyProps>`
@@ -34,13 +37,18 @@ export const Content = styled('div')<ThemeOnlyProps>`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+    color: #121C2D;
+    justify-content: center;
+    display: flex;
 `;
+
 export const Description = styled('div')<ThemeOnlyProps>`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
 `;
 
 export const Label = styled('div')`
+    color: #121C2D;
     font-size: 12px;
     font-weight: bold;
     padding: 2px;

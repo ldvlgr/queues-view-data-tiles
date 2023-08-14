@@ -22,10 +22,10 @@ const config = {
     },
   },
   allChannelsDataTile: true,
-  groupsChartTile: true,
-  enhancedAgentByActivityPieChart: false,
+  groupsChartTile: false,
+  enhancedAgentByActivityPieChart: true,
   queuesStatsColumns: {
-    assignedTasksColumn: true,
+    assignedTasksColumn: false,
     wrappingTasksColumn: true
   }
 }
