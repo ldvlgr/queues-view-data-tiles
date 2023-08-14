@@ -22,10 +22,11 @@ const config = {
     },
   },
   allChannelsDataTile: true,
+  groupsChartTile: false,
   enhancedAgentByActivityPieChart: true,
   queuesStatsColumns: {
     assignedTasksColumn: true,
-    wrappingTaskColumn: true
+    wrappingTasksColumn: true
   }
 }
 
@@ -73,7 +74,7 @@ export const isAllChannels_SLAEnabled = () => {
   return config.allChannelsDataTile;
 };
 export const isQueueGroups_SLAEnabled = () => {
-  return false;
+  return config.groupsChartTile;
 };
 export const isEnhancedAgentsByActivityPieChartEnabled = () => {
   return config.enhancedAgentByActivityPieChart;
@@ -82,5 +83,5 @@ export const isAssignedTasksColumnEnabled = () => {
   return config.queuesStatsColumns.assignedTasksColumn;
 };
 export const isWrappingTasksColumnEnabled = () => {
-  return config.queuesStatsColumns.wrappingTaskColumn;
+  return config.queuesStatsColumns.wrappingTasksColumn;
 };

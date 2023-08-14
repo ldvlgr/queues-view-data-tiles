@@ -138,7 +138,7 @@ class QueueDataUtil {
   }
 
   //Aggregate SL stats for all queue groups to display in a bar chart tile
-  getSLTodayByQueueGroups = (queues: WorkerQueue[] = [], queueGroups = []) => {
+  getSLTodayByQueueGroups = (queues: WorkerQueue[] = [], queueGroups: string[] = []) => {
     let slMetrics: SLMetrics = {};
     //Initialize return object
     queueGroups.forEach(group => {
@@ -160,6 +160,11 @@ class QueueDataUtil {
         }
       });
     })
+    //Mock data
+    slMetrics.sales = { handledTasks: 98, handledTasksWithinSL: 95, serviceLevelPct: 0 };
+    slMetrics.service = { handledTasks: 25, handledTasksWithinSL: 12, serviceLevelPct: 0 };
+    slMetrics.care = { handledTasks: 60, handledTasksWithinSL: 50, serviceLevelPct: 0 };
+    slMetrics.fraud = { handledTasks: 40, handledTasksWithinSL: 38, serviceLevelPct: 0 };
     //Calc SL % per group
     queueGroups.forEach(group => {
       if (slMetrics[group].handledTasks > 0)

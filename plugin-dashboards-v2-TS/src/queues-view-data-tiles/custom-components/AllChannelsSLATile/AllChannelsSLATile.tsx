@@ -7,6 +7,7 @@ import { PieChart } from "react-minimal-pie-chart";
 import { WorkerQueue } from '@twilio/flex-ui/src/state/QueuesState';
 import { AppState } from '../../flex-hooks/states';
 import { SLMetrics } from '../../types';
+import { Data } from 'react-minimal-pie-chart/types/commonTypes';
 
 interface ComponentProps {
     colors: {
@@ -25,7 +26,7 @@ const AllChannelsSLATile = (props: ComponentProps) => {
     const slPctVoice = sla.voice.serviceLevelPct;
     const slPctChat = sla.chat.serviceLevelPct;
     const slPctSMS = sla.sms.serviceLevelPct;
-    let data = [];
+    let data: Data = [];
     if (handledVoice) data.push({ title: 'voice', value: handledVoice, color: colors.voice });
     if (handledChat) data.push({ title: 'chat', value: handledChat, color: colors.chat });
     if (handledSMS) data.push({ title: 'sms', value: handledSMS, color: colors.sms });

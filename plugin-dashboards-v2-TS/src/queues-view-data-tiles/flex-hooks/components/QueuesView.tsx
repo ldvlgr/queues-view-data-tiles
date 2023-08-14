@@ -89,14 +89,14 @@ const addTiles = () => {
       { sortOrder: 0 }
     );
   }
-  // if (isQueueGroups_SLAEnabled()) {
-  //   const groupColors = ['#D8BFD8', '#DDA0DD', '#DA70D6', '#9370DB'];
-  //   const queueGroups = ['sales', 'service', 'care', 'fraud'];
-  //   Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-  //     <GroupsChartTile key='groups-data-tile' colors={groupColors} groups={queueGroups} />,
-  //     { sortOrder: 1 }
-  //   );
-  // }
+  if (isQueueGroups_SLAEnabled()) {
+    const groupColors = ['#D8BFD8', '#DDA0DD', '#DA70D6', '#9370DB'];
+    const queueGroups = ['sales', 'service', 'care', 'fraud'];
+    Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+      <GroupsChartTile key='groups-data-tile' colors={groupColors} groups={queueGroups} />,
+      { sortOrder: 1 }
+    );
+  }
   // Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
   //   <GroupTasksTile key='tasks-tile-1' group='sales' />,
   //   { sortOrder: 2 }

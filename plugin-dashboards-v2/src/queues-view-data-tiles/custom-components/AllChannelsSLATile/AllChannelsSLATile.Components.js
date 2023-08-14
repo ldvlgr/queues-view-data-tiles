@@ -55,7 +55,6 @@ export const Chart = styled('div')`
   display: flex;
   flex-direction: column;
   width: 130px;
-  display: flex;
   justify-content: center;
 `;
 

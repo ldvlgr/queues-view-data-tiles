@@ -1,6 +1,19 @@
 import { styled } from '@twilio/flex-ui';
 
-export const TileWrapper = styled('div')`
+export interface OwnProps {
+  theme?: any;
+  bgColor?: string;
+  value: number;
+  count?: number;
+  greenLine?: number;
+  yellowLine?: number;
+}
+
+export interface ThemeOnlyProps {
+  theme?: any;
+  bgColor?: string;
+}
+export const TileWrapper = styled('div')<ThemeOnlyProps>`
     display: flex;
     flex-direction: row;
     min-width: 275px;
@@ -13,22 +26,24 @@ export const TileWrapper = styled('div')`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
-export const Title = styled('p')`
+export const Title = styled('p')<ThemeOnlyProps>`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
     margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize40};
+    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize30};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight40};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+    justify-content: center;
+    display: flex;
 `;
 
-export const Content = styled('div')`
+export const Content = styled('div')<ThemeOnlyProps>`
     margin-top: ${({ theme }) => theme.tokens.spacings.space50};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
-export const Description = styled('div')`
+export const Description = styled('div')<ThemeOnlyProps>`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
 `;
@@ -39,8 +54,9 @@ export const Summary = styled('div')`
 `;
 
 export const Chart = styled('div')`
-  width: 130px;
   display: flex;
+  flex-direction: column;
+  width: 130px;
   justify-content: center;
 `;
 
@@ -53,7 +69,7 @@ export const Group = styled('div')`
   margin-top: 1px;
 `;
 
-export const Label = styled('div')`
+export const Label = styled('div')<ThemeOnlyProps>`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 12px;
   font-weight: bold;
@@ -71,7 +87,7 @@ export const Metric = styled('div')`
 
 `;
 
-export const SLPct = styled('div')`
+export const SLPct = styled('div')<OwnProps>`
   background-color: ${(props) => getColor(props)};
   font-size: 12px;
   font-weight: bold;
@@ -81,7 +97,7 @@ export const SLPct = styled('div')`
   margin: 1px;
 `;
 
-function getColor(props) {
+function getColor(props: OwnProps) {
   let {value, greenLine, yellowLine} = props;
   if (!greenLine) greenLine = 90;
   if (!yellowLine) yellowLine = 60;
