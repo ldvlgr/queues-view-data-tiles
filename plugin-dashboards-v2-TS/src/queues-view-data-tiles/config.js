@@ -24,8 +24,17 @@ const config = {
   allChannelsDataTile: true,
   groupsChartTile: false,
   enhancedAgentByActivityPieChart: true,
+  agentActivityConfiguration: {
+    Available: { color: 'green', icon: 'Accept' },
+    Outbound: { color: 'greenyellow', icon: 'Call' },
+    Break: { color: 'goldenrod', icon: 'Hold' },
+    Lunch: { color: 'darkorange', icon: 'Hamburger' },
+    Training: { color: 'red', icon: 'Bulb' },
+    Unavailable: { color: 'darkred', icon: 'Close' },
+    Offline: { color: 'grey', icon: 'Minus' },
+  },
   queuesStatsColumns: {
-    assignedTasksColumn: false,
+    assignedTasksColumn: true,
     wrappingTasksColumn: true
   }
 }
@@ -78,6 +87,9 @@ export const isQueueGroups_SLAEnabled = () => {
 };
 export const isEnhancedAgentsByActivityPieChartEnabled = () => {
   return config.enhancedAgentByActivityPieChart;
+};
+export const getAgentActivityConfig = () => {
+  return config.agentActivityConfiguration;
 };
 export const isAssignedTasksColumnEnabled = () => {
   return config.queuesStatsColumns.assignedTasksColumn;

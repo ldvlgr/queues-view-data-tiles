@@ -5,7 +5,7 @@ export interface ThemeOnlyProps {
   bgColor?: string;
 }
 
-export const TileWrapper = styled('div')<ThemeOnlyProps>`
+export const TileWrapper = styled('div') <ThemeOnlyProps>`
     display: flex;
     flex-direction: row;
     min-width: 300px;
@@ -18,21 +18,8 @@ export const TileWrapper = styled('div')<ThemeOnlyProps>`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
-export const TeamTile = styled('div')<ThemeOnlyProps>`
-    margin: 2px;
-    display: flex;
-    flex-direction: row;
-    
-    padding: ${({ theme }) => theme.tokens.spacings.space40};
-    border-style: solid;
-    border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
-    border-radius: ${({ theme }) => theme.tokens.radii.borderRadius20};
-    border-color: ${({ theme }) => theme.tokens.borderColors.colorBorderWeaker};
-    background-color: ${({ theme }) => theme.tokens.backgroundColors.colorBackgroundBody};
-    color: ${({ theme }) => theme.tokens.textColors.colorText};
-`;
 
-export const Title = styled('p')<ThemeOnlyProps>`
+export const Title = styled('p') <ThemeOnlyProps>`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
     margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
@@ -44,21 +31,11 @@ export const Title = styled('p')<ThemeOnlyProps>`
     margin-bottom: 4px;
 `;
 
-export const Content = styled('div')<ThemeOnlyProps>`
+export const Content = styled('div') <ThemeOnlyProps>`
     margin-top: ${({ theme }) => theme.tokens.spacings.space50};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
-`;
-export const Description = styled('div')<ThemeOnlyProps>`
-    background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
-    line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
-    justify-content: center;
-    display: flex;
-    padding: 2px;
-    margin-top: 6px;
-    margin-bottom: 2px;
 `;
 
 export const Summary = styled('div')`
@@ -74,8 +51,7 @@ export const Chart = styled('div')`
   justify-content: center;
 `;
 
-
-export const Label = styled('div')<ThemeOnlyProps>`
+export const Label = styled('div') <ThemeOnlyProps>`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
   font-weight: bold;
@@ -83,7 +59,6 @@ export const Label = styled('div')<ThemeOnlyProps>`
   margin: 1px;
   color: #ffffff
 `;
-
 
 export const Metric = styled('div')`
   font-size: 10px;

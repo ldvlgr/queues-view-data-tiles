@@ -1,9 +1,9 @@
 import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Summary, Chart, Description, Title, Label, Metric } from './AgentActivityTile.Components'
+import { TileWrapper, Summary, Chart, Title, Label, Metric } from './AgentActivityTile.Components'
 import { connect } from 'react-redux';
 import { PieChart } from 'react-minimal-pie-chart';
-import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
+import { Table, TBody, Tr, Td } from '@twilio-paste/core';
 
 const AgentActivityTile = connect((state) => {
     let workerActivityCounts = {};
@@ -15,18 +15,7 @@ const AgentActivityTile = connect((state) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { workerActivityCounts } = props;
-    //Available Flex icons:
-    //https://www.twilio.com/docs/flex/developer/ui/v1/icons
-    const activityConfig = {
-        Available: { color: 'green', icon: 'Accept' },
-        Outbound: { color: 'greenyellow', icon: 'Call' },
-        Break: { color: 'goldenrod', icon: 'Hold' },
-        Lunch: { color: 'darkorange', icon: 'Hamburger' },
-        Training: { color: 'red', icon: 'Bulb' },
-        Unavailable: { color: 'darkred', icon: 'Close' },
-        Offline: { color: 'grey', icon: 'Minus' },
-    }
+    const { workerActivityCounts, activityConfig } = props;
     const activityNames = Object.keys(activityConfig);
 
     let data = [];

@@ -13,20 +13,6 @@ export const TileWrapper = styled('div')`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
-export const TeamTile = styled('div')`
-    margin: 2px;
-    display: flex;
-    flex-direction: row;
-    
-    padding: ${({ theme }) => theme.tokens.spacings.space40};
-    border-style: solid;
-    border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
-    border-radius: ${({ theme }) => theme.tokens.radii.borderRadius20};
-    border-color: ${({ theme }) => theme.tokens.borderColors.colorBorderWeaker};
-    background-color: ${({ theme }) => theme.tokens.backgroundColors.colorBackgroundBody};
-    color: ${({ theme }) => theme.tokens.textColors.colorText};
-`;
-
 export const Title = styled('p')`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
@@ -45,16 +31,6 @@ export const Content = styled('div')`
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
-export const Description = styled('div')`
-    background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
-    line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
-    justify-content: center;
-    display: flex;
-    padding: 2px;
-    margin-top: 6px;
-    margin-bottom: 2px;
-`;
 
 export const Summary = styled('div')`
   flex-direction: column;
@@ -69,7 +45,6 @@ export const Chart = styled('div')`
   justify-content: center;
 `;
 
-
 export const Label = styled('div')`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
@@ -78,7 +53,6 @@ export const Label = styled('div')`
   margin: 1px;
   color: #ffffff
 `;
-
 
 export const Metric = styled('div')`
   font-size: 10px;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Icon, useFlexSelector } from '@twilio/flex-ui';
-import { TileWrapper, Summary, Chart, Description, Title, Label, Metric } from './AgentActivityTile.Components'
+import { TileWrapper, Summary, Chart, Title, Label, Metric } from './AgentActivityTile.Components'
 import { PieChart } from 'react-minimal-pie-chart';
-import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
+import { Table, TBody,  Tr, Td } from '@twilio-paste/core';
 import { AppState } from '../../flex-hooks/states';
 import { ActivityStatistic } from '@twilio/flex-ui/src/state/QueuesState';
 import { BaseDataEntry, Data } from 'react-minimal-pie-chart/types/commonTypes';
@@ -11,14 +11,16 @@ interface ActivityCounts {
     [key: string]: number;
 }
 
-interface ActivityConfig {
-    [key: string]: {
-        color: string;
-        icon: string;
-    };
+interface ComponentProps {
+    activityConfig: {
+        [key: string]: {
+            color: string;
+            icon: string;
+        };
+    }
 }
-
-const AgentActivityTile = () => {
+const AgentActivityTile = (props: ComponentProps) => {
+    const { activityConfig } = props;
     const workerActivityCounts: ActivityCounts = useFlexSelector((state: AppState) => {
         let activityCounts: ActivityCounts = {};
         const activityStats = state.flex.realtimeQueues.workspaceStats?.activity_statistics || [];
@@ -27,19 +29,8 @@ const AgentActivityTile = () => {
         });
         return activityCounts;
     });
-    //Available Flex icons:
-    //https://www.twilio.com/docs/flex/developer/ui/v1/icons
-    const activityConfig: ActivityConfig = {
-        Available: { color: 'green', icon: 'Accept' },
-        Outbound: { color: 'greenyellow', icon: 'Call' },
-        Break: { color: 'goldenrod', icon: 'Hold' },
-        Lunch: { color: 'darkorange', icon: 'Hamburger' },
-        Training: { color: 'red', icon: 'Bulb' },
-        Unavailable: { color: 'darkred', icon: 'Close' },
-        Offline: { color: 'grey', icon: 'Minus' },
-    }
     const activityNames = Object.keys(activityConfig);
-    
+
     let data: Data = [];
     activityNames.forEach((activity) => {
         let count = workerActivityCounts[activity] || 0;

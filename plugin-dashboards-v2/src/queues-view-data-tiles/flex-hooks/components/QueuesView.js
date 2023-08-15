@@ -29,6 +29,7 @@ import {
   isAllChannels_SLAEnabled,
   isQueueGroups_SLAEnabled,
   isEnhancedAgentsByActivityPieChartEnabled,
+  getAgentActivityConfig,
   isAssignedTasksColumnEnabled,
   isWrappingTasksColumnEnabled
 } from '../../config';
@@ -125,8 +126,9 @@ const addTiles = () => {
   //   { sortOrder: 5 }
   // );
   if (isEnhancedAgentsByActivityPieChartEnabled()) {
+    const agentActivityConfig = getAgentActivityConfig();
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AgentActivityTile key='agent-activity-tile' />,
+      <AgentActivityTile key='agent-activity-tile' activityConfig={agentActivityConfig}/>,
       { sortOrder: 6 }
     );
   }
