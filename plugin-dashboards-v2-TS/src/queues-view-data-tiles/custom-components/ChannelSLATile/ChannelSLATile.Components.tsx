@@ -13,51 +13,51 @@ export interface ThemeOnlyProps {
 }
 
 export const TileWrapper = styled('div')<OwnProps>`
-    display: flex;
-    flex-direction: column;
-    padding: ${({ theme }) => theme.tokens.spacings.space40};
-    border-style: solid;
-    border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
-    border-radius: ${({ theme }) => theme.tokens.radii.borderRadius20};
-    border-color: ${({ theme }) => theme.tokens.borderColors.colorBorderWeaker};
-    background-color: ${(props) => getColor(props)};
-    color: ${({ theme }) => theme.tokens.textColors.colorText};
+  display: flex;
+  flex-direction: column;
+  padding: ${({ theme }) => theme.tokens.spacings.space40};
+  border-style: solid;
+  border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
+  border-radius: ${({ theme }) => theme.tokens.radii.borderRadius20};
+  border-color: ${({ theme }) => theme.tokens.borderColors.colorBorderWeaker};
+  background-color: ${(props) => getColor(props)};
+  color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
 export const Title = styled('p')<ThemeOnlyProps>`
-    min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
-    margin-top: ${({ theme }) => theme.tokens.spacings.space0};
-    margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize40};
-    line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight40};
-    font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
-    color: #121C2D;
-    justify-content: center;
-    display: flex;
+  min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
+  margin-top: ${({ theme }) => theme.tokens.spacings.space0};
+  margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
+  font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize40};
+  line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight40};
+  font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+  color: #121c2d;
+  justify-content: center;
+  display: flex;
 `;
 
 export const Content = styled('div')<ThemeOnlyProps>`
-    margin-top: ${({ theme }) => theme.tokens.spacings.space50};
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
-    line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
-    font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
-    color: #121C2D;
-    justify-content: center;
-    display: flex;
+  margin-top: ${({ theme }) => theme.tokens.spacings.space50};
+  font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
+  line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
+  font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
+  color: #121c2d;
+  justify-content: center;
+  display: flex;
 `;
 
 export const Description = styled('div')<ThemeOnlyProps>`
-    font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
-    line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
+  font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
+  line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
 `;
 
 export const TileWrapper1 = styled('div')<OwnProps>`
-    background-color: ${(props) => getColor(props)};
-    color: ${(props) => props.theme.calculated.textColor};
-    padding: 12px;
-    box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;
-    display: flex;
-    flex-direction: column;
+  background-color: ${(props) => getColor(props)};
+  color: ${(props) => props.theme.calculated.textColor};
+  padding: 12px;
+  box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Channel = styled('div')`
@@ -69,23 +69,38 @@ export const Channel = styled('div')`
 `;
 
 export const ChannelIcon = styled('div')`
-  color: #121C2D;
+  color: #121c2d;
   margin-top: 0px;
   margin-bottom: 0px;
   height: 24px;
 `;
+export const Handled = styled('div')`
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+`;
 
 export const Label = styled('div')`
-    color: #121C2D;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 2px;
+  color: #121c2d;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100px;
+  padding: 2px;
+`;
+
+export const Metric = styled('div')`
+  color: #121c2d;
+  font-size: 12px;
+  font-weight: bold;
+  width: 50px;
+  padding: 2px;
+  text-align: right;
 `;
 
 function getColor(props: OwnProps) {
-  let {value = 0, count, greenLine, yellowLine, theme} = props;
-  //console.log('SL Data Tile getColor props:', props);
-  //No color if handled tasks count = 0 (N/A)
+  const { value = 0, count, theme } = props;
+  let { greenLine, yellowLine } = props;
+  // No color if handled tasks count = 0 (N/A)
   if (!count) return theme.tokens.backgroundColors.colorBackgroundBody;
   if (!greenLine) greenLine = 90;
   if (!yellowLine) yellowLine = 60;
@@ -93,8 +108,6 @@ function getColor(props: OwnProps) {
     return '#d0f4d1';
   } else if (value > yellowLine) {
     return '#ffe3b9';
-  } else {
-    return '#feced3';
   }
+  return '#feced3';
 }
-
