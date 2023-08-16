@@ -20,6 +20,11 @@ const config = {
       SLADataTile: true,
       taskCountsDataTile: true
     },
+    video: {
+      color: '#00FFFF',
+      SLADataTile: true,
+      taskCountsDataTile: true
+    },
   },
   allChannelsDataTile: true,
   groupsChartTile: false,
@@ -51,6 +56,9 @@ export const isLongestWaitTimeEnabled = () => {
 };
 export const isAgentsByActivityEnabled = () => {
   return config.agentsByActivityBarChart;
+};
+export const getChannelNames = () => {
+  return Object.keys(config.channels);
 };
 export const getChannelVoice_Color = () => {
   return config.channels.voice.color;
