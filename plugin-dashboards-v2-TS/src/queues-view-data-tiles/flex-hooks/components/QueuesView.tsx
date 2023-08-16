@@ -15,6 +15,7 @@ import {
   isLongestWaitTimeEnabled,
   isAgentsByActivityEnabled,
   getChannelNames,
+  getChannelColors,
   getChannelVoice_Color,
   getChannelChat_Color,
   getChannelSMS_Color,
@@ -33,11 +34,6 @@ import {
 } from '../../config';
 
 
-const tileColors = {
-  'voice': getChannelVoice_Color(),
-  'chat': getChannelChat_Color(),
-  'sms': getChannelSMS_Color()
-}
 
 export default (manager: Flex.Manager) => {
   customizeQueueStats();
@@ -49,19 +45,19 @@ const addTiles = () => {
   if (isChannelVoice_CountsEnabled()) {
     const options: Flex.ContentFragmentProps = { sortOrder: -6 };
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='voice-tasks' channelName='voice' bgColor={tileColors.voice} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='voice-tasks' channelName='voice' bgColor={getChannelVoice_Color()} channelList={getChannelNames()}/>,
       options
     );
   }
   if (isChannelChat_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='chat-tasks' channelName='chat' bgColor={tileColors.chat} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='chat-tasks' channelName='chat' bgColor={getChannelChat_Color()} channelList={getChannelNames()}/>,
       { sortOrder: -5 }
     );
   }
   if (isChannelSMS_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='sms-tasks' channelName='sms' bgColor={tileColors.sms} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='sms-tasks' channelName='sms' bgColor={getChannelSMS_Color()} channelList={getChannelNames()}/>,
       { sortOrder: -4 }
     );
   }
@@ -85,7 +81,7 @@ const addTiles = () => {
   }
   if (isAllChannels_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AllChannelsSLATile key='combo-data-tile' colors={tileColors} channelList={getChannelNames()}/>,
+      <AllChannelsSLATile key='combo-data-tile' colors={getChannelColors()} channelList={getChannelNames()}/>,
       { sortOrder: 0 }
     );
   }

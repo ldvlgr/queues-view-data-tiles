@@ -1,6 +1,9 @@
 
-const config = {
+import QueuesViewDataTilesConfig from "./types/ServiceConfiguration";
+
+const config: QueuesViewDataTilesConfig = {
   activeTasksDataTile: false,
+  enabled: true,
   waitingTasksDataTile: false,
   longestWaitTimeDataTile: false,
   agentsByActivityBarChart: false,
@@ -56,6 +59,14 @@ export const isLongestWaitTimeEnabled = () => {
 };
 export const isAgentsByActivityEnabled = () => {
   return config.agentsByActivityBarChart;
+};
+export const getChannelColors = () => {
+  const channelNames = Object.keys(config.channels);
+  const colors: { [key: string]: string } = {};
+  channelNames.forEach((ch) => {
+    colors[ch] = config.channels[ch].color;
+  });
+  return colors;
 };
 export const getChannelNames = () => {
   return Object.keys(config.channels);
