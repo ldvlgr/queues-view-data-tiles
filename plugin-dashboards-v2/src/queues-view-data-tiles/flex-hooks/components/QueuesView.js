@@ -17,6 +17,8 @@ import {
   isWaitingTasksEnabled,
   isLongestWaitTimeEnabled,
   isAgentsByActivityEnabled,
+  getChannelNames,
+  getChannelColors,
   getChannelVoice_Color,
   getChannelChat_Color,
   getChannelSMS_Color,
@@ -97,7 +99,7 @@ const addTiles = () => {
   }
   if (isAllChannels_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AllChannelsSLATile key='combo-data-tile' colors={tileColors} />,
+      <AllChannelsSLATile key='combo-data-tile' colors={getChannelColors()} channelList={getChannelNames()}/>,
       { sortOrder: 0 }
     );
   }

@@ -52,6 +52,17 @@ export const isLongestWaitTimeEnabled = () => {
 export const isAgentsByActivityEnabled = () => {
   return config.agentsByActivityBarChart;
 };
+export const getChannelColors = () => {
+  const channelNames = Object.keys(config.channels);
+  const colors = {};
+  channelNames.forEach((ch) => {
+    colors[ch] = config.channels[ch].color;
+  });
+  return colors;
+};
+export const getChannelNames = () => {
+  return Object.keys(config.channels);
+};
 export const getChannelVoice_Color = () => {
   return config.channels.voice.color;
 };

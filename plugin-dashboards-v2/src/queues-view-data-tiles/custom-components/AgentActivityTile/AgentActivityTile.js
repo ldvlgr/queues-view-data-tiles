@@ -1,9 +1,8 @@
 import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Summary, Chart, Title, Label, Metric } from './AgentActivityTile.Components'
+import { TileWrapper, Summary, Chart, Title, AgentActivity, Label, Metric } from './AgentActivityTile.Components'
 import { connect } from 'react-redux';
 import { PieChart } from 'react-minimal-pie-chart';
-import { Table, TBody, Tr, Td } from '@twilio-paste/core';
 
 const AgentActivityTile = connect((state) => {
     let workerActivityCounts = {};
@@ -28,24 +27,18 @@ const AgentActivityTile = connect((state) => {
     return (
         <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
-                <Table>
-                    <TBody>
-                    {activityNames.map((activity) => {
-                        let count = workerActivityCounts[activity] || 0;
-                        return (
-                            <Tr key={activity} verticalAlign='middle'>
-                                <Td> <Icon icon={activityConfig[activity]?.icon} /></Td> 
-                                <Td>
-                                    <Label bgColor={activityConfig[activity]?.color}>
-                                        {activity}:
-                                    </Label>
-                                </Td>
-                                <Td textAlign='center'><Metric>{count} </Metric></Td>
-                            </Tr>
-                        )
-                    })}
-                    </TBody>
-                    </Table>
+                {activityNames.map((activity) => {
+                    let count = workerActivityCounts[activity] || 0;
+                    return (
+                        <AgentActivity>
+                            <Icon icon={activityConfig[activity]?.icon} />
+                            <Label bgColor={activityConfig[activity]?.color}>
+                                {activity}:
+                            </Label>
+                            <Metric> {count} </Metric>
+                        </AgentActivity>
+                    )
+                })}
             </Summary>
             <Chart>
                 <Title>

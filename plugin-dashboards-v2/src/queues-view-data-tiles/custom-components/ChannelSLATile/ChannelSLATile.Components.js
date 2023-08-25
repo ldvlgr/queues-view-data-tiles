@@ -65,18 +65,34 @@ export const ChannelIcon = styled('div')`
   height: 24px;
 `;
 
+export const Handled = styled('div')`
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+`;
+
 export const Label = styled('div')`
-    color: #121C2D;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 2px;
+  color: #121c2d;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100px;
+  padding: 2px;
+`;
+
+export const Metric = styled('div')`
+  color: #121c2d;
+  font-size: 12px;
+  font-weight: bold;
+  width: 50px;
+  padding: 2px;
+  text-align: right;
 `;
 
 
 function getColor(props) {
-  let {value, count, greenLine, yellowLine, theme} = props;
-  console.log('SL Data Tile getColor props:', props);
-  //No color if handled tasks count = 0 (N/A)
+  const { value = 0, count, theme } = props;
+  let { greenLine, yellowLine } = props;
+  // No color if handled tasks count = 0 (N/A)
   if (!count) return theme.tokens.backgroundColors.colorBackgroundBody;
   if (!greenLine) greenLine = 90;
   if (!yellowLine) yellowLine = 60;
@@ -84,8 +100,7 @@ function getColor(props) {
     return '#d0f4d1';
   } else if (value > yellowLine) {
     return '#ffe3b9';
-  } else {
-    return '#feced3';
   }
+  return '#feced3';
 }
 
