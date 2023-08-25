@@ -101,10 +101,10 @@ export function getTasksByTeamCounts(workers = [], teams = []) {
         let channel = '';
         const tasks = wk?.tasks || [];
         tasks.forEach((task) => {
-            if (task.task_channel_unique_name == TASK_CHANNEL_VOICE) {
+            if (task.taskChannelUniqueName == TASK_CHANNEL_VOICE) {
                 channel = 'voice_' + (task.attributes?.direction || 'inbound');
             } else {
-                channel = task.task_channel_unique_name;
+                channel = task.taskChannelUniqueName;
             }
             if (teams.includes(tm)) {
                 let count = taskCounts[tm][channel] ? taskCounts[tm][channel] : 0;
@@ -116,3 +116,94 @@ export function getTasksByTeamCounts(workers = [], teams = []) {
     });
     return taskCounts;
 }
+
+
+export function getTasksAndCapacity(workers = []) {
+    const initTasks = { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 };
+    const initCapacity = { voice: 0, sms: 0, chat: 0 };
+
+    let tasksAndCapacity = {};
+    tasksAndCapacity = {
+        tasks: { ...initTasks },
+        capacity: { ...initCapacity }
+    };
+    workers.forEach((wk) => {
+        let channel = '';
+        const tasks = wk?.tasks || [];
+        tasks.forEach((task) => {
+            console.log('Task:', task);
+            if (task.taskChannelUniqueName == TASK_CHANNEL_VOICE) {
+                channel = 'voice_' + (task.attributes?.direction || 'inbound');
+            } else {
+                channel = task.taskChannelUniqueName;
+            }
+            let count = tasksAndCapacity?.tasks[channel] ? tasksAndCapacity.tasks[channel] : 0;
+            tasksAndCapacity.tasks[channel] = count + 1;
+        });
+        let wkCh = wk.worker?.attributes?.channels;
+        let wkMaxSms = (wkCh?.sms?.available && wkCh?.sms?.capacity) ? wkCh?.sms?.capacity : 0;
+        let wkMaxChat = (wkCh?.chat?.available && wkCh?.chat?.capacity) ? wkCh?.chat?.capacity : 0;
+
+        let capacity = tasksAndCapacity?.capacity?.sms ? tasksAndCapacity?.capacity?.sms : 0;
+        tasksAndCapacity.capacity.sms = capacity + wkMaxSms;
+        capacity = tasksAndCapacity?.capacity?.chat ? tasksAndCapacity?.capacity.chat : 0;
+        tasksAndCapacity.capacity.chat = capacity + wkMaxChat;
+    });
+    return tasksAndCapacity;
+}
+
+
+export function getTasksAndCapacityByTeam(workers = [], teams = []) {
+    const initTasks = { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 };
+    const initCapacity = { voice: 0, sms: 0, chat: 0 };
+
+    let tasksAndCapacity = {};
+    tasksAndCapacity['All'] = {
+        teamName: 'All',
+        tasks: { ...initTasks },
+        capacity: { ...initCapacity }
+    };
+    //Init task counts
+    teams.forEach((team) => {
+        tasksAndCapacity[team] = {
+            teamName: team,
+            tasks: { ...initTasks },
+            capacity: { ...initCapacity }
+        };
+    });
+    workers.forEach((wk) => {
+        let tm = wk.worker?.attributes?.team_name || 'Other';
+        let channel = '';
+        const tasks = wk?.tasks || [];
+        tasks.forEach((task) => {
+            console.log('Task:', task);
+            if (task.taskChannelUniqueName == TASK_CHANNEL_VOICE) {
+                channel = 'voice_' + (task.attributes?.direction || 'inbound');
+            } else {
+                channel = task.taskChannelUniqueName;
+            }
+            if (teams.includes(tm)) {
+                let taskCount = tasksAndCapacity[tm]?.tasks[channel] ? tasksAndCapacity[tm]?.tasks[channel] : 0;
+                tasksAndCapacity[tm].tasks[channel] = taskCount + 1;
+            }
+            let count = tasksAndCapacity.All?.tasks[channel] ? tasksAndCapacity.All.tasks[channel] : 0;
+            tasksAndCapacity.All.tasks[channel] = count + 1;
+        });
+        let wkCh = wk.worker?.attributes?.channels;
+        let wkMaxSms = (wkCh?.sms?.available && wkCh?.sms?.capacity) ? wkCh?.sms?.capacity : 0;
+        let wkMaxChat = (wkCh?.chat?.available && wkCh?.chat?.capacity) ? wkCh?.chat?.capacity : 0;
+
+        if (teams.includes(tm)) {
+            let capacity = tasksAndCapacity[tm]?.capacity?.sms ? tasksAndCapacity[tm].capacity.sms : 0;
+            tasksAndCapacity[tm].capacity.sms = capacity + wkMaxSms
+            capacity = tasksAndCapacity[tm]?.capacity?.chat ? tasksAndCapacity[tm].capacity.chat : 0;
+            tasksAndCapacity[tm].capacity.chat = capacity + wkMaxChat;
+        }
+        let capacity = tasksAndCapacity.All?.capacity?.sms ? tasksAndCapacity.All?.capacity?.sms : 0;
+        tasksAndCapacity.All.capacity.sms = capacity + wkMaxSms;
+        capacity = tasksAndCapacity.All?.capacity?.chat ? tasksAndCapacity.All?.capacity.chat : 0;
+        tasksAndCapacity.All.capacity.chat = capacity + wkMaxChat;
+    });
+    return tasksAndCapacity;
+}
+

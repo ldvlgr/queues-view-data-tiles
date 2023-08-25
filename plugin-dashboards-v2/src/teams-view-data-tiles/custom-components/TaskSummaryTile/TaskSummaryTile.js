@@ -1,4 +1,4 @@
-import { withTheme, Icon } from '@twilio/flex-ui';
+import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
 import { TileWrapper, Title, Label, Legend } from './TaskSummaryTile.Components'
 import { cx } from 'emotion';
@@ -8,10 +8,16 @@ import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
 
 import { connect } from 'react-redux';
 
+import {
+    getChannelVoice_Color,
+    getChannelChat_Color,
+    getChannelSMS_Color,
+} from '../../config';
+
 const channelColors = {
-    'voice': '#ADD8E6',
-    'chat': '#87CEFA',
-    'sms': '#4682B4'
+    'voice': getChannelVoice_Color(),
+    'chat': getChannelChat_Color(),
+    'sms': getChannelSMS_Color()
 }
 
 /**
@@ -19,8 +25,8 @@ const channelColors = {
  */
 const TaskSummaryTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
-    //const workers = state.flex.supervisor.workers;
-    const workers = mockWorkersData;
+    const workers = state.flex.supervisor.workers;
+    //const workers = mockWorkersData;
     const teamsData = ownProps.teamsData;
     const teams = Object.keys(teamsData);
     let taskCounts = getTasksByTeamCounts(workers, teams);
@@ -66,8 +72,8 @@ const TaskSummaryTile = connect((state, ownProps) => {
                         <Td><Label> Total (All) </Label></Td>
                         <Td textAlign='center'><Label> {taskCounts.All.voice_inbound} </Label></Td>
                         <Td textAlign='center'><Label> {taskCounts.All.voice_outbound} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.sms} </Label></Td>
                         <Td textAlign='center'><Label> {taskCounts.All.chat} </Label></Td>
+                        <Td textAlign='center'><Label> {taskCounts.All.sms} </Label></Td>
                     </Tr>
                 </TBody>
             </Table>
@@ -75,4 +81,4 @@ const TaskSummaryTile = connect((state, ownProps) => {
     )
 });
 
-export default withTheme(TaskSummaryTile);
+export default TaskSummaryTile;
