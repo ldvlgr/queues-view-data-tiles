@@ -2,7 +2,7 @@ import * as Flex from '@twilio/flex-ui';
 import { connect } from 'react-redux';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { mockQueuesData } from '../../utils/mockQueuesData';
-import { TileWrapper, Title, Content, Label, Metric, TaskCount } from './ChannelTaskCountTile.Components';
+import { TileWrapper, Title, Content, Label, Metric, TaskCount, MetricsContainer } from './ChannelTaskCountTile.Components';
 
 /**
  * @param {props} props.channelName The channelName ('voice', 'chat', 'sms' etc.)
@@ -21,18 +21,22 @@ const ChannelTaskCountTile = connect((state) => {
     <TileWrapper className="Twilio-AggregatedDataTile" bgColor={bgColor}>
       <Title className="Twilio-AggregatedDataTile-Title">{`${channelName} Active`}</Title>
       <Content className="Twilio-AggregatedDataTile-Content">{taskCounts?.activeTasks || 0}</Content>
-      <TaskCount>
-        <Label>Assigned: </Label>
-        <Metric>{taskCounts?.assignedTasks || 0}</Metric>
-      </TaskCount>
-      <TaskCount>
-        <Label>Wrapping: </Label>
-        <Metric>{taskCounts?.wrappingTasks || 0}</Metric>
-      </TaskCount>
-      <TaskCount>
-        <Label>Waiting: </Label>
-        <Metric>{taskCounts?.waitingTasks || 0}</Metric>
-      </TaskCount>
+      <MetricsContainer>
+        <TaskCount>
+          <Label>Assigned</Label>
+          <Metric>{taskCounts?.assignedTasks || 0}</Metric>
+        </TaskCount>
+        <TaskCount>
+          <Label>Wrapping</Label>
+          <Metric>{taskCounts?.wrappingTasks || 0}</Metric>
+        </TaskCount>
+      </MetricsContainer>
+      <MetricsContainer>
+        <TaskCount>
+          <Label>Waiting</Label>
+          <Metric>{taskCounts?.waitingTasks || 0}</Metric>
+        </TaskCount>
+      </MetricsContainer>
     </TileWrapper>
   );
 });

@@ -3,7 +3,7 @@ import { useFlexSelector } from '@twilio/flex-ui';
 import { AppState } from '../../flex-hooks/states';
 
 import QueueDataUtil from '../../utils/QueueDataUtil';
-import { TileWrapper, Title, Content, Label, Metric, TaskCount } from './ChannelTaskCountTile.Components';
+import { TileWrapper, Title, Content, Label, Metric, TaskCount, MetricsContainer } from './ChannelTaskCountTile.Components';
 import { ChannelTaskCounts, TaskCounts } from '../../types';
 
 interface ComponentProps {
@@ -24,18 +24,22 @@ const ChannelTaskCountTile = (props: ComponentProps) => {
     <TileWrapper className="Twilio-AggregatedDataTile" bgColor={bgColor}>
       <Title className="Twilio-AggregatedDataTile-Title">{`${channelName} Active`}</Title>
       <Content className="Twilio-AggregatedDataTile-Content">{taskCounts?.activeTasks || 0}</Content>
-      <TaskCount>
-        <Label>Assigned: </Label>
-        <Metric>{taskCounts?.assignedTasks || 0}</Metric>
-      </TaskCount>
-      <TaskCount>
-        <Label>Wrapping: </Label>
-        <Metric>{taskCounts?.wrappingTasks || 0}</Metric>
-      </TaskCount>
-      <TaskCount>
-        <Label>Waiting: </Label>
-        <Metric>{taskCounts?.waitingTasks || 0}</Metric>
-      </TaskCount>
+      <MetricsContainer>
+        <TaskCount>
+          <Label>Assigned</Label>
+          <Metric>{taskCounts?.assignedTasks || 0}</Metric>
+        </TaskCount>
+        <TaskCount>
+          <Label>Wrapping</Label>
+          <Metric>{taskCounts?.wrappingTasks || 0}</Metric>
+        </TaskCount>
+      </MetricsContainer>
+      <MetricsContainer>
+        <TaskCount>
+          <Label>Waiting</Label>
+          <Metric>{taskCounts?.waitingTasks || 0}</Metric>
+        </TaskCount>
+      </MetricsContainer>
     </TileWrapper>
   );
 };

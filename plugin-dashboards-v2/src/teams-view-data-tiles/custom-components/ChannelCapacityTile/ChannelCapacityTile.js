@@ -1,7 +1,7 @@
 import * as Flex from '@twilio/flex-ui';
 import { connect } from 'react-redux';
 import { getTasksAndCapacity } from '../../utils/WorkerDataUtil';
-import { TileWrapper, Title, Content, TaskCount, Label, Metric } from './ChannelCapacityTile.Components';
+import { TileWrapper, Title, Content, TaskCount, Label, Metric, MetricsContainer } from './ChannelCapacityTile.Components';
 
 /**
  * @param {props} props.channelName The channelName ('voice', 'chat', 'sms' etc.)
@@ -27,10 +27,12 @@ const ChannelCapacityTile = connect((state, ownProps) => {
       <Content className='Twilio-AggregatedDataTile-Content'>
         {capacity}
       </Content>
+      <MetricsContainer>
       <TaskCount>
-        <Label> {channelName} Tasks:</Label>
+        <Label> {channelName} Tasks</Label>
         <Metric> {taskCount} </Metric>
       </TaskCount>
+      </MetricsContainer>
     </TileWrapper>
   );
 });

@@ -14,13 +14,13 @@ const config = {
     },
   },
   taskSummaryDataTile: true,
-  teamActivityBarChart: true,
+  teamActivityBarChart: false,
   skillsByTeamDataTile: false,
   columns: {
     team: true,
     department: false,
     location: false,
-    agent_skills: true,
+    agent_skills: false,
     capacity: true
   }
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getChannelIcon } from '../../utils/helpers';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { mockQueuesData } from '../../utils/mockQueuesData';
-import { TileWrapper, Title, Channel, ChannelIcon, Content, Label, Metric, Handled } from './ChannelSLATile.Components';
+import { TileWrapper, Title, Channel, ChannelIcon, Content, Label, Metric, Handled, MetricsContainer } from './ChannelSLATile.Components';
 
 /**
  * @param {props} props.channelName The channelName ('voice', 'chat', 'sms' etc.)
@@ -31,14 +31,17 @@ const ChannelSLATileV2 = connect((state) => {
         <Title className="Twilio-AggregatedDataTile-Title">{`${channelName} SLA`}</Title>
       </Channel>
       <Content className="Twilio-AggregatedDataTile-Content">{content}</Content>
-      <Handled>
-        <Label>Handled Today: </Label>
-        <Metric>{sla?.handledTasks}</Metric>
-      </Handled>
-      <Handled>
-        <Label>Within SL: </Label>
-        <Metric>{sla?.handledTasksWithinSL}</Metric>
-      </Handled>
+      <Label>Today</Label>
+      <MetricsContainer>
+        <Handled>
+          <Label>Handled</Label>
+          <Metric>{sla?.handledTasks}</Metric>
+        </Handled>
+        <Handled>
+          <Label>Within&nbsp;SL</Label>
+          <Metric>{sla?.handledTasksWithinSL}</Metric>
+        </Handled>
+      </MetricsContainer>
     </TileWrapper>
   );
 });
