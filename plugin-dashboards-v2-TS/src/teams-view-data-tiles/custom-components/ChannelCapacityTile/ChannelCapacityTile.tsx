@@ -23,7 +23,7 @@ const ChannelCapacityTile = (props: ComponentProps) => {
   const available = capacity - taskCount;
 
   const data = [];
-  data.push({ title: "Busy", value: taskCount, color: "limegreen" });
+  if (taskCount > 0) data.push({ title: "Busy", value: taskCount, color: "limegreen" });
   data.push({ title: "Available", value: available, color: "green" });
 
   let used = '-';
