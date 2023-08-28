@@ -26,7 +26,7 @@ export const Title = styled('p')`
 `;
 
 export const Content = styled('div')`
-    margin-top: ${({ theme }) => theme.tokens.spacings.space50};
+    margin-top: ${({ theme }) => theme.tokens.spacings.space30};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
@@ -38,6 +38,12 @@ export const Content = styled('div')`
 export const Description = styled('div')`
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize20};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
+`;
+
+export const Chart = styled('div')`
+  display: flex;
+  max-width: 130px;
+  justify-content: center;
 `;
 
 export const MetricsContainer = styled('div')`

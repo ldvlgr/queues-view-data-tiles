@@ -1,7 +1,8 @@
 import * as Flex from '@twilio/flex-ui';
 import { connect } from 'react-redux';
 import { getTasksAndCapacity } from '../../utils/WorkerDataUtil';
-import { TileWrapper, Title, Content, TaskCount, Label, Metric, MetricsContainer } from './ChannelCapacityTile.Components';
+import { PieChart } from "react-minimal-pie-chart";
+import { TileWrapper, Title, Content, Chart, TaskCount, Label, Metric, MetricsContainer } from './ChannelCapacityTile.Components';
 
 /**
  * @param {props} props.channelName The channelName ('voice', 'chat', 'sms' etc.)
@@ -18,6 +19,11 @@ const ChannelCapacityTile = connect((state, ownProps) => {
   const { channelName, tasksAndCapacity, bgColor } = props;
   let taskCount = tasksAndCapacity.tasks[channelName];
   let capacity = tasksAndCapacity.capacity[channelName];
+  const available = capacity - taskCount;
+
+  const data = [];
+  data.push({ title: "Busy", value: taskCount, color: "limegreen" });
+  data.push({ title: "Available", value: available, color: "green" });
 
   let used = '-';
   if (capacity > 0) {
@@ -33,6 +39,21 @@ const ChannelCapacityTile = connect((state, ownProps) => {
       <Content className='Twilio-AggregatedDataTile-Content'>
         {capacity}
       </Content>
+      <MetricsContainer>
+        <Chart>
+          <PieChart
+            labelStyle={{
+              fontSize: '10px',
+              fill: 'Black',
+            }}
+            startAngle={180}
+            lengthAngle={180}
+            viewBoxSize={[100, 50]}
+            data={data}
+            label={({ dataEntry }) => dataEntry.value}
+          />
+        </Chart>
+      </MetricsContainer>
       <MetricsContainer>
         <TaskCount>
           <Label> {channelName} Tasks</Label>

@@ -19,7 +19,7 @@ const config = {
     Service: { color: 'tan' }
   },
   taskSummaryDataTile: true,
-  teamActivityBarChart: true,
+  teamActivityBarChart: false,
   skillsByTeamDataTile: false,
   columns: {
     team: true,
