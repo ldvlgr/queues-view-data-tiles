@@ -13,8 +13,13 @@ const config = {
       capacityDataTile: true,
     },
   },
+  teams: {
+    Sales: { color: 'beige' },
+    Magic: { color: 'wheat' },
+    Service: { color: 'tan' }
+  },
   taskSummaryDataTile: true,
-  teamActivityBarChart: false,
+  teamActivityBarChart: true,
   skillsByTeamDataTile: false,
   columns: {
     team: true,
@@ -25,6 +30,7 @@ const config = {
   }
 }
 
+
 export const getChannelVoice_Color = () => {
   return config.channels.voice.color;
 };
@@ -34,6 +40,9 @@ export const getChannelChat_Color = () => {
 export const getChannelSMS_Color = () => {
   return config.channels.sms.color;
 };
+export const getTeamsConfig = () => {
+  return config.teams;
+}
 export const isChannelVoice_CapacityEnabled = () => {
   return config.channels.voice.capacityDataTile;
 };

@@ -3,7 +3,6 @@ import * as React from 'react';
 import { TileWrapper, Title, BarChart, Label, Legend } from './AgentTeamActivityTile.Components'
 import { cx } from 'emotion';
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
-import { mockWorkersData } from '../../utils/mockWorkersData';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
 
 import { connect } from 'react-redux';
@@ -13,12 +12,11 @@ import { connect } from 'react-redux';
  */
 const AgentTeamActivityTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
-    //const workers = state.flex.supervisor.workers;
-    const workers = mockWorkersData;
+    const workers = state.flex.supervisor.workers;
     const teamsData = ownProps.teamsData;
     const teams = Object.keys(teamsData);
     let activityCounts = getAgentStatusCounts(workers, teams);
-    console.log('ActivityCounts:', activityCounts);
+    //console.log('ActivityCounts:', activityCounts);
     return { activityCounts };
 
     //object returned from connect is merged into component props

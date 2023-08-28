@@ -19,6 +19,12 @@ const ChannelCapacityTile = connect((state, ownProps) => {
   let taskCount = tasksAndCapacity.tasks[channelName];
   let capacity = tasksAndCapacity.capacity[channelName];
 
+  let used = '-';
+  if (capacity > 0) {
+    const pct = Math.round(taskCount / capacity * 100);
+    used = `${pct}%`;
+  }
+
   return (
     <TileWrapper className='Twilio-AggregatedDataTile' bgColor={bgColor}>
       <Title className='Twilio-AggregatedDataTile-Title'>
@@ -28,10 +34,14 @@ const ChannelCapacityTile = connect((state, ownProps) => {
         {capacity}
       </Content>
       <MetricsContainer>
-      <TaskCount>
-        <Label> {channelName} Tasks</Label>
-        <Metric> {taskCount} </Metric>
-      </TaskCount>
+        <TaskCount>
+          <Label> {channelName} Tasks</Label>
+          <Metric> {taskCount} </Metric>
+        </TaskCount>
+        <TaskCount>
+          <Label> Occupied </Label>
+          <Metric> {used} </Metric>
+        </TaskCount>
       </MetricsContainer>
     </TileWrapper>
   );

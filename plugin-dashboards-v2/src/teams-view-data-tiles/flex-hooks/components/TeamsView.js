@@ -12,6 +12,7 @@ import {
   getChannelVoice_Color,
   getChannelChat_Color,
   getChannelSMS_Color,
+  getTeamsConfig,
   isChannelVoice_CapacityEnabled,
   isChannelChat_CapacityEnabled,
   isChannelSMS_CapacityEnabled,
@@ -24,13 +25,6 @@ import {
   isTeamActivityBarChartEnabled,
   isSkillsByTeamEnabled
 } from '../../config';
-
-const teamsData = {
-  ABC123: { color: 'beige' },
-  DEF456: { color: 'wheat' },
-  XYZ789: { color: 'tan' }
-}
-const teams = Object.keys(teamsData);
 
 export default (manager) => {
   addTeamsViewTiles();
@@ -89,13 +83,13 @@ const addTeamsViewTiles = () => {
               <ChannelCapacityTile key="sms" channelName="sms" bgColor={getChannelSMS_Color()} />
             }
             {isTaskSummaryEnabled() &&
-              <TaskSummaryTile teamsData={teamsData} />
+              <TaskSummaryTile teamsData={getTeamsConfig()} />
             }
             {isTeamActivityBarChartEnabled() &&
-              <AgentTeamActivityTile teamsData={teamsData} />
+              <AgentTeamActivityTile teamsData={getTeamsConfig()} />
             }
             {isSkillsByTeamEnabled() &&
-              <SkillsByTeamTile teamsData={teamsData} />
+              <SkillsByTeamTile teamsData={getTeamsConfig()} />
             }
           </TeamsViewDataTiles>
 
