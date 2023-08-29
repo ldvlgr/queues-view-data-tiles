@@ -38,7 +38,7 @@ const config: QueuesViewDataTilesConfig = {
     Break: { color: 'goldenrod', icon: 'Hold' },
     Lunch: { color: 'darkorange', icon: 'Hamburger' },
     Training: { color: 'red', icon: 'Bulb' },
-    Unavailable: { color: 'darkred', icon: 'Close' },
+    OTHER: { color: 'darkred', icon: 'More' },
     Offline: { color: 'grey', icon: 'Minus' },
   },
   queuesStatsColumns: {

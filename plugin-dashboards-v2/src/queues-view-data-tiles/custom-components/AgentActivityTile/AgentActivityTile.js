@@ -1,34 +1,38 @@
-import { Icon } from '@twilio/flex-ui';
-import * as React from 'react';
+import React from 'react';
+import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import { TileWrapper, Summary, Chart, Title, AgentActivity, Label, Metric } from './AgentActivityTile.Components'
-import { connect } from 'react-redux';
 import { PieChart } from 'react-minimal-pie-chart';
 
-const AgentActivityTile = connect((state) => {
-    let workerActivityCounts = {};
-    const activityStats = state.flex.realtimeQueues.workspaceStats?.activity_statistics || [];
-    activityStats.forEach((activity) => {
-        workerActivityCounts[activity.friendly_name] = activity.workers;
+const AgentActivityTile = (props) => {
+    const { activityConfig } = props;
+    const workerActivityCounts = useFlexSelector((state) => {
+        const activityStats = state.flex.realtimeQueues.workspaceStats?.activity_statistics || [];
+        return activityStats;
     });
-    return { workerActivityCounts };
-    //object returned from connect is merged into component props
-    //See https://react-redux.js.org/api/connect
-})((props) => {
-    const { workerActivityCounts, activityConfig } = props;
-    const activityNames = Object.keys(activityConfig);
-
+    let activityCounts = {};
+    let otherUnavailable = 0;
     let data = [];
-    activityNames.forEach((activity) => {
-        let count = workerActivityCounts[activity] || 0;
-        const dataEntry = { title: activity, value: count, color: activityConfig[activity].color };
-        if ((count) && activityConfig[activity]) data.push(dataEntry);
+    workerActivityCounts.forEach((activity) => {
+        let count = activity.workers;
+        if (count && activityConfig[activity.friendly_name]) {
+            activityCounts[activity.friendly_name] = count;
+            const dataEntry = { title: activity.friendly_name, value: count, color: activityConfig[activity.friendly_name]?.color };
+            data.push(dataEntry);
+        }
+        else otherUnavailable += count;
     })
+    if (otherUnavailable > 0) {
+        activityCounts.OTHER  = otherUnavailable;
+        const other = { title: "OTHER", value: otherUnavailable, color: activityConfig.OTHER?.color };
+        data.push(other);
+    }
+    const activityNames = Object.keys(activityConfig);
 
     return (
         <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
                 {activityNames.map((activity) => {
-                    let count = workerActivityCounts[activity] || 0;
+                    let count = activityCounts[activity] || 0;
                     return (
                         <AgentActivity>
                             <Icon icon={activityConfig[activity]?.icon} />
@@ -54,6 +58,6 @@ const AgentActivityTile = connect((state) => {
             </Chart>
         </TileWrapper>
     )
-});
+}
 
 export default AgentActivityTile;

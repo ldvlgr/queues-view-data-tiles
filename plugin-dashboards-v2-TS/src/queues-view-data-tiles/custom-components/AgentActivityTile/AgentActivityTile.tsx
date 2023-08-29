@@ -20,28 +20,34 @@ interface ComponentProps {
 }
 const AgentActivityTile = (props: ComponentProps) => {
     const { activityConfig } = props;
-    const workerActivityCounts: ActivityCounts = useFlexSelector((state: AppState) => {
-        let activityCounts: ActivityCounts = {};
+    const workerActivityCounts: ActivityStatistic[] = useFlexSelector((state: AppState) => {
         const activityStats = state.flex.realtimeQueues.workspaceStats?.activity_statistics || [];
-        activityStats.forEach((activity: ActivityStatistic) => {
-            activityCounts[activity.friendly_name] = activity.workers;
-        });
-        return activityCounts;
+        return activityStats;
     });
-    const activityNames = Object.keys(activityConfig);
-
+    let activityCounts: ActivityCounts = {};
+    let otherUnavailable = 0;
     let data: Data = [];
-    activityNames.forEach((activity) => {
-        let count = workerActivityCounts[activity] || 0;
-        const dataEntry: BaseDataEntry = { title: activity, value: count, color: activityConfig[activity].color };
-        if ((count) && activityConfig[activity]) data.push(dataEntry);
+    workerActivityCounts.forEach((activity) => {
+        let count = activity.workers;
+        if (count && activityConfig[activity.friendly_name]) {
+            activityCounts[activity.friendly_name] = count;
+            const dataEntry: BaseDataEntry = { title: activity.friendly_name, value: count, color: activityConfig[activity.friendly_name]?.color };
+            data.push(dataEntry);
+        }
+        else otherUnavailable += count;
     })
+    if (otherUnavailable > 0) {
+        activityCounts.OTHER  = otherUnavailable;
+        const other: BaseDataEntry = { title: "OTHER", value: otherUnavailable, color: activityConfig.OTHER?.color };
+        data.push(other);
+    }
+    const activityNames = Object.keys(activityConfig);
 
     return (
         <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
                 {activityNames.map((activity) => {
-                    let count = workerActivityCounts[activity] || 0;
+                    let count = activityCounts[activity] || 0;
                     return (
                         <AgentActivity>
                             <Icon icon={activityConfig[activity]?.icon} />
