@@ -30,10 +30,10 @@ const TeamsViewDataTiles = () => {
       {isTaskSummaryEnabled() &&
         <TaskSummaryTile teamsData={getTeamsConfig()} />
       }
-      {/* {isTeamActivityBarChartEnabled() &&
+      {isTeamActivityBarChartEnabled() &&
         <AgentTeamActivityTile teamsData={getTeamsConfig()} />
       } 
-      {isSkillsByTeamEnabled() &&
+      {/* {isSkillsByTeamEnabled() &&
         <SkillsByTeamTile teamsData={getTeamsConfig()} />
       } */}
     </TeamsViewTilesContainer>

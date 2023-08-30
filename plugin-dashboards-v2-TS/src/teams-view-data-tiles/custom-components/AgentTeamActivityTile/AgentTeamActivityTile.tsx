@@ -1,45 +1,50 @@
-import { withTheme, StackedBarChart } from '@twilio/flex-ui';
+import { useFlexSelector, StackedBarChart } from '@twilio/flex-ui';
 import * as React from 'react';
 import { TileWrapper, Title, BarChart, Label, Legend } from './AgentTeamActivityTile.Components'
-import { cx } from 'emotion';
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
+import { SupervisorWorkerState } from '@twilio/flex-ui/src/state/State.definition';
+import { AppState } from '../../flex-hooks/states';
+import { TeamsData, ActivityCounts } from '../../types';
+// import { connect } from 'react-redux';
 
-import { connect } from 'react-redux';
+interface StackedBarChartItem {
+    value: number;
+    color: string;
+    label: string;
+}
 
-/**
- * @param {props} props.teamsData The teams data {'teamName': {color: 'grey'}}
- */
-const AgentTeamActivityTile = connect((state, ownProps) => {
-    //Note: max 200 workers will be loaded for teams view
-    //const workers = state.flex.supervisor.workers;
-    const workers = mockWorkersData;
-    const teamsData = ownProps.teamsData;
+interface ActivityConfig {
+    [key: string]: {
+        color: string;
+        icon: string;
+    };
+};
+interface ComponentProps {
+    teamsData: TeamsData;
+    maxWidth?: number;
+}
+
+const AgentTeamActivityTile = (props: ComponentProps) => {
+    const { teamsData, maxWidth } = props;
     const teams = Object.keys(teamsData);
-    let activityCounts = getAgentStatusCounts(workers, teams);
-    console.log('ActivityCounts:', activityCounts);
-    return { activityCounts };
-
-    //object returned from connect is merged into component props
-    //See https://react-redux.js.org/api/connect
-})((props) => {
-    const { className, teamsData, activityCounts, maxWidth } = props;
-    const teams = Object.keys(teamsData);
-
-    //Available Flex icons:
-    //https://www.twilio.com/docs/flex/developer/ui/v1/icons
-    const activityConfig = {
+    const activityCounts: ActivityCounts = useFlexSelector((state: AppState) => {
+        const workers: SupervisorWorkerState[] = state.flex.supervisor.workers;
+        const workerData = getAgentStatusCounts(workers, teams);
+        return workerData;
+    });
+    // Move into feature config
+    const activityConfig: ActivityConfig = {
         Idle: { color: 'green', icon: 'Accept' },
         Busy: { color: 'limegreen', icon: 'GenericTask' },
         Outbound: { color: 'greenyellow', icon: 'Call' },
         Break: { color: 'goldenrod', icon: 'Hold' },
         Lunch: { color: 'darkorange', icon: 'Hamburger' },
         Training: { color: 'red', icon: 'Bulb' },
-        Unavailable: { color: 'darkred', icon: 'Close' },
+        OTHER: { color: 'darkred', icon: 'More' },
         Offline: { color: 'grey', icon: 'Minus' },
     }
-    const activityNames = Object.keys(activityConfig);
     //Note: Idle and Busy are special Status values based on agent task counts
 
     let totalAgents = activityCounts?.All?.totalAgentCount || 0;
@@ -48,18 +53,27 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
         if (activityCounts[tm].totalAgentCount > maxAgents) maxAgents = activityCounts[tm].totalAgentCount;
     });
 
-    const getChartProps = (tm) => {
-        let teamActivitydata = activityCounts[tm];
-        let teamBarCharProps = [];
+    const getChartProps = (tm: string) => {
+        let otherUnavailable = 0;
+        let teamActivities = activityCounts[tm].activities;
+        let teamBarCharProps: StackedBarChartItem[] = [];
+        const activityNames = Object.keys(teamActivities);
         activityNames.forEach((activity) => {
-            let count = teamActivitydata[activity] || 0;
-            if ((count) && activityConfig[activity]) teamBarCharProps.push({ label: activity, value: count, color: activityConfig[activity].color });
-        })
+            const count = teamActivities[activity] || 0;
+            if (count && activityConfig[activity]) {
+                const barChartItem: StackedBarChartItem = { label: activity, value: count, color: activityConfig[activity].color }
+                if ((count) && activityConfig[activity]) teamBarCharProps.push(barChartItem);
+            } else otherUnavailable += count;
+        });
+        if (otherUnavailable > 0) {
+            const barChartItem: StackedBarChartItem = { label: 'OTHER', value: otherUnavailable, color: activityConfig.OTHER?.color }
+            teamBarCharProps.push(barChartItem);
+        }
         return teamBarCharProps;
     }
 
     return (
-        <TileWrapper className={cx('Twilio-AggregatedDataTile', className)}>
+        <TileWrapper className='Twilio-AggregatedDataTile'>
             <Title className='Twilio-AggregatedDataTile-Title'>
                 Activity by Team
             </Title>
@@ -88,8 +102,6 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
                                     </BarChart>
                                 </Td>
                             </Tr>
-
-
                         );
                     })
                     }
@@ -97,6 +109,6 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
             </Table>
         </TileWrapper>
     )
-});
+};
 
-export default withTheme(AgentTeamActivityTile);
+export default AgentTeamActivityTile;

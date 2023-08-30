@@ -34,7 +34,7 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
         Break: { color: 'goldenrod', icon: 'Hold' },
         Lunch: { color: 'darkorange', icon: 'Hamburger' },
         Training: { color: 'red', icon: 'Bulb' },
-        Unavailable: { color: 'darkred', icon: 'Close' },
+        OTHER: { color: 'darkred', icon: 'More' },
         Offline: { color: 'grey', icon: 'Minus' },
     }
     const activityNames = Object.keys(activityConfig);
@@ -47,14 +47,36 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     });
 
     const getChartProps = (tm) => {
-        let teamActivitydata = activityCounts[tm];
+        let otherUnavailable = 0;
+        let teamActivities = activityCounts[tm].activities;
         let teamBarCharProps = [];
+        const activityNames = Object.keys(teamActivities);
         activityNames.forEach((activity) => {
-            let count = teamActivitydata[activity] || 0;
-            if ((count) && activityConfig[activity]) teamBarCharProps.push({ label: activity, value: count, color: activityConfig[activity].color });
-        })
+            const count = teamActivities[activity] || 0;
+            if (count && activityConfig[activity]) {
+                const barChartItem = { label: activity, value: count, color: activityConfig[activity].color }
+                if ((count) && activityConfig[activity]) teamBarCharProps.push(barChartItem);
+            } else otherUnavailable += count;
+        });
+        if (otherUnavailable > 0) {
+            const barChartItem = { label: 'OTHER', value: otherUnavailable, color: activityConfig.OTHER?.color }
+            teamBarCharProps.push(barChartItem);
+        }
         return teamBarCharProps;
     }
+
+
+
+
+    // const getChartProps = (tm) => {
+    //     let teamActivitydata = activityCounts[tm];
+    //     let teamBarCharProps = [];
+    //     activityNames.forEach((activity) => {
+    //         let count = teamActivitydata[activity] || 0;
+    //         if ((count) && activityConfig[activity]) teamBarCharProps.push({ label: activity, value: count, color: activityConfig[activity].color });
+    //     })
+    //     return teamBarCharProps;
+    // }
 
     return (
         <TileWrapper className={cx('Twilio-AggregatedDataTile', className)}>

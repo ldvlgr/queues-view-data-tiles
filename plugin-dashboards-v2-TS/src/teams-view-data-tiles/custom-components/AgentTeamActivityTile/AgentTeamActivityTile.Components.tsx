@@ -1,6 +1,19 @@
 import { styled } from '@twilio/flex-ui';
 
-export const TileWrapper = styled('div')`
+export interface OwnProps {
+  theme?: any;
+  bgColor?: string;
+  agentCount: number;
+  totalAgents: number;
+  maxWidth: number
+}
+
+export interface ThemeOnlyProps {
+  theme?: any;
+  bgColor?: string;
+}
+
+export const TileWrapper = styled('div')<ThemeOnlyProps>`
     display: flex;
     flex-direction: column;
     padding: ${({ theme }) => theme.tokens.spacings.space40};
@@ -12,7 +25,7 @@ export const TileWrapper = styled('div')`
     color: ${({ theme }) => theme.tokens.textColors.colorText};
 `;
 
-export const Title = styled('p')`
+export const Title = styled('p')<ThemeOnlyProps>`
     min-height: ${({ theme }) => theme.tokens.sizings.sizeSquare70};
     margin-top: ${({ theme }) => theme.tokens.spacings.space0};
     margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
@@ -21,21 +34,21 @@ export const Title = styled('p')`
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
 
-export const Content = styled('div')`
+export const Content = styled('div')<ThemeOnlyProps>`
     margin-top: ${({ theme }) => theme.tokens.spacings.space50};
     font-size: ${({ theme }) => theme.tokens.fontSizes.fontSize90};
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight90};
     font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
 
-export const Label = styled('div')`
+export const Label = styled('div')<ThemeOnlyProps>`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 12px;
   font-weight: bold;
   padding: 4px;
 `;
 
-export const Legend = styled('div')`
+export const Legend = styled('div')<ThemeOnlyProps>`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   font-size: 10px;
   font-weight: bold;
@@ -45,14 +58,16 @@ export const Legend = styled('div')`
 `;
 
 
-export const BarChart = styled('div')`
+export const BarChart = styled('div')<OwnProps>`
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   width : ${(props) => getWidth(props)};
 `;
 
 
-function getWidth(props) {
-  let {agentCount, totalAgents, maxWidth} = props;
+function getWidth(props: OwnProps) {
+  const {agentCount, totalAgents} = props;
+  let { maxWidth} = props;
+  
   //console.log('BarChart props:', props);
   if (!maxWidth) maxWidth = 900;
   return ((agentCount / totalAgents) * maxWidth) + 'px';
