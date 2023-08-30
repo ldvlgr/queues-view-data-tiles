@@ -1,42 +1,20 @@
+import React from 'react';
 import * as Flex from '@twilio/flex-ui';
 import { styled } from '@twilio/flex-ui';
-
-import AgentTeamActivityTile from '../../custom-components/AgentTeamActivityTile/AgentTeamActivityTile';
-import AgentStatusByTeamTile from '../../custom-components/AgentStatusTile/AgentStatusByTeamTile';
-import AgentStatusAllTeamsTile from '../../custom-components/AgentStatusTile/AgentStatusAllTeamsTile';
-import AgentSkillsAllTeamsTile from '../../custom-components/AgentSkillsTile/AgentSkillsAllTeamsTile';
-import SkillsByTeamTile from '../../custom-components/SkillsByTeamBarChartTile/SkillsByTeamTile';
-import TaskSummaryTile from '../../custom-components/TaskSummaryTile/TaskSummaryTile';
-import ChannelCapacityTile from '../../custom-components/ChannelCapacityTile/ChannelCapacityTile';
+import TeamsViewDataTiles from '../../custom-components/TeamsViewDataTiles/TeamsViewDataTiles';
 import {
-  getChannelVoice_Color,
-  getChannelChat_Color,
-  getChannelSMS_Color,
-  getTeamsConfig,
-  isChannelVoice_CapacityEnabled,
-  isChannelChat_CapacityEnabled,
-  isChannelSMS_CapacityEnabled,
   isTeamColumnEnabled,
   isDepartmentColumnEnabled,
   isLocationColumnEnabled,
   isAgentSkillsColumnEnabled,
   isAgentCapacityColumnEnabled,
-  isTaskSummaryEnabled,
-  isTeamActivityBarChartEnabled,
-  isSkillsByTeamEnabled
 } from '../../config';
 
 export default (manager) => {
   addTeamsViewTiles();
   addWorkersDataTableColumns(manager);
-  //manager.strings.SupervisorTaskCardHeader = '{{task.attributes.direction}} {{task.defaultFrom}}';  
-  window.Handlebars.registerHelper('showDirection', (taskAttributes) => {
-    if (taskAttributes.direction == 'inbound') return 'IN'
-    else return 'OUT';
-  });
-  //default string
-  //manager.strings.SupervisorTaskCardHeader = '{{task.defaultFrom}}';
-  //manager.strings.SupervisorTaskCardHeader = '{{showDirection task.attributes}} {{task.defaultFrom}}';
+  // default string
+  // manager.strings.SupervisorTaskCardHeader = '{{task.defaultFrom}}';
   manager.strings.SupervisorTaskCardHeader = '{{task.queueName}}';
 }
 
@@ -47,63 +25,14 @@ const TeamsWrapper = styled('div')`
   padding: 12px;
   `;
 
-const TeamsViewDataTiles = styled('div')`
-  
-  display: flex;
-  width: 100%;
-  margin-top: ${({ theme }) => theme.tokens.spacings.space0};
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: ${({ theme }) => theme.tokens.spacings.space0};
-  height: auto;
-  box-sizing: border-box;
-  flex: 0 0 auto;
-  > * {
-      flex: 1 1 25%;
-  }
-  > * + * {
-      margin-left: ${({ theme }) => theme.tokens.spacings.space50};
-  }
-  ${(props) => props.theme.QueuesStats.TilesGrid}
-`;
-
 const addTeamsViewTiles = () => {
 
   Flex.TeamsView.Content.addWrapper(
     (OriginalComponent) => (originalProps) => {
       const updatedProps = { ...originalProps };
-
       return (
         <TeamsWrapper>
-          <TeamsViewDataTiles>
-            {isChannelChat_CapacityEnabled() &&
-              <ChannelCapacityTile key="chat" channelName="chat" bgColor={getChannelChat_Color()} />
-            }
-            {isChannelSMS_CapacityEnabled() &&
-              <ChannelCapacityTile key="sms" channelName="sms" bgColor={getChannelSMS_Color()} />
-            }
-            {isTaskSummaryEnabled() &&
-              <TaskSummaryTile teamsData={getTeamsConfig()} />
-            }
-            {isTeamActivityBarChartEnabled() &&
-              <AgentTeamActivityTile teamsData={getTeamsConfig()} />
-            }
-            {isSkillsByTeamEnabled() &&
-              <SkillsByTeamTile teamsData={getTeamsConfig()} />
-            }
-          </TeamsViewDataTiles>
-
-          {/* <TeamsViewDataTiles>
-            <AgentStatusByTeamTile team='All' teams={teams} />
-            <AgentStatusByTeamTile team='ABC123' teams={teams} />
-            <AgentStatusByTeamTile team='DEF456' teams={teams} />
-            <AgentStatusByTeamTile team='XYZ789' teams={teams} />
-          </TeamsViewDataTiles>  */}
-
-          {/* <TeamsViewDataTiles>
-            <AgentStatusAllTeamsTile teamsData={teamsData} />
-          </TeamsViewDataTiles> */}
-
+          <TeamsViewDataTiles />
           <OriginalComponent {...updatedProps} />
         </TeamsWrapper>
       );
