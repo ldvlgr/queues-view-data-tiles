@@ -1,6 +1,6 @@
 import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Title, Label, Legend } from './TaskSummaryTile.Components'
+import { TileWrapper, Title, Label } from './TaskSummaryTile.Components'
 import { getTasksByTeamCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';

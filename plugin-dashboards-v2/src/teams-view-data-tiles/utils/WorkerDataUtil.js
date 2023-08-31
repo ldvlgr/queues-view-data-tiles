@@ -91,10 +91,10 @@ export function getSkillsByTeamCounts(workers = [], teams = []) {
 
 export function getTasksByTeamCounts(workers = [], teams = []) {
     let taskCounts = {};
-    taskCounts['All'] = { teamName: 'All', voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 };
+    taskCounts['All'] = { teamName: 'All', tasks: { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 } };
     //Init task counts
     teams.forEach((team) => {
-        taskCounts[team] = { teamName: team, voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 };
+        taskCounts[team] = { teamName: team, tasks: { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 } };
     });
     workers.forEach((wk) => {
         let tm = wk.worker?.attributes?.team_name || 'Other';
@@ -107,11 +107,11 @@ export function getTasksByTeamCounts(workers = [], teams = []) {
                 channel = task.taskChannelUniqueName;
             }
             if (teams.includes(tm)) {
-                let count = taskCounts[tm][channel] ? taskCounts[tm][channel] : 0;
-                taskCounts[tm][channel] = count + 1;
+                let count = taskCounts[tm].tasks[channel] ? taskCounts[tm].tasks[channel] : 0;
+                taskCounts[tm].tasks[channel] = count + 1;
             }
-            let count = taskCounts.All[channel] ? taskCounts.All[channel] : 0;
-            taskCounts.All[channel] = count + 1;
+            let count = taskCounts.All.tasks[channel] ? taskCounts.All.tasks[channel] : 0;
+            taskCounts.All.tasks[channel] = count + 1;
         });
     });
     return taskCounts;

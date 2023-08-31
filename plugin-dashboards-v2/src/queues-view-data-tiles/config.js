@@ -12,13 +12,13 @@ const config = {
     },
     chat: {
       color: '#87CEFA',
-      SLADataTile: false,
-      taskCountsDataTile: false
+      SLADataTile: true,
+      taskCountsDataTile: true
     },
     sms: {
       color: '#4682B4',
-      SLADataTile: true,
-      taskCountsDataTile: true
+      SLADataTile: false,
+      taskCountsDataTile: false
     },
   },
   allChannelsDataTile: true,

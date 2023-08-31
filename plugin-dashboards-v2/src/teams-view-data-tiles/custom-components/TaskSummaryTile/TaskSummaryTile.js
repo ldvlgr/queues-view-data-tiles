@@ -1,7 +1,6 @@
 import { Icon } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Title, Label, Legend } from './TaskSummaryTile.Components'
-import { cx } from 'emotion';
+import { TileWrapper, Title, Label } from './TaskSummaryTile.Components'
 import { getTasksByTeamCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
@@ -36,10 +35,10 @@ const TaskSummaryTile = connect((state, ownProps) => {
     //object returned from connect is merged into component props
     //See https://react-redux.js.org/api/connect
 })((props) => {
-    const { className, teamsData, taskCounts } = props;
+    const { teamsData, taskCounts } = props;
     const teams = Object.keys(teamsData);
     return (
-        <TileWrapper className={cx('Twilio-AggregatedDataTile', className)}>
+        <TileWrapper className='Twilio-AggregatedDataTile'>
             <Title className='Twilio-AggregatedDataTile-Title'>
                 Tasks by Team & Channel
             </Title>
@@ -59,10 +58,10 @@ const TaskSummaryTile = connect((state, ownProps) => {
                         return (
                             <Tr key={team}>
                                 <Td><Label bgColor={teamsData[team].color}> {team}  </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].voice_inbound} </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].voice_outbound} </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].chat} </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].sms} </Label></Td>
+                                <Td textAlign='center'><Label> {taskCounts[team].tasks.voice_inbound} </Label></Td>
+                                <Td textAlign='center'><Label> {taskCounts[team].tasks.voice_outbound} </Label></Td>
+                                <Td textAlign='center'><Label> {taskCounts[team].tasks.chat} </Label></Td>
+                                <Td textAlign='center'><Label> {taskCounts[team].tasks.sms} </Label></Td>
 
                             </Tr>
                         );
@@ -70,10 +69,10 @@ const TaskSummaryTile = connect((state, ownProps) => {
                     }
                     <Tr key='Total'>
                         <Td><Label> Total (All) </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.voice_inbound} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.voice_outbound} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.chat} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.sms} </Label></Td>
+                        <Td textAlign='center'><Label> {taskCounts.All.tasks.voice_inbound} </Label></Td>
+                        <Td textAlign='center'><Label> {taskCounts.All.tasks.voice_outbound} </Label></Td>
+                        <Td textAlign='center'><Label> {taskCounts.All.tasks.chat} </Label></Td>
+                        <Td textAlign='center'><Label> {taskCounts.All.tasks.sms} </Label></Td>
                     </Tr>
                 </TBody>
             </Table>
