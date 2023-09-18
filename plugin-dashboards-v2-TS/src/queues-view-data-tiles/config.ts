@@ -2,8 +2,8 @@
 import QueuesViewDataTilesConfig from "./types/ServiceConfiguration";
 
 const config: QueuesViewDataTilesConfig = {
-  activeTasksDataTile: false,
   enabled: true,
+  activeTasksDataTile: false,
   waitingTasksDataTile: false,
   longestWaitTimeDataTile: false,
   agentsByActivityBarChart: false,
@@ -19,7 +19,7 @@ const config: QueuesViewDataTilesConfig = {
       taskCountsDataTile: false
     },
     sms: {
-      color: '#4682B4',
+      color: '#59cef8',
       SLADataTile: true,
       taskCountsDataTile: true
     },
@@ -33,13 +33,15 @@ const config: QueuesViewDataTilesConfig = {
   groupsChartTile: false,
   enhancedAgentByActivityPieChart: true,
   agentActivityConfiguration: {
-    Available: { color: 'green', icon: 'Accept' },
-    Outbound: { color: 'greenyellow', icon: 'Call' },
-    Break: { color: 'goldenrod', icon: 'Hold' },
-    Lunch: { color: 'darkorange', icon: 'Hamburger' },
-    Training: { color: 'red', icon: 'Bulb' },
-    OTHER: { color: 'darkred', icon: 'More' },
-    Offline: { color: 'grey', icon: 'Minus' },
+    activities: {
+      Available: { color: 'green', icon: 'Accept' },
+      Outbound: { color: 'darkgreen', icon: 'Call' },
+      Break: { color: 'goldenrod', icon: 'Hold' },
+      Lunch: { color: 'darkorange', icon: 'Hamburger' },
+      Training: { color: 'red', icon: 'Bulb' },
+      Offline: { color: 'grey', icon: 'Minus' },
+    },
+    other: { color: 'darkred', icon: 'More' },
   },
   queuesStatsColumns: {
     assignedTasksColumn: true,

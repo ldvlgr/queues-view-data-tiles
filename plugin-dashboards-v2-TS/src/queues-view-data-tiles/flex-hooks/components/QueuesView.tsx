@@ -7,7 +7,6 @@ import ChannelSLATile from '../../custom-components/ChannelSLATile/ChannelSLATil
 import AllChannelsSLATile from '../../custom-components/AllChannelsSLATile/AllChannelsSLATile';
 import GroupsChartTile from '../../custom-components/GroupsChartTile/GroupsChartTile';
 import AgentActivityTile from '../../custom-components/AgentActivityTile/AgentActivityTile';
-const PLUGIN_NAME = 'DashboardsPlugin';
 
 import {
   isActiveTasksEnabled,
@@ -45,37 +44,37 @@ const addTiles = () => {
   if (isChannelVoice_CountsEnabled()) {
     const options: Flex.ContentFragmentProps = { sortOrder: -6 };
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='voice-tasks' channelName='voice' bgColor={getChannelVoice_Color()} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={getChannelVoice_Color()} channelList={getChannelNames()}/>,
       options
     );
   }
   if (isChannelChat_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='chat-tasks' channelName='chat' bgColor={getChannelChat_Color()} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={getChannelChat_Color()} channelList={getChannelNames()}/>,
       { sortOrder: -5 }
     );
   }
   if (isChannelSMS_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='sms-tasks' channelName='sms' bgColor={getChannelSMS_Color()} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={getChannelSMS_Color()} channelList={getChannelNames()}/>,
       { sortOrder: -4 }
     );
   }
   if (isChannelVoice_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='voice-sla-tile' channelName='voice' channelList={getChannelNames()}/>,
+      <ChannelSLATile key='voice-sla-tile' channelName='Voice' channelList={getChannelNames()}/>,
       { sortOrder: -3 }
     );
   }
   if (isChannelChat_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='chat-sla-tile' channelName='chat' channelList={getChannelNames()}/>,
+      <ChannelSLATile key='chat-sla-tile' channelName='Chat' channelList={getChannelNames()}/>,
       { sortOrder: -2 }
     );
   }
   if (isChannelSMS_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='sms-sla-tile' channelName='sms' channelList={getChannelNames()}/>,
+      <ChannelSLATile key='sms-sla-tile' channelName='SMS' channelList={getChannelNames()}/>,
       { sortOrder: -1 }
     );
   }

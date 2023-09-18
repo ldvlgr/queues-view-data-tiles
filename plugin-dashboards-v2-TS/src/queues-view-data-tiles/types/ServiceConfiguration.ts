@@ -9,7 +9,10 @@ export default interface QueuesViewDataTilesConfig {
   enhancedAgentByActivityPieChart: boolean;
   channels: Channels;
   agentActivityConfiguration: {
-    [key: string]: ActivityConfig;
+    activities: {
+      [key: string]: ActivityConfig;
+    },
+    other: ActivityConfig;
   };
   queuesStatsColumns: {
     assignedTasksColumn: boolean;

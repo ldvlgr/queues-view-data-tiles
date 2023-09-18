@@ -49,17 +49,6 @@ export const Description = styled('div')<ThemeOnlyProps>`
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
 `;
 
-
-export const TileWrapper1 = styled('div')<ThemeOnlyProps>`
-    background-color: ${(props) => props.theme.colors.base2};
-    color: ${(props) => props.theme.calculated.textColor};
-    padding: 12px;
-    box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;
-    display: flex;
-    flex-direction: row;
-    min-width: 250px;
-    flex: 1 1 auto;
-`;
 export const Summary = styled('div')`
   flex-direction: column;
   padding-right: 16px;
@@ -98,7 +87,7 @@ export const Metric = styled('div')`
   width: 40px;
   text-align: right;
   margin: 2px;
-
+  background-color: #f4f4f6;
 `;
 
 export const SLPct = styled('div')<OwnProps>`
@@ -113,16 +102,16 @@ export const SLPct = styled('div')<OwnProps>`
 `;
 
 function getColor(props: OwnProps) {
-  let {value, greenLine, yellowLine} = props;
+  const { value } = props;
+  let { greenLine, yellowLine } = props;
   if (!greenLine) greenLine = 90;
   if (!yellowLine) yellowLine = 60;
-    if (value >= greenLine) {
-      return '#d0f4d1';
-    } else if (value > yellowLine) {
-      return '#ffe3b9';
-    } else {
-      return '#feced3';
-    }
+  if (value >= greenLine) {
+    return '#d0f4d1';
+  } else if (value > yellowLine) {
+    return '#ffe3b9';
   }
+  return '#feced3';
+}
 
 
