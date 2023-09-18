@@ -13,36 +13,44 @@ const AgentActivityTile = (props) => {
     let otherUnavailable = 0;
     let data = [];
     workerActivityCounts.forEach((activity) => {
-        let count = activity.workers;
-        if (count && activityConfig[activity.friendly_name]) {
+        const count = activity.workers;
+        if (count && activityConfig.activities[activity.friendly_name]) {
             activityCounts[activity.friendly_name] = count;
-            const dataEntry = { title: activity.friendly_name, value: count, color: activityConfig[activity.friendly_name]?.color };
+            const dataEntry = {
+                title: activity.friendly_name,
+                value: count,
+                color: activityConfig.activities[activity.friendly_name]?.color,
+            };
             data.push(dataEntry);
-        }
-        else otherUnavailable += count;
-    })
+        } else otherUnavailable += count;
+    });
     if (otherUnavailable > 0) {
-        activityCounts.OTHER  = otherUnavailable;
-        const other = { title: "OTHER", value: otherUnavailable, color: activityConfig.OTHER?.color };
+        activityCounts.other = otherUnavailable;
+        const other = { title: 'Other', value: otherUnavailable, color: activityConfig.other?.color };
         data.push(other);
     }
-    const activityNames = Object.keys(activityConfig);
+    const activityNames = Object.keys(activityConfig.activities);
 
     return (
         <TileWrapper className='Twilio-AggregatedDataTile'>
             <Summary>
                 {activityNames.map((activity) => {
-                    let count = activityCounts[activity] || 0;
+                    const count = activityCounts[activity] || 0;
                     return (
-                        <AgentActivity>
-                            <Icon icon={activityConfig[activity]?.icon} />
-                            <Label bgColor={activityConfig[activity]?.color}>
-                                {activity}:
-                            </Label>
+                        <AgentActivity key={activity}>
+                            <Icon icon={activityConfig.activities[activity]?.icon} />
+                            <Label bgColor={activityConfig.activities[activity]?.color}>{activity}:</Label>
                             <Metric> {count} </Metric>
                         </AgentActivity>
-                    )
+                    );
                 })}
+                <AgentActivity key="other">
+                    <Icon icon={activityConfig.other?.icon} />
+                    <Label bgColor={activityConfig.other?.color}>
+                        Other
+                    </Label>
+                    <Metric> {activityCounts.other} </Metric>
+                </AgentActivity>
             </Summary>
             <Chart>
                 <Title>

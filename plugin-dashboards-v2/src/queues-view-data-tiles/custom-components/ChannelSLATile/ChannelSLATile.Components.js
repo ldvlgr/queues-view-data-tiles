@@ -39,21 +39,9 @@ export const Description = styled('div')`
     line-height: ${({ theme }) => theme.tokens.lineHeights.lineHeight10};
 `;
 
-
-export const TileWrapper1 = styled('div')`
-    background-color: ${(props) => getColor(props)};
-    color: ${(props) => props.theme.calculated.textColor};
-    padding: 12px;
-    box-shadow: ${(props) => props.theme.colors.base4} 0 -1px 0 inset;
-    display: flex;
-    flex-direction: column;
-`;
-
-
 export const Channel = styled('div')`
   display: flex;
   flex-direction: row;
-  height: 30px;
   vertical-align: top;
   justify-content: center;
 `;
@@ -99,10 +87,9 @@ export const Metric = styled('div')`
 `;
 
 function getColor(props) {
-  const { value = 0, count, theme } = props;
+  const { value = 0, count } = props;
   let { greenLine, yellowLine } = props;
-  // No color if handled tasks count = 0 (N/A)
-  if (!count) return theme.tokens.backgroundColors.colorBackgroundBody;
+  if (!count) return '#f4f4f6';
   if (!greenLine) greenLine = 90;
   if (!yellowLine) yellowLine = 60;
   if (value >= greenLine) {

@@ -8,8 +8,7 @@ import { PieChart } from "react-minimal-pie-chart";
 import { TileWrapper, Title, Summary, Chart, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components'
 
 const AllChannelsSLATile = connect((state) => {
-    //const queues = Object.values(state.flex.realtimeQueues.queuesList);
-    const queues = mockQueuesData;
+    const queues = Object.values(state.flex.realtimeQueues.queuesList);
     const sla = QueueDataUtil.getSLTodayByChannel(queues);
     return { sla }
     //object returned from connect is merged into component props
@@ -29,7 +28,7 @@ const AllChannelsSLATile = connect((state) => {
                     const handled = sla[ch]?.handledTasks || 0;
                     const slPct = sla[ch]?.serviceLevelPct;
                     return (
-                        <Channel>
+                        <Channel key={ch}>
                             <Icon icon={ getChannelIcon(ch) } />    
                             <Label bgColor={colors[ch]}>{ch}</Label>
                             {handled > 0 ? <SLPct value={slPct}> {slPct}% </SLPct> : <Metric> - </Metric>}

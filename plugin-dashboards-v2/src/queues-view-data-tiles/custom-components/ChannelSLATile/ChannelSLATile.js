@@ -15,7 +15,7 @@ const ChannelSLATileV2 = connect((state) => {
   //See https://react-redux.js.org/api/connect
 })((props) => {
   const { channelName } = props;
-  let sla = props[channelName];
+  let sla = props[channelName.toLowerCase()];
 
   let content = '-';
   if (sla?.handledTasks && sla?.handledTasks > 0) {

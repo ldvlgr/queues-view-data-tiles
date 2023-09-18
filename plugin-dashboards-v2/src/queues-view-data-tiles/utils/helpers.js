@@ -6,5 +6,5 @@ export const getChannelIcon = (channelName) => {
     video: 'Video',
     default: 'GenericTask',
   };
-  return channelIcons[channelName];
+  return channelIcons[channelName.toLowerCase()];
 };

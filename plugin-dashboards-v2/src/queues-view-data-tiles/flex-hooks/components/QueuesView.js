@@ -63,37 +63,37 @@ const addTiles = () => {
   //Add custom tile
   if (isChannelVoice_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='voice-tasks' channelName='voice' bgColor={tileColors.voice} />,
+      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={tileColors.voice} />,
       { sortOrder: -6 }
     );
   }
   if (isChannelChat_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='chat-tasks' channelName='chat' bgColor={tileColors.chat} />,
+      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={tileColors.chat} />,
       { sortOrder: -5 }
     );
   }
   if (isChannelSMS_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='sms-tasks' channelName='sms' bgColor={tileColors.sms} />,
+      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={tileColors.sms} />,
       { sortOrder: -4 }
     );
   }
   if (isChannelVoice_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='voice-sla-tile' channelName='voice' />,
+      <ChannelSLATile key='voice-sla-tile' channelName='Voice' />,
       { sortOrder: -3 }
     );
   }
   if (isChannelChat_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='chat-sla-tile' channelName='chat' />,
+      <ChannelSLATile key='chat-sla-tile' channelName='Chat' />,
       { sortOrder: -2 }
     );
   }
   if (isChannelSMS_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='sms-sla-tile' channelName='sms' />,
+      <ChannelSLATile key='sms-sla-tile' channelName='SMS' />,
       { sortOrder: -1 }
     );
   }

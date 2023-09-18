@@ -16,22 +16,29 @@ const config = {
       taskCountsDataTile: true
     },
     sms: {
-      color: '#4682B4',
+      color: '#59cef8',
       SLADataTile: false,
       taskCountsDataTile: false
+    },
+    video: {
+      color: '#00FFFF',
+      SLADataTile: true,
+      taskCountsDataTile: true
     },
   },
   allChannelsDataTile: true,
   groupsChartTile: false,
   enhancedAgentByActivityPieChart: true,
   agentActivityConfiguration: {
-    Available: { color: 'green', icon: 'Accept' },
-    Outbound: { color: 'greenyellow', icon: 'Call' },
-    Break: { color: 'goldenrod', icon: 'Hold' },
-    Lunch: { color: 'darkorange', icon: 'Hamburger' },
-    Training: { color: 'red', icon: 'Bulb' },
-    OTHER: { color: 'darkred', icon: 'More' },
-    Offline: { color: 'grey', icon: 'Minus' },
+    activities: {
+      Available: { color: 'green', icon: 'Accept' },
+      Outbound: { color: 'darkgreen', icon: 'Call' },
+      Break: { color: 'goldenrod', icon: 'Hold' },
+      Lunch: { color: 'darkorange', icon: 'Hamburger' },
+      Training: { color: 'red', icon: 'Bulb' },
+      Offline: { color: 'grey', icon: 'Minus' },
+    },
+    other: { color: 'darkred', icon: 'More' },
   },
   queuesStatsColumns: {
     assignedTasksColumn: true,
