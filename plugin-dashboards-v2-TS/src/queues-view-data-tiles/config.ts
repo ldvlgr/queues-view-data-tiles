@@ -10,18 +10,18 @@ const config: QueuesViewDataTilesConfig = {
   channels: {
     voice: {
       color: '#ADD8E6',
-      SLADataTile: true,
+      SLADataTile: false,
       taskCountsDataTile: true
     },
     chat: {
       color: '#87CEFA',
       SLADataTile: false,
-      taskCountsDataTile: false
+      taskCountsDataTile: true
     },
     sms: {
       color: '#59cef8',
-      SLADataTile: true,
-      taskCountsDataTile: true
+      SLADataTile: false,
+      taskCountsDataTile: false
     },
     video: {
       color: '#00FFFF',
