@@ -5,24 +5,29 @@ const config: TeamsViewDataTilesConfig = {
   channels: {
     voice: {
       color: '#ADD8E6',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
     chat: {
       color: '#87CEFA',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
     sms: {
       color: '#4682B4',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
   },
   teams: {
     Sales: { color: 'beige' },
     Magic: { color: 'wheat' },
-    Service: { color: 'tan' }
+    Service: { color: 'tan' },
+    Support: { color: 'grey' },
+    Fraud: { color: 'darkgrey'}
   },
   taskSummaryDataTile: true,
-  teamActivityBarChart: true,
+  teamActivityBarChart: false,
+  activitySummaryTile: true,
+  idle_status: { label: 'Idle (No Tasks)', color: 'limegreen', icon: 'AcceptLarge' },
+  busy_status: { label: 'Busy (1+ Tasks)', color: 'darkgreen', icon: 'GenericTask' },
   skillsByTeamDataTile: false,
   columns: {
     team: true,
@@ -45,7 +50,10 @@ export const getChannelSMS_Color = () => {
 };
 export const getTeamsConfig = () => {
   return config.teams;
-}
+};
+export const getTeamNames = () => {
+  return Object.keys(config.teams);
+};
 export const isChannelVoice_CapacityEnabled = () => {
   return config.channels.voice.capacityDataTile;
 };
@@ -60,6 +68,15 @@ export const isTaskSummaryEnabled = () => {
 };
 export const isTeamActivityBarChartEnabled = () => {
   return config.teamActivityBarChart;
+};
+export const isActivitySummaryEnabled = () => {
+  return config.activitySummaryTile;
+};
+export const getIdleStatusConfig = () => {
+  return config.idle_status;
+};
+export const getBusyStatusConfig = () => {
+  return config.busy_status;
 };
 export const isSkillsByTeamEnabled = () => {
   return config.skillsByTeamDataTile;

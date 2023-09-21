@@ -1,6 +1,7 @@
-import AgentTeamActivityTile from '../AgentTeamActivityTile/AgentTeamActivityTile';
+import AgentActivityBarChartTile from '../AgentActivityBarChartTile/AgentActivityBarChartTile';
 import SkillsByTeamTile from '../SkillsByTeamBarChartTile/SkillsByTeamTile';
 import TaskSummaryTile from '../TaskSummaryTile/TaskSummaryTile';
+import ActivitySummaryTile from '../ActivitySummaryTile/ActivitySummaryTile';
 import ChannelCapacityTile from '../ChannelCapacityTile/ChannelCapacityTile';
 import { TeamsViewTilesContainer } from "./TeamsViewDataTiles.Components"
 
@@ -14,7 +15,8 @@ import {
   isChannelSMS_CapacityEnabled,
   isTaskSummaryEnabled,
   isTeamActivityBarChartEnabled,
-  isSkillsByTeamEnabled
+  isSkillsByTeamEnabled,
+  isActivitySummaryEnabled
 } from '../../config';
 
 
@@ -28,10 +30,13 @@ const TeamsViewDataTiles = () => {
         <ChannelCapacityTile key="sms" channelName="sms" bgColor={getChannelSMS_Color()} />
       }
       {isTaskSummaryEnabled() &&
-        <TaskSummaryTile teamsData={getTeamsConfig()} />
+        <TaskSummaryTile />
+      }
+      {isActivitySummaryEnabled() &&
+        <ActivitySummaryTile />
       }
       {isTeamActivityBarChartEnabled() &&
-        <AgentTeamActivityTile teamsData={getTeamsConfig()} />
+        <AgentActivityBarChartTile teamsData={getTeamsConfig()} />
       } 
       {/* {isSkillsByTeamEnabled() &&
         <SkillsByTeamTile teamsData={getTeamsConfig()} />

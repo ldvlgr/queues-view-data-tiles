@@ -1,6 +1,6 @@
 import { useFlexSelector, StackedBarChart } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Title, BarChart, Label, Legend } from './AgentTeamActivityTile.Components'
+import { TileWrapper, Title, BarChart, Label, Legend } from './AgentActivityBarChartTile.Components'
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
 import { mockWorkersData } from '../../utils/mockWorkersData';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
@@ -26,7 +26,7 @@ interface ComponentProps {
     maxWidth?: number;
 }
 
-const AgentTeamActivityTile = (props: ComponentProps) => {
+const AgentActivityBarChartTile = (props: ComponentProps) => {
     const { teamsData, maxWidth } = props;
     const teams = Object.keys(teamsData);
     const activityCounts: ActivityCounts = useFlexSelector((state: AppState) => {
@@ -111,4 +111,4 @@ const AgentTeamActivityTile = (props: ComponentProps) => {
     )
 };
 
-export default AgentTeamActivityTile;
+export default AgentActivityBarChartTile;

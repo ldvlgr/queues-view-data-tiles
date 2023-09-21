@@ -6,6 +6,9 @@ export default interface TeamsViewDataTilesConfig {
   },
   taskSummaryDataTile: boolean;
   teamActivityBarChart: boolean;
+  activitySummaryTile: boolean;
+  idle_status: StatusConfig;
+  busy_status: StatusConfig;
   skillsByTeamDataTile: boolean;
   columns: {
     team: boolean,
@@ -25,3 +28,8 @@ export interface ChannelConfig {
   capacityDataTile: boolean;
 }
 
+interface StatusConfig {
+  label: string;
+  color: string;
+  icon: string;
+}

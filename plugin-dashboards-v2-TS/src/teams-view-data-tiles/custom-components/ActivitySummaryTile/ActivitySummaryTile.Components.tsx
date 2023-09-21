@@ -1,5 +1,13 @@
 import { styled } from '@twilio/flex-ui';
 
+export interface OwnProps {
+  theme?: any;
+  bgColor?: string;
+  agentCount: number;
+  totalAgents: number;
+  maxWidth: number;
+}
+
 export interface ThemeOnlyProps {
   theme?: any;
   bgColor?: string;
@@ -30,16 +38,16 @@ export const Content = styled('div')<ThemeOnlyProps>`
   font-weight: ${({ theme }) => theme.tokens.fontWeights.fontWeightBold};
 `;
 
-export const Channel = styled('div')<ThemeOnlyProps>`
-  color: #121c2d;
+export const AgentActivity = styled('div')<ThemeOnlyProps>`
+  color: #ffffff;
   background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
   display: flex;
+  flex: 1 1 auto;
   flex-direction: row;
+  font-size: 11px;
   justify-content: center;
   border-width: 0px;
   border-radius: 12px;
-  height: 24px;
-  min-width: 24px;
 `;
 
 export const Label = styled('div')<ThemeOnlyProps>`
@@ -49,4 +57,13 @@ export const Label = styled('div')<ThemeOnlyProps>`
 export const Heading = styled('div')<ThemeOnlyProps>`
   font-size: 12px;
   font-weight: bold;
+`;
+
+export const Legend = styled('div')<ThemeOnlyProps>`
+  background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px;
+  margin-right: 8px;
+  color: #ffffff;
 `;
