@@ -17,14 +17,14 @@ import {
 const TeamsViewDataTiles = () => {
   return (
     <TeamsViewTilesContainer>
+      {isTaskSummaryEnabled() &&
+        <TaskSummaryTile />
+      }
       {isChannelChat_CapacityEnabled() &&
         <ChannelCapacityTile key="chat" channelName="Chat" />
       }
       {isChannelSMS_CapacityEnabled() &&
         <ChannelCapacityTile key="sms" channelName="SMS" />
-      }
-      {isTaskSummaryEnabled() &&
-        <TaskSummaryTile />
       }
       {isActivitySummaryEnabled() &&
         <ActivitySummaryTile />

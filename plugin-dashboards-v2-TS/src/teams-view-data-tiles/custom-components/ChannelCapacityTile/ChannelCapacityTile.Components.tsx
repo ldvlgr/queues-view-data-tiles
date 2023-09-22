@@ -8,6 +8,8 @@ export const TileWrapper = styled('div')<ThemeOnlyProps>`
     display: flex;
     flex-direction: column;
     padding: ${({ theme }) => theme.tokens.spacings.space40};
+    margin-left: ${({ theme }) => theme.tokens.spacings.space40};
+    margin-right: ${({ theme }) => theme.tokens.spacings.space40};
     border-style: solid;
     border-width: ${({ theme }) => theme.tokens.borderWidths.borderWidth20};
     border-radius: ${({ theme }) => theme.tokens.radii.borderRadius20};
@@ -15,7 +17,6 @@ export const TileWrapper = styled('div')<ThemeOnlyProps>`
     background-color: ${(props) => props.theme.tokens.backgroundColors.colorBackground};
     color: ${({ theme }) => theme.tokens.textColors.colorText};
     max-width: 200px;
-    margin: ${({ theme }) => theme.tokens.spacings.space40};
 `;
 
 export const Title = styled('p')<ThemeOnlyProps>`
