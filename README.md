@@ -56,13 +56,16 @@ The native Agent Activity Tile adds up all Unavailable activities into 1 categor
 <img width="450px" src="images/AgentActivityPieChartV2.png"/>
 
 
-### Teams View Data Tiles (Activity & Skills)
+### Teams View Data Tiles (Tasks & Agent Activity by Team)
 
-June 2023 Update.  This plugin now also includes sample code to add "Data Tiles" to the Flex [Teams View](https://www.twilio.com/docs/flex/end-user-guide/insights/monitor-agent-activity).  Using the Worker data in the Flex Redux store associated with the Teams View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
+ This plugin also includes sample code to add "Data Tiles" to the Flex [Teams View](https://www.twilio.com/docs/flex/end-user-guide/insights/monitor-agent-activity).  Using the Worker data in the Flex Redux store associated with the Teams View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
 
-<img width="800px" src="images/TeamsViewTilesV3.png"/>
+The TypeScript (TS) version of this plugin contains the latest code for the Teams View additions. The current version of the Task Summary by Channel & Team and Activity Summary by Team now looks like this:
+
+<img width="800px" src="images/TaskSummaryActivityByTeam.png"/>
 
 Note: The Teams View can only display up to 200 agents, so the worker data available for aggregation is limited to this data set.
+
 
 # Configuration
 

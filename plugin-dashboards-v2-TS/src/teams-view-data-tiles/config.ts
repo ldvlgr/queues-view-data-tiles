@@ -9,11 +9,11 @@ const config: TeamsViewDataTilesConfig = {
     },
     chat: {
       color: '#87CEFA',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
     sms: {
       color: '#59cef8',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
   },
   teams: {
@@ -21,7 +21,6 @@ const config: TeamsViewDataTilesConfig = {
     Magic: { color: 'wheat' },
     Service: { color: 'tan' },
     Support: { color: 'grey' },
-    Fraud: { color: 'darkgrey'}
   },
   taskSummaryDataTile: true,
   teamActivityBarChart: false,
