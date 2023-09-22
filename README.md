@@ -55,8 +55,12 @@ The native Agent Activity Tile adds up all Unavailable activities into 1 categor
 
 <img width="450px" src="images/AgentActivityPieChartV2.png"/>
 
+## Twilio PS Plugin Project
 
-### Teams View Data Tiles (Tasks & Agent Activity by Team)
+Several of these data tiles (Task Counts, Channel SLA, All Channels, Enhanced Agent Activity) are now also available as a feature in the [PS Project template](https://twilio-professional-services.github.io/flex-project-template/feature-library/queues-view-data-tiles)
+
+
+## Teams View Data Tiles (Tasks & Agent Activity by Team)
 
  This plugin also includes sample code to add "Data Tiles" to the Flex [Teams View](https://www.twilio.com/docs/flex/end-user-guide/insights/monitor-agent-activity).  Using the Worker data in the Flex Redux store associated with the Teams View, we can aggregate Worker Activity data to show Worker Activity / Status by team (assuming the `team_name` attribute is populated).  Furthermore, we can differentiate agents in the Available activty that are truly *Idle* (have no tasks) or are Available but *Busy* (have at least 1 task)
 
