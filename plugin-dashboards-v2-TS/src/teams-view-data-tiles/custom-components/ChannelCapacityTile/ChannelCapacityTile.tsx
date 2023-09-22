@@ -24,7 +24,7 @@ const ChannelCapacityTile = (props: ComponentProps) => {
   const available = capacity - taskCount;
 
   const data = [];
-  if (taskCount > 0) data.push({ title: "Busy", value: taskCount, color: "darkgreen" });
+  if (taskCount > 0) data.push({ title: "Busy", value: taskCount, color: "yellow" });
   data.push({ title: "Available", value: available, color: "limegreen" });
 
   let used = '-';
@@ -62,10 +62,6 @@ const ChannelCapacityTile = (props: ComponentProps) => {
         </Chart>
       </MetricsContainer>
       <MetricsContainer>
-      <TaskCount>
-          <Label> Max </Label>
-          <Metric> {capacity} </Metric>
-        </TaskCount>
         <TaskCount>
           <Label> Tasks</Label>
           <Metric> {taskCount} </Metric>
@@ -73,6 +69,10 @@ const ChannelCapacityTile = (props: ComponentProps) => {
         <TaskCount>
           <Label> Used </Label>
           <Metric> {used} </Metric>
+        </TaskCount>
+        <TaskCount>
+          <Label> Max </Label>
+          <Metric> {capacity} </Metric>
         </TaskCount>
       </MetricsContainer>
     </TileWrapper>
