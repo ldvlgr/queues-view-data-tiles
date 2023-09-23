@@ -7,6 +7,7 @@ import ChannelSLATile from '../../custom-components/ChannelSLATile/ChannelSLATil
 import AllChannelsSLATile from '../../custom-components/AllChannelsSLATile/AllChannelsSLATile';
 import GroupsChartTile from '../../custom-components/GroupsChartTile/GroupsChartTile';
 import AgentActivityTile from '../../custom-components/AgentActivityTile/AgentActivityTile';
+import QueueGroupSummaryTile from '../../custom-components/QueueGroupSummaryTile/QueueGroupSummaryTile';
 
 import {
   isActiveTasksEnabled,
@@ -29,7 +30,9 @@ import {
   isEnhancedAgentsByActivityPieChartEnabled,
   getAgentActivityConfig,
   isAssignedTasksColumnEnabled,
-  isWrappingTasksColumnEnabled
+  isWrappingTasksColumnEnabled,
+  isGroupsSummaryEnabled,
+  getQueueGroups
 } from '../../config';
 
 
@@ -41,46 +44,54 @@ export default (manager: Flex.Manager) => {
 
 const addTiles = () => {
   //Add custom tile
+  if (isGroupsSummaryEnabled()) {
+    const groups = getQueueGroups();
+    Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
+      <QueueGroupSummaryTile key='queue-groups' groups={groups} />,
+      { sortOrder: -7 }
+    );
+  }
+
   if (isChannelVoice_CountsEnabled()) {
     const options: Flex.ContentFragmentProps = { sortOrder: -6 };
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={getChannelVoice_Color()} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={getChannelVoice_Color()} channelList={getChannelNames()} />,
       options
     );
   }
   if (isChannelChat_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={getChannelChat_Color()} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={getChannelChat_Color()} channelList={getChannelNames()} />,
       { sortOrder: -5 }
     );
   }
   if (isChannelSMS_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={getChannelSMS_Color()} channelList={getChannelNames()}/>,
+      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={getChannelSMS_Color()} channelList={getChannelNames()} />,
       { sortOrder: -4 }
     );
   }
   if (isChannelVoice_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='voice-sla-tile' channelName='Voice' channelList={getChannelNames()}/>,
+      <ChannelSLATile key='voice-sla-tile' channelName='Voice' channelList={getChannelNames()} />,
       { sortOrder: -3 }
     );
   }
   if (isChannelChat_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='chat-sla-tile' channelName='Chat' channelList={getChannelNames()}/>,
+      <ChannelSLATile key='chat-sla-tile' channelName='Chat' channelList={getChannelNames()} />,
       { sortOrder: -2 }
     );
   }
   if (isChannelSMS_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='sms-sla-tile' channelName='SMS' channelList={getChannelNames()}/>,
+      <ChannelSLATile key='sms-sla-tile' channelName='SMS' channelList={getChannelNames()} />,
       { sortOrder: -1 }
     );
   }
   if (isAllChannels_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AllChannelsSLATile key='combo-data-tile' colors={getChannelColors()} channelList={getChannelNames()}/>,
+      <AllChannelsSLATile key='combo-data-tile' colors={getChannelColors()} channelList={getChannelNames()} />,
       { sortOrder: 0 }
     );
   }
@@ -92,11 +103,11 @@ const addTiles = () => {
       { sortOrder: 1 }
     );
   }
-  
+
   if (isEnhancedAgentsByActivityPieChartEnabled()) {
     const agentActivityConfig = getAgentActivityConfig();
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AgentActivityTile key='agent-activity-tile' activityConfig={agentActivityConfig}/>,
+      <AgentActivityTile key='agent-activity-tile' activityConfig={agentActivityConfig} />,
       { sortOrder: 6 }
     );
   }

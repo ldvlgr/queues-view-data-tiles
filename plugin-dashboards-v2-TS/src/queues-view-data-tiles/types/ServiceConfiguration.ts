@@ -6,6 +6,8 @@ export default interface QueuesViewDataTilesConfig {
   agentsByActivityBarChart: boolean;
   allChannelsDataTile: boolean;
   groupsChartTile: boolean;
+  groupsSummaryTile: boolean;
+  queueGroups: string[];
   enhancedAgentByActivityPieChart: boolean;
   channels: Channels;
   agentActivityConfiguration: {

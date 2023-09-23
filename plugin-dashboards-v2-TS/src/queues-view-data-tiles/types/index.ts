@@ -1,11 +1,11 @@
 export interface ChannelTaskCounts {
-  activeTasks: number; 
-  waitingTasks: number; 
+  activeTasks: number;
+  waitingTasks: number;
   assignedTasks: number;
   wrappingTasks: number;
 }
 
-export interface TaskCounts { 
+export interface TaskCounts {
   [channel: string]: ChannelTaskCounts;
 }
 
@@ -17,5 +17,21 @@ export interface ChannelSLMetrics {
 
 export interface SLMetrics {
   [channel: string]: ChannelSLMetrics;
+}
+
+export interface QueueGroupMetrics {
+  [group: string]: {
+    tasksNow: {
+      activeTasks: number;
+      waitingTasks: number;
+      assignedTasks: number;
+      wrappingTasks: number;
+    }
+    slaToday: {
+      handledTasks: number;
+      handledTasksWithinSL: number;
+      serviceLevelPct: number;
+    }
+  }
 }
 
