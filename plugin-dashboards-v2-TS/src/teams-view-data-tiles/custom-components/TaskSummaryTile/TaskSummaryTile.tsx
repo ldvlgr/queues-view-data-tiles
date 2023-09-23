@@ -71,6 +71,23 @@ const TaskSummaryTile = () => {
             </Tr>
           </THead>
           <TBody>
+            <Tr key="Total">
+              <Td element="COMPACT_TABLE">
+                <Heading> Total (All) </Heading>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.voice_inbound} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.voice_outbound} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.chat} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.sms} </Label>
+              </Td>
+            </Tr>
             {teams.map((team) => {
               return (
                 <Tr key={team}>
@@ -92,23 +109,6 @@ const TaskSummaryTile = () => {
                 </Tr>
               );
             })}
-            <Tr key="Total">
-              <Td element="COMPACT_TABLE">
-                <Label> Total (All) </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.voice_inbound} </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.voice_outbound} </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.chat} </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.sms} </Label>
-              </Td>
-            </Tr>
           </TBody>
         </Table>
       </Box>

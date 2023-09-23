@@ -72,6 +72,27 @@ const ActivitySummaryTile = () => {
             </Tr>
           </THead>
           <TBody>
+            <Tr key="All">
+              <Td element="COMPACT_TABLE">
+                <Heading> Total (All) </Heading>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label>{workerActivityCounts.All.totalAgentCount} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label>{workerActivityCounts.All.activities.Idle} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label>{workerActivityCounts.All.activities.Busy} </Label>
+              </Td>
+              {activityNames.map((activity) => {
+                return (
+                  <Td element="COMPACT_TABLE" textAlign="center" key={activity}>
+                    <Label> {workerActivityCounts.All.activities[activity] || 0} </Label>
+                  </Td>
+                );
+              })}
+            </Tr>
             {teams.map((team) => {
               const agentCount = workerActivityCounts[team].totalAgentCount;
               return (
@@ -98,27 +119,6 @@ const ActivitySummaryTile = () => {
                 </Tr>
               );
             })}
-            <Tr key="All">
-              <Td element="COMPACT_TABLE">
-                <Label> Total (All) </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label>{workerActivityCounts.All.totalAgentCount} </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label>{workerActivityCounts.All.activities.Idle} </Label>
-              </Td>
-              <Td element="COMPACT_TABLE" textAlign="center">
-                <Label>{workerActivityCounts.All.activities.Busy} </Label>
-              </Td>
-              {activityNames.map((activity) => {
-                return (
-                  <Td element="COMPACT_TABLE" textAlign="center" key={activity}>
-                    <Label> {workerActivityCounts.All.activities[activity] || 0} </Label>
-                  </Td>
-                );
-              })}
-            </Tr>
           </TBody>
         </Table>
         <Label>Note: Available = Busy + Idle. Busy = Available with 1+ Tasks. Idle = Available with No Tasks.</Label>
