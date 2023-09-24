@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Box, Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
 
 import { AppState } from '../../flex-hooks/states';
-
+import Tooltip from '@material-ui/core/Tooltip';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { TileWrapper, Label, Heading } from './QueueGroupSummaryTile.Components';
 import { QueueGroupMetrics } from '../../types';
@@ -32,29 +32,39 @@ const QueueGroupSummaryTile = (props: ComponentProps) => {
                 <Heading> Group </Heading>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Heading>
-                  Assigned
-                </Heading>                  
+                <Tooltip title="Conversations" placement="top" arrow={true}>
+                  <Heading>
+                    Assigned
+                  </Heading>
+                </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Heading>
-                  Wrap
-                </Heading>                  
+                <Tooltip title="Wrapping" placement="top" arrow={true}>
+                  <Heading>
+                    Wrap
+                  </Heading>
+                </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Heading>
-                  Wait
-                </Heading>                  
+                <Tooltip title="Waiting in Queues" placement="top" arrow={true}>
+                  <Heading>
+                    Wait
+                  </Heading>
+                </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Heading>
-                  Handled
-                </Heading>                  
+                <Tooltip title="Handled Today" placement="top" arrow={true}>
+                  <Heading>
+                    Handled
+                  </Heading>
+                </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Heading>
-                  SLA
-                </Heading>                  
+                <Tooltip title="SLA Today" placement="top" arrow={true}>
+                  <Heading>
+                    SLA
+                  </Heading>
+                </Tooltip>
               </Th>
             </Tr>
           </THead>
@@ -63,7 +73,9 @@ const QueueGroupSummaryTile = (props: ComponentProps) => {
               return (
                 <Tr key={group}>
                   <Td element="COMPACT_TABLE">
-                    <Label> {group} {filter} </Label>
+                    <Tooltip title={"Queues: " + metrics[group].queues.join(', ')} placement="right" arrow={true}>
+                      <Label> {group} {filter} </Label>
+                    </Tooltip>
                   </Td>
                   <Td element="COMPACT_TABLE" textAlign="center">
                     <Label> {metrics[group].tasksNow.assignedTasks} </Label>

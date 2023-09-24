@@ -21,6 +21,7 @@ export interface SLMetrics {
 
 export interface QueueGroupMetrics {
   [group: string]: {
+    queues: string[];
     tasksNow: {
       activeTasks: number;
       waitingTasks: number;
