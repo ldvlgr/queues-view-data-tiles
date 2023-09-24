@@ -33,6 +33,14 @@ export default class DashboardsPlugin extends FlexPlugin {
             COMPACT_TABLE: {
               padding: 'space20',
             },
+            COMPACT_TABLE_BG20: {
+              padding: 'space20',
+              backgroundColor: 'colorBackgroundDecorative20Weakest',
+            },
+            COMPACT_TABLE_BG30: {
+              padding: 'space20',
+              backgroundColor: 'colorBackgroundDecorative30Weakest',
+            },
             FLEX_WITH_OVERFLOW: {
               overflowY: 'auto',
             },

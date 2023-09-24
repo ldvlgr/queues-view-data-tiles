@@ -26,7 +26,7 @@ const config: TeamsViewDataTilesConfig = {
   teamActivityBarChart: false,
   activitySummaryTile: true,
   idle_status: { label: 'Idle (No Tasks)', color: 'limegreen', icon: 'AcceptLarge' },
-  busy_status: { label: 'Busy (1+ Tasks)', color: 'darkgreen', icon: 'GenericTask' },
+  busy_status: { label: 'Busy (1+ Tasks)', color: 'royalblue', icon: 'GenericTask' },
   skillsByTeamDataTile: false,
   columns: {
     team: true,
