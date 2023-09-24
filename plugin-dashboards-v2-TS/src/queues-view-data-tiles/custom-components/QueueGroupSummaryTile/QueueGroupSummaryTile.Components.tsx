@@ -21,10 +21,10 @@ export const TileWrapper = styled('div')<ThemeOnlyProps>`
 `;
 
 export const Label = styled('div')<ThemeOnlyProps>`
-  font-size: 10px;
+  font-size: 12px;
 `;
 
 export const Heading = styled('div')<ThemeOnlyProps>`
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
 `;
