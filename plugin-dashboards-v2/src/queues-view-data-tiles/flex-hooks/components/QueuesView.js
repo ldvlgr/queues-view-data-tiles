@@ -179,7 +179,7 @@ const customizeQueueStats = () => {
           return <span>{assignedTasks}</span>;
         }}
       />,
-      { sortOrder: -10 }
+      { sortOrder: 0 }
     );
   }
   if (isWrappingTasksColumnEnabled()) {
@@ -193,7 +193,7 @@ const customizeQueueStats = () => {
           return <span>{wrappingTasks}</span>;
         }}
       />,
-      { sortOrder: -9 }
+      { sortOrder: 0 }
     );
   }
 }
