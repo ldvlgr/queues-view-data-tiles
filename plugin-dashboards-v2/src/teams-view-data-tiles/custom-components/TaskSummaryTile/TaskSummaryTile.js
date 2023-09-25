@@ -1,83 +1,116 @@
-import { Icon } from '@twilio/flex-ui';
+import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Title, Label } from './TaskSummaryTile.Components'
+import { Box, Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
+import Tooltip from '@material-ui/core/Tooltip';
+import { CallIncomingIcon } from '@twilio-paste/icons/esm/CallIncomingIcon';
+import { CallOutgoingIcon } from '@twilio-paste/icons/esm/CallOutgoingIcon';
+
+import { getTeamNames } from '../../config';
+import { TileWrapper, Channel, Label, Heading } from './TaskSummaryTile.Components';
 import { getTasksByTeamCounts } from '../../utils/WorkerDataUtil';
-import { mockWorkersData } from '../../utils/mockWorkersData';
-import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
-
-import { connect } from 'react-redux';
-
 import {
-    getChannelVoice_Color,
-    getChannelChat_Color,
-    getChannelSMS_Color,
-} from '../../config';
+  getChannelVoice_Color,
+  getChannelChat_Color,
+  getChannelSMS_Color,
+} from '../../../queues-view-data-tiles/config';
 
-const channelColors = {
-    'voice': getChannelVoice_Color(),
-    'chat': getChannelChat_Color(),
-    'sms': getChannelSMS_Color()
-}
-
-/**
- * @param {props} props.teamsData The teams data {'teamName': {color: 'grey'}}
- */
-const TaskSummaryTile = connect((state, ownProps) => {
-    //Note: max 200 workers will be loaded for teams view
+const TaskSummaryTile = () => {
+  const teams = getTeamNames();
+  const taskCounts = useFlexSelector((state) => {
     const workers = state.flex.supervisor.workers;
-    //const workers = mockWorkersData;
-    const teamsData = ownProps.teamsData;
-    const teams = Object.keys(teamsData);
-    let taskCounts = getTasksByTeamCounts(workers, teams);
-    console.log('TaskCounts:', taskCounts);
-    return { taskCounts };
-
-    //object returned from connect is merged into component props
-    //See https://react-redux.js.org/api/connect
-})((props) => {
-    const { teamsData, taskCounts } = props;
-    const teams = Object.keys(teamsData);
-    return (
-        <TileWrapper className='Twilio-AggregatedDataTile'>
-            <Title className='Twilio-AggregatedDataTile-Title'>
-                Tasks by Team & Channel
-            </Title>
-            <Table variant='default'>
-                <THead>
-                    <Tr>
-                        <Th><Label> Agent Team </Label></Th>
-                        <Th textAlign='center'><Label bgColor={channelColors.voice}> <Icon icon='Call' /> IN </Label></Th>
-                        <Th textAlign='center'><Label bgColor={channelColors.voice}> <Icon icon='Call' /> OUT </Label></Th>
-                        <Th textAlign='center'><Label bgColor={channelColors.chat}> <Icon icon='Message' /> Chat </Label></Th>
-                        <Th textAlign='center'><Label bgColor={channelColors.sms}> <Icon icon='Sms' /> SMS </Label></Th>
-
-                    </Tr>
-                </THead>
-                <TBody>
-                    {teams.map((team) => {
-                        return (
-                            <Tr key={team}>
-                                <Td><Label bgColor={teamsData[team].color}> {team}  </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].tasks.voice_inbound} </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].tasks.voice_outbound} </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].tasks.chat} </Label></Td>
-                                <Td textAlign='center'><Label> {taskCounts[team].tasks.sms} </Label></Td>
-
-                            </Tr>
-                        );
-                    })
-                    }
-                    <Tr key='Total'>
-                        <Td><Label> Total (All) </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.tasks.voice_inbound} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.tasks.voice_outbound} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.tasks.chat} </Label></Td>
-                        <Td textAlign='center'><Label> {taskCounts.All.tasks.sms} </Label></Td>
-                    </Tr>
-                </TBody>
-            </Table>
-        </TileWrapper>
-    )
-});
+    return getTasksByTeamCounts(workers, teams);
+  });
+  return (
+    <TileWrapper className="Twilio-AggregatedDataTile">
+      <Box overflowY="auto" maxHeight="240px">
+        <Table variant="borderless">
+          <THead stickyHeader top={0}>
+            <Tr>
+              <Th element="COMPACT_TABLE">
+                <Heading> Team </Heading>
+              </Th>
+              <Th element="COMPACT_TABLE" textAlign="center">
+                <Channel bgColor={getChannelVoice_Color()}>
+                  <Tooltip title="Inbound Calls" placement="top" arrow={true}>
+                    <Heading>
+                      <CallIncomingIcon decorative={false} title="In" />
+                    </Heading>
+                  </Tooltip>
+                </Channel>
+              </Th>
+              <Th element="COMPACT_TABLE" textAlign="center">
+                <Channel bgColor={getChannelVoice_Color()}>
+                  <Tooltip title="Outbound Calls" placement="top" arrow={true}>
+                    <Heading>
+                      <CallOutgoingIcon decorative={false} title="Out" />
+                    </Heading>
+                  </Tooltip>
+                </Channel>
+              </Th>
+              <Th element="COMPACT_TABLE" textAlign="center">
+                <Channel bgColor={getChannelChat_Color()}>
+                  <Tooltip title="Chat" placement="top" arrow={true}>
+                    <Heading>
+                      <Icon icon="Message" />
+                    </Heading>
+                  </Tooltip>
+                </Channel>
+              </Th>
+              <Th element="COMPACT_TABLE" textAlign="center">
+                <Channel bgColor={getChannelSMS_Color()}>
+                  <Tooltip title="SMS" placement="top" arrow={true}>
+                    <Heading>
+                      <Icon icon="Sms" />
+                    </Heading>
+                  </Tooltip>
+                </Channel>
+              </Th>
+            </Tr>
+          </THead>
+          <TBody>
+            <Tr key="Total">
+              <Td element="COMPACT_TABLE">
+                <Heading> Total (All) </Heading>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.voice_inbound} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.voice_outbound} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.chat} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label> {taskCounts.All.tasks.sms} </Label>
+              </Td>
+            </Tr>
+            {teams.map((team) => {
+              return (
+                <Tr key={team}>
+                  <Td element="COMPACT_TABLE">
+                    <Label> {team} </Label>
+                  </Td>
+                  <Td element="COMPACT_TABLE" textAlign="center">
+                    <Label> {taskCounts[team].tasks.voice_inbound} </Label>
+                  </Td>
+                  <Td element="COMPACT_TABLE" textAlign="center">
+                    <Label> {taskCounts[team].tasks.voice_outbound} </Label>
+                  </Td>
+                  <Td element="COMPACT_TABLE" textAlign="center">
+                    <Label> {taskCounts[team].tasks.chat} </Label>
+                  </Td>
+                  <Td element="COMPACT_TABLE" textAlign="center">
+                    <Label> {taskCounts[team].tasks.sms} </Label>
+                  </Td>
+                </Tr>
+              );
+            })}
+          </TBody>
+        </Table>
+      </Box>
+    </TileWrapper>
+  );
+};
 
 export default TaskSummaryTile;

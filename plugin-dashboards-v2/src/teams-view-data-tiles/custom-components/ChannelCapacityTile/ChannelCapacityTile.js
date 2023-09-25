@@ -1,44 +1,46 @@
-import * as Flex from '@twilio/flex-ui';
-import { connect } from 'react-redux';
+import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import { getTasksAndCapacity } from '../../utils/WorkerDataUtil';
 import { PieChart } from "react-minimal-pie-chart";
-import { TileWrapper, Title, Content, Chart, TaskCount, Label, Metric, MetricsContainer } from './ChannelCapacityTile.Components';
+import { TileWrapper, Title, Content, Chart, TaskCount, Label, Metric, MetricsContainer, Channel, ChannelIcon } from './ChannelCapacityTile.Components';
 
-/**
- * @param {props} props.channelName The channelName ('voice', 'chat', 'sms' etc.)
- * @param {props} props.bgColor The tile background color
- */
-const ChannelCapacityTile = connect((state, ownProps) => {
-  //Note: max 200 workers will be loaded for teams view
-  const workers = state.flex.supervisor.workers;
-  let tasksAndCapacity = getTasksAndCapacity(workers);
-  return { tasksAndCapacity };
-  //object returned from connect is merged into component props
-  //See https://react-redux.js.org/api/connect
-})((props) => {
-  const { channelName, tasksAndCapacity, bgColor } = props;
-  let taskCount = tasksAndCapacity.tasks[channelName];
-  let capacity = tasksAndCapacity.capacity[channelName];
+import { getChannelColors } from '../../../queues-view-data-tiles/config';
+import { getChannelIcon } from '../../utils/helpers';
+
+
+const ChannelCapacityTile = (props) => {
+  const { channelName } = props;
+  const tasksAndCapacity = useFlexSelector((state) => {
+    const workers = state.flex.supervisor.workers;
+    const capacityData = getTasksAndCapacity(workers);
+    return capacityData;
+  });
+  let taskCount = tasksAndCapacity.tasks[channelName.toLowerCase()];
+  let capacity = tasksAndCapacity.capacity[channelName.toLowerCase()];
   const available = capacity - taskCount;
 
   const data = [];
-  if (taskCount > 0) data.push({ title: "Busy", value: taskCount, color: "limegreen" });
-  data.push({ title: "Available", value: available, color: "green" });
+  if (taskCount > 0) data.push({ title: "Busy", value: taskCount, color: "yellow" });
+  data.push({ title: "Available", value: available, color: "limegreen" });
 
   let used = '-';
   if (capacity > 0) {
     const pct = Math.round(taskCount / capacity * 100);
     used = `${pct}%`;
   }
-
+  const bgColor = getChannelColors()[channelName.toLowerCase()];
   return (
-    <TileWrapper className='Twilio-AggregatedDataTile' bgColor={bgColor}>
-      <Title className='Twilio-AggregatedDataTile-Title'>
-        {channelName + ' Capacity'}
-      </Title>
-      <Content className='Twilio-AggregatedDataTile-Content'>
+    <TileWrapper className='Twilio-AggregatedDataTile'>
+      <Channel bgColor={bgColor}>
+        <ChannelIcon>
+          <Icon icon={getChannelIcon(channelName)} />
+        </ChannelIcon>
+        <Title className='Twilio-AggregatedDataTile-Title'>
+          {channelName + ' Capacity'}
+        </Title>
+      </Channel>
+      {/* <Content className='Twilio-AggregatedDataTile-Content'>
         {capacity}
-      </Content>
+      </Content> */}
       <MetricsContainer>
         <Chart>
           <PieChart
@@ -56,16 +58,20 @@ const ChannelCapacityTile = connect((state, ownProps) => {
       </MetricsContainer>
       <MetricsContainer>
         <TaskCount>
-          <Label> {channelName} Tasks</Label>
+          <Label> Tasks</Label>
           <Metric> {taskCount} </Metric>
         </TaskCount>
         <TaskCount>
-          <Label> Occupied </Label>
+          <Label> Used </Label>
           <Metric> {used} </Metric>
+        </TaskCount>
+        <TaskCount>
+          <Label> Max </Label>
+          <Metric> {capacity} </Metric>
         </TaskCount>
       </MetricsContainer>
     </TileWrapper>
   );
-});
+};
 
 export default ChannelCapacityTile;

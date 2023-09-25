@@ -9,43 +9,53 @@ const STATUS_IDLE = 'Idle';
 const TASK_CHANNEL_VOICE = 'voice';
 
 export function getAgentStatusCounts(workers = [], teams = []) {
-    //Version 2: Also consider if worker has tasks
-    //If task count == 0, Status = 'Idle'
-    //If task count > 0, Status = 'Busy' 
-    let activityCounts = {};
-    activityCounts['All'] = { teamName: 'All', totalAgentCount: 0, activities: {} };
-    //Init activity counts
+    const ac = {};
+    ac.All = { teamName: 'All', totalAgentCount: 0, activities: { Idle: 0, Busy: 0 } };
+    // Init activity counts
     teams.forEach((team) => {
-        activityCounts[team] = { teamName: team, totalAgentCount: 0, activities: {} };
-        workerActivities.forEach((value, key) => {
-            activityCounts[team].activities[value.name] = 0;
-            activityCounts['All'].activities[value.name] = 0;
-        });
+      ac[team] = { teamName: team, totalAgentCount: 0, activities: { Idle: 0, Busy: 0 } };
+      workerActivities.forEach((value) => {
+        ac[team].activities[value.name] = 0;
+        ac.All.activities[value.name] = 0;
+      });
     });
-
-    //Aggregate Activity/Status by Team
+  
+    // Aggregate Activity/Status by Team
     workers.forEach((wk) => {
-        let workerStatus = wk.worker.activityName;
-        let tm = wk.worker?.attributes?.team_name || 'Other';
+      const workerStatus = wk.worker.activityName;
+      const tasks = wk?.tasks || [];
+      const tm = wk.worker?.attributes?.team_name || 'Other';
+      if (teams.includes(tm)) {
+        const count = ac[tm].activities[workerStatus] ? ac[tm].activities[workerStatus] : 0;
+        ac[tm].activities[workerStatus] = count + 1;
+        ac[tm].totalAgentCount += 1;
         if (workerStatus === STATUS_AVAILABLE) {
-            // Determine Busy status (1+ tasks) vs. Idle (0 tasks)
-            const tasks = wk?.tasks || [];
-            workerStatus = STATUS_IDLE;
-            if (tasks.length > 0) workerStatus = STATUS_BUSY
+          if (tasks.length > 0) {
+            const count = ac[tm].activities.Busy ? ac[tm].activities.Busy : 0;
+            ac[tm].activities.Busy = count + 1;
+          } else {
+            const count = ac[tm].activities.Idle ? ac[tm].activities.Idle : 0;
+            ac[tm].activities.Idle = count + 1;
+          }
         }
-        if (teams.includes(tm)) {
-            let count = activityCounts[tm].activities[workerStatus] ? activityCounts[tm].activities[workerStatus] : 0;
-            activityCounts[tm].activities[workerStatus] = count + 1;
-            activityCounts[tm].totalAgentCount += 1;
+      }
+      // Total Count for All Workers/Teams
+      const count = ac.All.activities[workerStatus] ? ac.All.activities[workerStatus] : 0;
+      ac.All.activities[workerStatus] = count + 1;
+      if (workerStatus === STATUS_AVAILABLE) {
+        if (tasks.length > 0) {
+          const count = ac.All.activities.Busy ? ac.All.activities.Busy : 0;
+          ac.All.activities.Busy = count + 1;
+        } else {
+          const count = ac.All.activities.Idle ? ac.All.activities.Idle : 0;
+          ac.All.activities.Idle = count + 1;
         }
-        // Total Count for All Workers/Teams
-        let count = activityCounts.All.activities[workerStatus] ? activityCounts.All.activities[workerStatus] : 0;
-        activityCounts.All.activities[workerStatus] = count + 1;
-        activityCounts.All.totalAgentCount += 1;
+      }
+      ac.All.totalAgentCount += 1;
     });
-
-    return activityCounts;
-}
+  
+    return ac;
+  }
 
 
 export function getSkillsCounts(workers = [], teams = []) {
@@ -97,7 +107,7 @@ export function getTasksByTeamCounts(workers = [], teams = []) {
         taskCounts[team] = { teamName: team, tasks: { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 } };
     });
     workers.forEach((wk) => {
-        let tm = wk.worker?.attributes?.team_name || 'Other';
+        let tm = wk.worker?.attributes?.team_name ? wk.worker.attributes.team_name : 'Other';
         let channel = '';
         const tasks = wk?.tasks || [];
         tasks.forEach((task) => {

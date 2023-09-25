@@ -1,6 +1,6 @@
 import { withTheme, StackedBarChart } from '@twilio/flex-ui';
 import * as React from 'react';
-import { TileWrapper, Title, BarChart, Label, Legend } from './AgentTeamActivityTile.Components'
+import { TileWrapper, Title, BarChart, Label, Legend } from './AgentActivityBarChartTile.Components'
 import { cx } from 'emotion';
 import { getAgentStatusCounts } from '../../utils/WorkerDataUtil';
 import { Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 /**
  * @param {props} props.teamsData The teams data {'teamName': {color: 'grey'}}
  */
-const AgentTeamActivityTile = connect((state, ownProps) => {
+const AgentActivityBarChartTile = connect((state, ownProps) => {
     //Note: max 200 workers will be loaded for teams view
     const workers = state.flex.supervisor.workers;
     const teamsData = ownProps.teamsData;
@@ -119,4 +119,4 @@ const AgentTeamActivityTile = connect((state, ownProps) => {
     )
 });
 
-export default withTheme(AgentTeamActivityTile);
+export default withTheme(AgentActivityBarChartTile);
