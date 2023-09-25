@@ -158,6 +158,48 @@ class QueueDataUtil {
     })
     return slMetrics;
   }
+
+  getQueueGroupMetrics = (queues = [], queueGroups = [], filter = "") => {
+    const metrics = { };
+    const initTasksNow = { activeTasks: 0, assignedTasks: 0, wrappingTasks: 0, waitingTasks: 0 };
+    const initSlaToday = { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 };
+    queueGroups.forEach((group) => {
+      metrics[group] = { 
+        tasksNow: { ...initTasksNow }, 
+        slaToday: { ...initSlaToday },
+        queues: [] 
+      };
+    });
+    if (queues.length === 0) return metrics;
+    queues.forEach((q) => {
+      const qName = q.friendly_name.toLowerCase();
+      queueGroups.forEach((group) => {
+        if (qName.includes(group.toLowerCase()) && qName.includes(filter)) {
+          const queues =  metrics[group].queues;
+          metrics[group].queues = queues.concat([qName]);
+          if (q.sla_today) {
+            metrics[group].slaToday.handledTasks += q?.sla_today?.handled_tasks_count;
+            metrics[group].slaToday.handledTasksWithinSL += q?.sla_today?.handled_tasks_within_sl_threshold_count;
+          }
+          if (q.tasks_by_status) {
+            const assignedTasks = q.tasks_by_status.assigned;
+            const wrappingTasks = q.tasks_by_status.wrapping;
+            metrics[group].tasksNow.assignedTasks += assignedTasks;
+            metrics[group].tasksNow.wrappingTasks += wrappingTasks;
+            metrics[group].tasksNow.activeTasks += assignedTasks + wrappingTasks;
+            metrics[group].tasksNow.waitingTasks += q.tasks_by_status.pending + q.tasks_by_status.reserved;
+          }
+        }
+      });
+    });
+    queueGroups.forEach((group) => {
+      if (metrics[group].slaToday.handledTasks > 0)
+        metrics[group].slaToday.serviceLevelPct = Math.floor(
+          (metrics[group].slaToday.handledTasksWithinSL / metrics[group].slaToday.handledTasks) * 100,
+        );
+    });
+    return metrics;
+  };
 }
 
 const queueDataUtil = new QueueDataUtil;

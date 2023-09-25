@@ -26,8 +26,10 @@ const config = {
       taskCountsDataTile: true
     },
   },
-  allChannelsDataTile: true,
+  allChannelsDataTile: false,
   groupsChartTile: false,
+  groupsSummaryTile: true,
+  queueGroups: ['Sales', 'Service', 'Magic'],
   enhancedAgentByActivityPieChart: true,
   agentActivityConfiguration: {
     activities: {
@@ -102,6 +104,12 @@ export const isAllChannels_SLAEnabled = () => {
 };
 export const isQueueGroups_SLAEnabled = () => {
   return config.groupsChartTile;
+};
+export const isGroupsSummaryEnabled = () => {
+  return config.groupsSummaryTile;
+};
+export const getQueueGroups = () => {
+  return config.queueGroups;
 };
 export const isEnhancedAgentsByActivityPieChartEnabled = () => {
   return config.enhancedAgentByActivityPieChart;
