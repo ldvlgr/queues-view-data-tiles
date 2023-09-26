@@ -28,7 +28,7 @@ const config = {
   },
   allChannelsDataTile: false,
   groupsChartTile: false,
-  groupsSummaryTile: true,
+  groupsSummaryTile: false,
   queueGroups: ['Sales', 'Service', 'Magic'],
   enhancedAgentByActivityPieChart: true,
   agentActivityConfiguration: {

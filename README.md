@@ -27,20 +27,20 @@ Twilio.Flex.Manager.getInstance().store.getState().flex.realtimeQueues
 ```
 
 ### Active and waiting tasks by channel Data Tiles
-To be able to display the Active and Waiting Tasks for a specific Task Channel (e.g voice, chat, sms), we would first need to calculate these totals by aggregating the Channels data for all Queues. See code for this is contained in the `QueueDataUtil.getTaskCountsByChannel` method.  Leveraging the `getTaskCountsByChannel` utility method, we can create our custom Channel Data Tile component. This component is similar to the `AggregatedDataTile` component available in Flex with the a small enhancement to be able to change the tile background color:
+To be able to display the Active and Waiting Tasks for a specific Task Channel (e.g voice, chat, sms), we would first need to calculate these totals by aggregating the Channels data for all Queues. See code for this is contained in the `QueueDataUtil.getTaskCountsByChannel` method.  Leveraging the `getTaskCountsByChannel` utility method, we can create our custom Channel Data Tile component. 
 
-<img width="800px" src="images/QueuesViewChannelDataTiles.png"/>
+<img width="800px" src="images/ChannelCountDataTiles.png"/>
 
 ### Channel SLA Data Tiles
 
 The Flex Real Time Queues View shows the SLA % for each Queue (and further broken down by Channel, if available). If there are a large number of queues, it may be preferable to display the SLA % aggregated by Channel across all queues. The code for this aggregation is contained in the `QueueDataUtil.getSLTodayByChannel` method.  Leveraging this utility method, we can now create our custom Channel SLA Data Tiles:
 
-<img width="800px" src="images/QueuesView6DataTiles.png"/>
+<img width="800px" src="images/ChannelAndSLATiles.png"/>
 
 ### Custom pie chart Data Tiles
 Since there is limited screen space at the top of the Queues View to add new Data Tiles, it may make sense to combine several SLA metrics into a single data tile. For example:
 
-<img width="800px" src="images/ChannelSLAComboTile.png"/>
+<img width="800px" src="images/AllChannelsSLADataTile.png"/>
 
 This pie chart Data Tile is just one possible visualization of this data. Other options include vertical bar charts or donut charts. There are a variety of chart libraries available in npm for inclusion in your plugin. 
 
@@ -53,7 +53,6 @@ Furthermore, for large Flex implementations with dozens or even 100s of Queues, 
 ### Enhanced Agent Activity Breakdown Chart
 The native Agent Activity Tile adds up all Unavailable activities into 1 category (Unavailable) and does not show the agent counts for each specific Unavailable activity (for example, Break, Training, Lunch etc).  The Workspace agent activity data can be aggregated by Activity to display this more granular breakdown.
 
-<img width="450px" src="images/AgentActivityPieChartV2.png"/>
 
 ## Twilio PS Plugin Project
 
