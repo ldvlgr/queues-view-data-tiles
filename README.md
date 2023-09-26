@@ -105,6 +105,44 @@ From the root directory, rename `public/appConfig.example.js` to `public/appConf
 mv public/appConfig.example.js public/appConfig.js
 ```
 
+## Serverless Functions
+The serverless function (updateWorkerWithCapacity) is only required if you are going to use the ChannelCapacityTile on the Teams View.  This data tile requires that the worker channels capacity is copied to the worker attributes to be able to aggregate the total capacity across all workers.
+
+### Deployment
+
+Create the Serverless config file by copying `.env.example` to `.env`.
+
+```bash
+cd channel-capacity-service
+cp .env.example .env
+```
+Edit `.env` and set the `TWILIO_WORKSPACE_SID` variable to your Twilio TaskRouter Workspace Sid. 
+Set the `TWILIO_SYNC_SERVICE_SID` variable to your default Sync Service Sid.
+
+Next, deploy the Serverless functions:
+
+```bash
+cd channel-capacity-service
+twilio serverless:deploy
+```
+After successfully deploying your function, you should see at least the following:
+```bash
+✔ Serverless project successfully deployed
+
+Deployment Details
+
+Domain: worker-channel-capacity-service-xxx-dev.twil.io
+Service:
+   worker-channel-capacity-service (ZS...)
+
+
+Functions:
+Functions:
+   https://worker-channel-capacity-service-xxxx-dev.twil.io/updateWorkerWithCapacity
+
+```
+
+Your function will now be present in the Twilio Functions Console and be part of the "worker-channel-capacity-service" service. Copy the base URL from the function.
 
 ## Flex Plugin
 
@@ -116,6 +154,8 @@ Create the plugin config file by copying `.env.example` to `.env`.
 cd plugin-dashboards
 cp .env.example .env
 ```
+
+(Add `FLEX_APP_FUNCTIONS_BASE=https://worker-channel-capacity-service-xxxx-dev.twil.io` if you deployed the serverless function above. Only required for Channel Capacity Tile on the Teams View)
 
 To run the plugin locally, you can use the Twilio Flex CLI plugin. Using your command line, run the following from the root directory of the plugin.
 
