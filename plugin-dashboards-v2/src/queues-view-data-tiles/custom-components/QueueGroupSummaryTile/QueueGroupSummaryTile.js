@@ -1,8 +1,7 @@
 import { useFlexSelector } from '@twilio/flex-ui';
 import * as React from 'react';
-import { Box, Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
+import { Box, Table, THead, TBody, Th, Tr, Td, Tooltip } from '@twilio-paste/core';
 
-import Tooltip from '@material-ui/core/Tooltip';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { TileWrapper, Label, Heading } from './QueueGroupSummaryTile.Components';
 
@@ -24,35 +23,35 @@ const QueueGroupSummaryTile = (props) => {
                 <Heading> Group </Heading>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Tooltip title="Conversations" placement="top" arrow={true}>
+                <Tooltip text="Conversations" placement="top">
                   <Heading>
                     Assigned
                   </Heading>
                 </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Tooltip title="Wrapping" placement="top" arrow={true}>
+                <Tooltip text="Wrapping" placement="top">
                   <Heading>
                     Wrap
                   </Heading>
                 </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Tooltip title="Waiting in Queues" placement="top" arrow={true}>
+                <Tooltip text="Waiting in Queues" placement="top">
                   <Heading>
                     Wait
                   </Heading>
                 </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Tooltip title="Handled Today" placement="top" arrow={true}>
+                <Tooltip text="Handled Today" placement="top">
                   <Heading>
                     Handled
                   </Heading>
                 </Tooltip>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Tooltip title="SLA Today" placement="top" arrow={true}>
+                <Tooltip text="SLA Today" placement="top">
                   <Heading>
                     SLA
                   </Heading>
@@ -65,7 +64,7 @@ const QueueGroupSummaryTile = (props) => {
               return (
                 <Tr key={group}>
                   <Td element="COMPACT_TABLE">
-                    <Tooltip title={"Queues: " + metrics[group].queues.join(', ')} placement="right" arrow={true}>
+                    <Tooltip text={"Queues: " + metrics[group].queues.join(', ')} placement="right">
                       <Label> {group} {filter} </Label>
                     </Tooltip>
                   </Td>

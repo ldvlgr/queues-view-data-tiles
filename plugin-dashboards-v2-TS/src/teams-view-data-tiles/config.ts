@@ -9,11 +9,11 @@ const config: TeamsViewDataTilesConfig = {
     },
     chat: {
       color: '#87CEFA',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
     sms: {
       color: '#59cef8',
-      capacityDataTile: true,
+      capacityDataTile: false,
     },
   },
   teams: {
@@ -25,8 +25,8 @@ const config: TeamsViewDataTilesConfig = {
   taskSummaryDataTile: true,
   teamActivityBarChart: false,
   activitySummaryTile: true,
-  idle_status: { label: 'Idle (No Tasks)', color: 'limegreen', icon: 'AcceptLarge' },
-  busy_status: { label: 'Busy (1+ Tasks)', color: 'royalblue', icon: 'GenericTask' },
+  idle_status: { label: 'Idle: Available with no Tasks', color: 'limegreen', icon: 'AcceptLarge' },
+  busy_status: { label: 'Busy: Available with Task(s)', color: 'royalblue', icon: 'GenericTask' },
   skillsByTeamDataTile: false,
   columns: {
     team: true,

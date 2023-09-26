@@ -1,9 +1,9 @@
 import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import * as React from 'react';
-import { Box, Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
+import { Box, Table, THead, TBody, Th, Tr, Td, Tooltip } from '@twilio-paste/core';
 import { SupervisorWorkerState } from '@twilio/flex-ui/src/state/State.definition';
 import { AppState } from '../../flex-hooks/states';
-import Tooltip from '@material-ui/core/Tooltip';
+import { EmojiIcon } from '@twilio-paste/icons/esm/EmojiIcon';
 
 import { getTeamNames, getIdleStatusConfig, getBusyStatusConfig } from '../../config';
 import { TileWrapper, AgentActivity, Label, Heading } from './ActivitySummaryTile.Components';
@@ -32,7 +32,7 @@ const ActivitySummaryTile = () => {
                 <Heading> Team </Heading>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
-                <Tooltip title="Total Agents" placement="top" arrow={true}>
+                <Tooltip text="Total Agents" placement="top">
                   <Heading>
                     <Icon icon="Agents" />
                   </Heading>
@@ -40,16 +40,16 @@ const ActivitySummaryTile = () => {
               </Th>
               <Th element="COMPACT_TABLE">
                 <AgentActivity bgColor={statusIdle.color}>
-                  <Tooltip title={statusIdle.label} placement="top" arrow={true}>
+                  <Tooltip text={statusIdle.label} placement="top">
                     <Heading>
-                      <Icon icon={statusIdle.icon} />
+                      <EmojiIcon decorative={true} />
                     </Heading>
                   </Tooltip>
                 </AgentActivity>
               </Th>
               <Th element="COMPACT_TABLE">
                 <AgentActivity bgColor={statusBusy.color}>
-                  <Tooltip title={statusBusy.label} placement="top" arrow={true}>
+                  <Tooltip text={statusBusy.label} placement="top">
                     <Heading>
                       <Icon icon={statusBusy.icon} />
                     </Heading>
@@ -60,7 +60,7 @@ const ActivitySummaryTile = () => {
                 return (
                   <Th element="COMPACT_TABLE" key={activity}>
                     <AgentActivity bgColor={activityConfig.activities[activity].color}>
-                      <Tooltip title={activity} placement="top" arrow={true}>
+                      <Tooltip text={activity} placement="top">
                         <Heading>
                           <Icon icon={activityConfig.activities[activity]?.icon} />
                         </Heading>
@@ -121,7 +121,6 @@ const ActivitySummaryTile = () => {
             })}
           </TBody>
         </Table>
-        <Label>Note: Available = Busy + Idle. Busy = Available with 1+ Tasks. Idle = Available with No Tasks.</Label>
       </Box>
     </TileWrapper>
   );

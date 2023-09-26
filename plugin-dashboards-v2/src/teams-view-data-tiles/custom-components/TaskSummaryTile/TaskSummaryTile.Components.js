@@ -41,6 +41,7 @@ export const Channel = styled('div')`
   border-radius: 12px;
   height: 24px;
   min-width: 24px;
+  align-items: center;
 `;
 
 export const Label = styled('div')`

@@ -1,7 +1,6 @@
 import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import * as React from 'react';
-import { Box, Table, THead, TBody, Th, Tr, Td } from '@twilio-paste/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import { Box, Table, THead, TBody, Th, Tr, Td, Tooltip } from '@twilio-paste/core';
 import { CallIncomingIcon } from '@twilio-paste/icons/esm/CallIncomingIcon';
 import { CallOutgoingIcon } from '@twilio-paste/icons/esm/CallOutgoingIcon';
 
@@ -31,25 +30,25 @@ const TaskSummaryTile = () => {
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
                 <Channel bgColor={getChannelVoice_Color()}>
-                  <Tooltip title="Inbound Calls" placement="top" arrow={true}>
+                  <Tooltip text="Inbound Calls" placement="top">
                     <Heading>
-                      <CallIncomingIcon decorative={false} title="In" />
+                      <CallIncomingIcon decorative={true}/>
                     </Heading>
                   </Tooltip>
                 </Channel>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
                 <Channel bgColor={getChannelVoice_Color()}>
-                  <Tooltip title="Outbound Calls" placement="top" arrow={true}>
+                  <Tooltip text="Outbound Calls" placement="top">
                     <Heading>
-                      <CallOutgoingIcon decorative={false} title="Out" />
+                      <CallOutgoingIcon decorative={true} />
                     </Heading>
                   </Tooltip>
                 </Channel>
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
                 <Channel bgColor={getChannelChat_Color()}>
-                  <Tooltip title="Chat" placement="top" arrow={true}>
+                  <Tooltip text="Chat" placement="top">
                     <Heading>
                       <Icon icon="Message" />
                     </Heading>
@@ -58,7 +57,7 @@ const TaskSummaryTile = () => {
               </Th>
               <Th element="COMPACT_TABLE" textAlign="center">
                 <Channel bgColor={getChannelSMS_Color()}>
-                  <Tooltip title="SMS" placement="top" arrow={true}>
+                  <Tooltip text="SMS" placement="top">
                     <Heading>
                       <Icon icon="Sms" />
                     </Heading>
