@@ -141,7 +141,6 @@ export function getTasksAndCapacity(workers = []) {
         let channel = '';
         const tasks = wk?.tasks || [];
         tasks.forEach((task) => {
-            console.log('Task:', task);
             if (task.taskChannelUniqueName == TASK_CHANNEL_VOICE) {
                 channel = 'voice_' + (task.attributes?.direction || 'inbound');
             } else {
@@ -186,7 +185,6 @@ export function getTasksAndCapacityByTeam(workers = [], teams = []) {
         let channel = '';
         const tasks = wk?.tasks || [];
         tasks.forEach((task) => {
-            console.log('Task:', task);
             if (task.taskChannelUniqueName == TASK_CHANNEL_VOICE) {
                 channel = 'voice_' + (task.attributes?.direction || 'inbound');
             } else {

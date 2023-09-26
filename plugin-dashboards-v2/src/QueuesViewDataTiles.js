@@ -4,7 +4,8 @@ import { CustomizationProvider, PasteCustomCSS, CustomizationProviderProps } fro
 
 import QueuesView from './queues-view-data-tiles/flex-hooks/components/QueuesView';
 import TeamsView from './teams-view-data-tiles/flex-hooks/components/TeamsView';
-
+import { updateWorkerWithCapacity } from './teams-view-data-tiles/utils/TRService';
+import { isChannelChat_CapacityEnabled, isChannelSMS_CapacityEnabled } from './teams-view-data-tiles/config';
 const PLUGIN_NAME = 'QueuesViewDataTiles';
 
 export default class DashboardsPlugin extends FlexPlugin {
@@ -51,6 +52,13 @@ export default class DashboardsPlugin extends FlexPlugin {
       },
     });
 
+    if (isChannelChat_CapacityEnabled() || isChannelSMS_CapacityEnabled()) {
+      // Copy Worker Channels capacity to worker attributes
+      const workerSid = manager?.workerClient?.sid;
+      if (workerSid) {
+        await updateWorkerWithCapacity(workerSid);
+      };
+    }
     //Queue Stats Dashboard enhancements
     QueuesView(manager);
     TeamsView(manager)
