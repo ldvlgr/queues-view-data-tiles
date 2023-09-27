@@ -65,7 +65,7 @@ Several of these data tiles (Task Counts, Channel SLA, All Channels, Enhanced Ag
 
 The TypeScript (TS) version of this plugin contains the latest code for the Teams View additions. The current version of the Task Summary by Channel & Team and Activity Summary by Team now looks like this:
 
-<img width="800px" src="images/TaskSummaryActivityByTeam.png"/>
+<img width="800px" src="images/TeamsViewSummaryTiles.png"/>
 
 Note: The Teams View can only display up to 200 agents, so the worker data available for aggregation is limited to this data set.
 

@@ -77,18 +77,18 @@ const ActivitySummaryTile = () => {
                 <Heading> Total (All) </Heading>
               </Td>
               <Td element="COMPACT_TABLE" textAlign="center">
-                <Label>{workerActivityCounts.All.totalAgentCount} </Label>
+                <Heading>{workerActivityCounts.All.totalAgentCount} </Heading>
               </Td>
               <Td element="COMPACT_TABLE_BG30" textAlign="center">
-                <Label>{workerActivityCounts.All.activities.Idle} </Label>
+                <Heading>{workerActivityCounts.All.activities.Idle} </Heading>
               </Td>
               <Td element="COMPACT_TABLE_BG20" textAlign="center">
-                <Label>{workerActivityCounts.All.activities.Busy} </Label>
+                <Heading>{workerActivityCounts.All.activities.Busy} </Heading>
               </Td>
               {activityNames.map((activity) => {
                 return (
                   <Td element="COMPACT_TABLE" textAlign="center" key={activity}>
-                    <Label> {workerActivityCounts.All.activities[activity] || 0} </Label>
+                    <Heading> {workerActivityCounts.All.activities[activity] || 0} </Heading>
                   </Td>
                 );
               })}

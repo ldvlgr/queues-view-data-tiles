@@ -72,16 +72,16 @@ const TaskSummaryTile = () => {
                 <Heading> Total (All) </Heading>
               </Td>
               <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.voice_inbound} </Label>
+                <Heading> {taskCounts.All.tasks.voice_inbound} </Heading>
               </Td>
               <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.voice_outbound} </Label>
+                <Heading> {taskCounts.All.tasks.voice_outbound} </Heading>
               </Td>
               <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.chat} </Label>
+                <Heading> {taskCounts.All.tasks.chat} </Heading>
               </Td>
               <Td element="COMPACT_TABLE" textAlign="center">
-                <Label> {taskCounts.All.tasks.sms} </Label>
+                <Heading> {taskCounts.All.tasks.sms} </Heading>
               </Td>
             </Tr>
             {teams.map((team) => {
