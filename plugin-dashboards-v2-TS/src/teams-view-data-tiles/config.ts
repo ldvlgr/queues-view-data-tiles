@@ -9,11 +9,11 @@ const config: TeamsViewDataTilesConfig = {
     },
     chat: {
       color: '#87CEFA',
-      capacityDataTile: false,
+      capacityDataTile: true,
     },
     sms: {
       color: '#59cef8',
-      capacityDataTile: false,
+      capacityDataTile: true,
     },
   },
   teams: {

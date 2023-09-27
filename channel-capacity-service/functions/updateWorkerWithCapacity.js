@@ -27,7 +27,7 @@ exports.handler = TokenValidator(async function (context, event, callback) {
       .list({ limit: 20 });
 
     workerChannels.forEach(wc => {
-      console.log(wc);
+      // console.log(wc);
       if (wc.taskChannelUniqueName == "chat") {
         channels.chat.available = wc.available;
         channels.chat.capacity = wc.configuredCapacity;
@@ -36,27 +36,38 @@ exports.handler = TokenValidator(async function (context, event, callback) {
         channels.sms.capacity = wc.configuredCapacity;
       }
     })
-    console.log('Channels: ', channels);
+    console.log('WorkerChannels: ', channels);
 
-    //Update capacity in Worker attributes
     const worker = await client.taskrouter.v1
       .workspaces(context.TWILIO_WORKSPACE_SID)
       .workers(workerSid)
       .fetch();
 
-    console.log('Worker:', worker);
     // Worker Attributes are encoded as Json string
-    let workersAttributes = JSON.parse(worker.attributes);
+    let wkAttr = JSON.parse(worker.attributes);
+    console.log('Channels in Attributes:', wkAttr.channels);
 
-    workersAttributes = {
-      ...workersAttributes, channels};
+    if (wkAttr.channels && wkAttr.channels.chat.available == channels.chat.available
+      && wkAttr.channels.chat.capacity == channels.chat.capacity
+      && wkAttr.channels.sms.available == channels.sms.available
+      && wkAttr.channels.sms.capacity == channels.sms.capacity) {
+      console.log('No change in Channels');
+      response.appendHeader("Content-Type", "application/json");
+      response.setBody(wkAttr);
+      return callback(null, response);
+    }
+
+    console.log('Channel Capacity Changed - Update Worker Attributes');
+    wkAttr = {
+      ...wkAttr, channels
+    };
 
     const updateWorker = await client.taskrouter.v1
       .workspaces(context.TWILIO_WORKSPACE_SID)
       .workers(workerSid)
-      .update({ attributes: JSON.stringify(workersAttributes) });
+      .update({ attributes: JSON.stringify(wkAttr) });
 
-    console.log('Updated', workerSid, 'attributes with', workersAttributes);
+    console.log('Updated', workerSid, 'attributes with channels: ', channels);
 
     response.appendHeader("Content-Type", "application/json");
     response.setBody(JSON.parse(updateWorker.attributes));

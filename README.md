@@ -105,7 +105,7 @@ mv public/appConfig.example.js public/appConfig.js
 ```
 
 ## Serverless Functions
-The serverless function (updateWorkerWithCapacity) is only required if you are going to use the ChannelCapacityTile on the Teams View.  This data tile requires that the worker channels capacity is copied to the worker attributes to be able to aggregate the total capacity across all workers.
+The serverless function (updateWorkerWithCapacity) is only required if you are going to use the ChannelCapacityTile on the Teams View.  This data tile requires that the worker channels capacity is copied to the worker attributes to be able to aggregate the total capacity across all workers. This function runs once at agent login (Plugin load) and will only update the `channels` in the Worker Attributes if not present or if different from the configured WorkerChannels.
 
 ### Deployment
 
@@ -127,15 +127,12 @@ twilio serverless:deploy
 After successfully deploying your function, you should see at least the following:
 ```bash
 ✔ Serverless project successfully deployed
-
 Deployment Details
 
 Domain: worker-channel-capacity-service-xxx-dev.twil.io
 Service:
    worker-channel-capacity-service (ZS...)
 
-
-Functions:
 Functions:
    https://worker-channel-capacity-service-xxxx-dev.twil.io/updateWorkerWithCapacity
 
