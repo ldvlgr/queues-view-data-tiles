@@ -2,14 +2,22 @@ const config = {
   channels: {
     voice: {
       color: '#ADD8E6',
+      taskCount: true,
       capacityDataTile: false,
     },
     chat: {
       color: '#87CEFA',
+      taskCount: true,
       capacityDataTile: false,
     },
     sms: {
       color: '#59cef8',
+      taskCount: true,
+      capacityDataTile: false,
+    },
+    video: {
+      color: '#00CED1',
+      taskCount: true,
       capacityDataTile: false,
     },
   },
@@ -18,14 +26,14 @@ const config = {
     Magic: { color: 'wheat' },
     Service: { color: 'tan' },
     Support: { color: 'grey' },
-    Chicago: { color: 'white' },
-    Toronto: { color: 'white' },
+    Galaxy: { color: 'white' },
+    USA: { color: 'white' },
   },
   taskSummaryDataTile: true,
   teamActivityBarChart: false,
   activitySummaryTile: true,
-  idle_status: { label: 'Idle: Available with no Tasks', color: 'limegreen', icon: 'AcceptLarge' },
-  busy_status: { label: 'Busy: Available with Task(s)', color: 'royalblue', icon: 'GenericTask' },
+  idle_status: { color: 'limegreen' },
+  busy_status: { color: 'royalblue' },
   skillsByTeamDataTile: false,
   columns: {
     team: true,
@@ -36,7 +44,9 @@ const config = {
   }
 }
 
-
+export const getChannelsConfig = () => {
+  return config.channels;
+};
 export const getChannelVoice_Color = () => {
   return config.channels.voice.color;
 };
@@ -45,6 +55,9 @@ export const getChannelChat_Color = () => {
 };
 export const getChannelSMS_Color = () => {
   return config.channels.sms.color;
+};
+export const getChannelVideo_Color = () => {
+  return channels.video.color;
 };
 export const getTeamsConfig = () => {
   return config.teams;

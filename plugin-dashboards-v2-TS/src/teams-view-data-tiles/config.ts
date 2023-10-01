@@ -1,19 +1,26 @@
 import TeamsViewDataTilesConfig from "./types/ServiceConfiguration";
 
 const config: TeamsViewDataTilesConfig = {
-  enabled: true,
   channels: {
     voice: {
       color: '#ADD8E6',
+      taskCount: true,
       capacityDataTile: false,
     },
     chat: {
       color: '#87CEFA',
+      taskCount: true,
       capacityDataTile: true,
     },
     sms: {
       color: '#59cef8',
+      taskCount: true,
       capacityDataTile: true,
+    },
+    video: {
+      color: '#00CED1',
+      taskCount: true,
+      capacityDataTile: false,
     },
   },
   teams: {
@@ -21,12 +28,14 @@ const config: TeamsViewDataTilesConfig = {
     Magic: { color: 'wheat' },
     Service: { color: 'tan' },
     Support: { color: 'grey' },
+    Galaxy: { color: 'white' },
+    USA: { color: 'white' },
   },
   taskSummaryDataTile: true,
   teamActivityBarChart: false,
   activitySummaryTile: true,
-  idle_status: { label: 'Idle: Available with no Tasks', color: 'limegreen', icon: 'AcceptLarge' },
-  busy_status: { label: 'Busy: Available with Task(s)', color: 'royalblue', icon: 'GenericTask' },
+  idle_status: { color: 'limegreen' },
+  busy_status: { color: 'royalblue' },
   skillsByTeamDataTile: false,
   columns: {
     team: true,
@@ -37,7 +46,9 @@ const config: TeamsViewDataTilesConfig = {
   }
 }
 
-
+export const getChannelsConfig = () => {
+  return config.channels;
+};
 export const getChannelVoice_Color = () => {
   return config.channels.voice.color;
 };
@@ -46,6 +57,9 @@ export const getChannelChat_Color = () => {
 };
 export const getChannelSMS_Color = () => {
   return config.channels.sms.color;
+};
+export const getChannelVideo_Color = () => {
+  return config.channels.video.color;
 };
 export const getTeamsConfig = () => {
   return config.teams;

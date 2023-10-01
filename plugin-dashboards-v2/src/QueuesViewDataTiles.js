@@ -28,6 +28,9 @@ export default class DashboardsPlugin extends FlexPlugin {
           theme: props.theme?.tokens,
           style: { minWidth: '100%', height: '100%' },
           elements: {
+            STICKY_HEADER: {
+              zIndex: 2,
+            },
             COMPACT_TABLE: {
               padding: 'space20',
             },

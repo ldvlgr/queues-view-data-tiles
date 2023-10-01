@@ -33,7 +33,7 @@ export const Content = styled('div')`
 
 export const Channel = styled('div')`
   color: #121c2d;
-  background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundBody};
+  background-color: ${(props) => props.bgColor || props.theme.tokens.backgroundColors.colorBackgroundStrong};
   display: flex;
   flex-direction: row;
   justify-content: center;

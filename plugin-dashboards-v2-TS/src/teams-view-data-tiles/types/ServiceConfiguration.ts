@@ -1,5 +1,4 @@
 export default interface TeamsViewDataTilesConfig {
-  enabled: boolean;
   channels: Channels;
   teams: {
     [key: string]: { color: string},
@@ -7,8 +6,8 @@ export default interface TeamsViewDataTilesConfig {
   taskSummaryDataTile: boolean;
   teamActivityBarChart: boolean;
   activitySummaryTile: boolean;
-  idle_status: StatusConfig;
-  busy_status: StatusConfig;
+  idle_status: { color: string };
+  busy_status: { color: string };
   skillsByTeamDataTile: boolean;
   columns: {
     team: boolean,
@@ -20,16 +19,9 @@ export default interface TeamsViewDataTilesConfig {
 }
 
 export interface Channels {
-  [key: string]: ChannelConfig;
-}
-
-export interface ChannelConfig {
-  color: string;
-  capacityDataTile: boolean;
-}
-
-interface StatusConfig {
-  label: string;
-  color: string;
-  icon: string;
+  [key: string]: { 
+    color: string; 
+    taskCount: boolean, 
+    capacityDataTile: boolean 
+  };
 }

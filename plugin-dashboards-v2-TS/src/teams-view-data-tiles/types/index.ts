@@ -15,6 +15,7 @@ export interface ActivityCounts {
 export interface TaskCounts {
   [key: string]: {
     teamName: string;
+    totalTaskCount: number;
     tasks: {
       [key: string]: number;
     };

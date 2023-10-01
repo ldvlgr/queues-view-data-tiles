@@ -24,13 +24,14 @@ export default class DashboardsPlugin extends FlexPlugin {
 
     Flex.setProviders({
       CustomProvider: RootComponent => props => {
-        const pasteProviderProps: CustomizationProviderProps & {
-          style: PasteCustomCSS;
-        } = {
+        const pasteProviderProps: { [key: string]: any } = {
           baseTheme: props.theme?.isLight ? 'default' : 'dark',
           theme: props.theme?.tokens,
           style: { minWidth: '100%', height: '100%' },
           elements: {
+            STICKY_HEADER: {
+              zIndex: 2,
+            },
             COMPACT_TABLE: {
               padding: 'space20',
             },

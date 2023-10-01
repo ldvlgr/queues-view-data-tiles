@@ -11,6 +11,7 @@ const TASK_CHANNEL_VOICE = 'voice';
 export function getAgentStatusCounts(workers = [], teams = []) {
     const ac = {};
     ac.All = { teamName: 'All', totalAgentCount: 0, activities: { Idle: 0, Busy: 0 } };
+    ac.Other = { teamName: 'Other', totalAgentCount: 0, activities: { Idle: 0, Busy: 0 } };
     // Init activity counts
     teams.forEach((team) => {
       ac[team] = { teamName: team, totalAgentCount: 0, activities: { Idle: 0, Busy: 0 } };
@@ -24,24 +25,24 @@ export function getAgentStatusCounts(workers = [], teams = []) {
     workers.forEach((wk) => {
       const workerStatus = wk.worker.activityName;
       const tasks = wk?.tasks || [];
-      const tm = wk.worker?.attributes?.team_name || 'Other';
-      if (teams.includes(tm)) {
-        const count = ac[tm].activities[workerStatus] ? ac[tm].activities[workerStatus] : 0;
-        ac[tm].activities[workerStatus] = count + 1;
-        ac[tm].totalAgentCount += 1;
-        if (workerStatus === STATUS_AVAILABLE) {
-          if (tasks.length > 0) {
-            const count = ac[tm].activities.Busy ? ac[tm].activities.Busy : 0;
-            ac[tm].activities.Busy = count + 1;
-          } else {
-            const count = ac[tm].activities.Idle ? ac[tm].activities.Idle : 0;
-            ac[tm].activities.Idle = count + 1;
-          }
+      const teamName = wk.worker?.attributes?.team_name || 'Other';
+      let tm = teamName;
+      if (!teams.includes(teamName)) tm = 'Other';
+      const count = ac[tm].activities[workerStatus] ? ac[tm].activities[workerStatus] : 0;
+      ac[tm].activities[workerStatus] = count + 1;
+      ac[tm].totalAgentCount += 1;
+      if (workerStatus === STATUS_AVAILABLE) {
+        if (tasks.length > 0) {
+          const count = ac[tm].activities.Busy ? ac[tm].activities.Busy : 0;
+          ac[tm].activities.Busy = count + 1;
+        } else {
+          const count = ac[tm].activities.Idle ? ac[tm].activities.Idle : 0;
+          ac[tm].activities.Idle = count + 1;
         }
       }
       // Total Count for All Workers/Teams
-      const count = ac.All.activities[workerStatus] ? ac.All.activities[workerStatus] : 0;
-      ac.All.activities[workerStatus] = count + 1;
+      const allCount = ac.All.activities[workerStatus] ? ac.All.activities[workerStatus] : 0;
+      ac.All.activities[workerStatus] = allCount + 1;
       if (workerStatus === STATUS_AVAILABLE) {
         if (tasks.length > 0) {
           const count = ac.All.activities.Busy ? ac.All.activities.Busy : 0;
@@ -100,32 +101,40 @@ export function getSkillsByTeamCounts(workers = [], teams = []) {
 }
 
 export function getTasksByTeamCounts(workers = [], teams = []) {
-    let taskCounts = {};
-    taskCounts['All'] = { teamName: 'All', tasks: { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 } };
-    //Init task counts
+    const taskCounts = {};
+    const initTasks = { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0, video: 0 };
+    taskCounts.All = { teamName: 'All', totalTaskCount: 0, tasks: { ...initTasks } };
+    taskCounts.Other = { teamName: 'Other', totalTaskCount: 0, tasks: { ...initTasks } };
+  
+    // Init task counts
     teams.forEach((team) => {
-        taskCounts[team] = { teamName: team, tasks: { voice_inbound: 0, voice_outbound: 0, sms: 0, chat: 0 } };
+      taskCounts[team] = { teamName: team, totalTaskCount: 0, tasks: { ...initTasks } };
     });
     workers.forEach((wk) => {
-        let tm = wk.worker?.attributes?.team_name ? wk.worker.attributes.team_name : 'Other';
-        let channel = '';
-        const tasks = wk?.tasks || [];
-        tasks.forEach((task) => {
-            if (task.taskChannelUniqueName == TASK_CHANNEL_VOICE) {
-                channel = 'voice_' + (task.attributes?.direction || 'inbound');
-            } else {
-                channel = task.taskChannelUniqueName;
-            }
-            if (teams.includes(tm)) {
-                let count = taskCounts[tm].tasks[channel] ? taskCounts[tm].tasks[channel] : 0;
-                taskCounts[tm].tasks[channel] = count + 1;
-            }
-            let count = taskCounts.All.tasks[channel] ? taskCounts.All.tasks[channel] : 0;
-            taskCounts.All.tasks[channel] = count + 1;
-        });
+      const teamName = wk.worker?.attributes?.team_name ? wk.worker.attributes.team_name : 'Other';
+      let tm = teamName;
+      if (!teams.includes(teamName)) tm = 'Other';
+      let channel = '';
+      const tasks = wk?.tasks || [];
+      tasks.forEach((task) => {
+        if (task.taskChannelUniqueName === TASK_CHANNEL_VOICE) {
+          channel = `voice_${task.attributes?.direction || 'inbound'}`;
+        } else {
+          channel = task.taskChannelUniqueName;
+        }
+        const count = taskCounts[tm].tasks[channel] ? taskCounts[tm].tasks[channel] : 0;
+        taskCounts[tm].tasks[channel] = count + 1;
+        const total = taskCounts[tm].totalTaskCount ? taskCounts[tm].totalTaskCount : 0;
+        taskCounts[tm].totalTaskCount = total + 1;
+  
+        const allCount = taskCounts.All.tasks[channel] ? taskCounts.All.tasks[channel] : 0;
+        taskCounts.All.tasks[channel] = allCount + 1;
+        const allTotal = taskCounts.All.totalTaskCount ? taskCounts.All.totalTaskCount : 0;
+        taskCounts.All.totalTaskCount = allTotal + 1;
+      });
     });
     return taskCounts;
-}
+  }
 
 
 export function getTasksAndCapacity(workers = []) {

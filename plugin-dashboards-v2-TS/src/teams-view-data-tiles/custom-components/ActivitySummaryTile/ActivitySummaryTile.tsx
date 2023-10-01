@@ -26,7 +26,7 @@ const ActivitySummaryTile = () => {
     <TileWrapper className="Twilio-AggregatedDataTile">
       <Box overflowY="auto" maxHeight="240px">
         <Table variant="borderless">
-          <THead stickyHeader top={0}>
+          <THead stickyHeader top={0} element="STICKY_HEADER">
             <Tr key="headerRow">
               <Th element="COMPACT_TABLE">
                 <Heading> Team </Heading>
@@ -40,7 +40,7 @@ const ActivitySummaryTile = () => {
               </Th>
               <Th element="COMPACT_TABLE">
                 <AgentActivity bgColor={statusIdle.color}>
-                  <Tooltip text={statusIdle.label} placement="top">
+                  <Tooltip text="Idle: Available with no Tasks" placement="top">
                     <Heading>
                       <EmojiIcon decorative={true} />
                     </Heading>
@@ -49,9 +49,9 @@ const ActivitySummaryTile = () => {
               </Th>
               <Th element="COMPACT_TABLE">
                 <AgentActivity bgColor={statusBusy.color}>
-                  <Tooltip text={statusBusy.label} placement="top">
+                  <Tooltip text="Busy: Available with Task(s)" placement="top">
                     <Heading>
-                      <Icon icon={statusBusy.icon} />
+                      <Icon icon="GenericTask" />
                     </Heading>
                   </Tooltip>
                 </AgentActivity>
@@ -112,13 +112,34 @@ const ActivitySummaryTile = () => {
                   {activityNames.map((activity) => {
                     return (
                       <Td element="COMPACT_TABLE" textAlign="center" key={activity}>
-                        <Label>{workerActivityCounts[team].activities[activity]}</Label>
+                        <Label>{workerActivityCounts[team].activities[activity] || 0}</Label>
                       </Td>
                     );
                   })}
                 </Tr>
               );
             })}
+            <Tr key="Other">
+              <Td element="COMPACT_TABLE">
+                <Label> Other </Label>
+              </Td>
+              <Td element="COMPACT_TABLE" textAlign="center">
+                <Label>{workerActivityCounts.Other.totalAgentCount} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE_BG30" textAlign="center">
+                <Label>{workerActivityCounts.Other.activities.Idle} </Label>
+              </Td>
+              <Td element="COMPACT_TABLE_BG20" textAlign="center">
+                <Label>{workerActivityCounts.Other.activities.Busy} </Label>
+              </Td>
+              {activityNames.map((activity) => {
+                return (
+                  <Td element="COMPACT_TABLE" textAlign="center" key={activity}>
+                    <Label> {workerActivityCounts.Other.activities[activity] || 0} </Label>
+                  </Td>
+                );
+              })}
+            </Tr>
           </TBody>
         </Table>
       </Box>
