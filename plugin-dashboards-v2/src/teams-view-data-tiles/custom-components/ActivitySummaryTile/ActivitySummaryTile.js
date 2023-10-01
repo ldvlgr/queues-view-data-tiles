@@ -71,7 +71,7 @@ const ActivitySummaryTile = () => {
           <TBody>
             <Tr key="All">
               <Td element="COMPACT_TABLE">
-                <Heading> Total (All) </Heading>
+                <Heading> All Teams </Heading>
               </Td>
               <Td element="COMPACT_TABLE" textAlign="center">
                 <Heading>{workerActivityCounts.All.totalAgentCount} </Heading>
