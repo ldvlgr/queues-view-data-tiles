@@ -1,5 +1,3 @@
-const channelList = ['chat', 'sms', 'voice'];
-
 class QueueDataUtil {
   getTasksByGroup = (queues = [], group = '') => {
     let activeTasks = 0;
@@ -45,58 +43,57 @@ class QueueDataUtil {
   }
 
 
-  getTaskCountsByChannel = (queues = []) => {
+  getTaskCountsByChannel = (queues = [], channelList) => {
     const initCounts = { activeTasks: 0, assignedTasks: 0, wrappingTasks: 0, waitingTasks: 0 };
-    let taskCounts = {
-      chat: { ...initCounts },
-      sms: { ...initCounts },
-      voice: { ...initCounts }
-    };
+    const taskCounts = {}
     if (queues.length === 0) return taskCounts;
-    queues.forEach(q => {
+    queues.forEach((q) => {
       if (q.channels) {
-        q.channels.forEach(ch => {
-          //Only aggregate counts for configured channels
-          const wqChannelName = ch.unique_name ? ch.unique_name : "unknown";
-          if (channelList.includes(wqChannelName) && (ch.tasks_now)) {
+        q.channels.forEach((ch) => {
+          const wqChannelName = ch.unique_name ? ch.unique_name : 'unknown';
+          if (channelList.includes(wqChannelName) && ch.tasks_now) {
+            if (!taskCounts[wqChannelName]) taskCounts[wqChannelName] = { ...initCounts };
             const assignedTasks = ch?.tasks_now?.assigned_tasks;
             const wrappingTasks = ch?.tasks_now?.wrapping_tasks;
             taskCounts[wqChannelName].assignedTasks += assignedTasks;
             taskCounts[wqChannelName].wrappingTasks += wrappingTasks;
-            taskCounts[wqChannelName].activeTasks += ch?.tasks_now?.active_tasks;
-            taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.waiting_tasks;
+            // active = assigned + wrapping
+            taskCounts[wqChannelName].activeTasks += assignedTasks + wrappingTasks;
+            // waiting = pending + reserved
+            taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.pending_tasks;
+            taskCounts[wqChannelName].waitingTasks += ch?.tasks_now?.reserved_tasks;
           }
-        })
+        });
       }
-    })
+    });
     return taskCounts;
-  }
+  };
 
 
-  getSLTodayByChannel = (queues = []) => {
-    const initSLMetrics = { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 }
-    let slMetrics = {
-      chat: { ...initSLMetrics },
-      sms: { ...initSLMetrics },
-      voice: { ...initSLMetrics }
-    };
+  getSLTodayByChannel = (queues = [], channelList) => {
+    const initSLMetrics = { handledTasks: 0, handledTasksWithinSL: 0, serviceLevelPct: 0 };
+    const slMetrics = {};
     if (queues.length === 0) return slMetrics;
-    queues.forEach(q => {
+    queues.forEach((q) => {
       if (q.channels) {
-        q.channels.forEach(ch => {
-          if (channelList.includes(ch.unique_name) && (ch.sla_today)) {
-            slMetrics[ch.unique_name].handledTasks += ch?.sla_today?.handled_tasks_count;
-            slMetrics[ch.unique_name].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
+        q.channels.forEach((ch) => {
+          const wqChannelName = ch.unique_name ? ch.unique_name : 'unknown';
+          if (channelList.includes(wqChannelName) && ch.sla_today) {
+            if (!slMetrics[wqChannelName]) slMetrics[wqChannelName] = { ...initSLMetrics };
+            slMetrics[wqChannelName].handledTasks += ch?.sla_today?.handled_tasks_count;
+            slMetrics[wqChannelName].handledTasksWithinSL += ch?.sla_today?.handled_tasks_within_sl_threshold_count;
           }
-        })
+        });
       }
-    })
-    channelList.forEach(ch => {
-      if (slMetrics[ch].handledTasks > 0)
-        slMetrics[ch].serviceLevelPct = Math.floor((slMetrics[ch].handledTasksWithinSL / slMetrics[ch].handledTasks) * 100);
-    })
+    });
+    channelList.forEach((ch) => {
+      if (slMetrics[ch]?.handledTasks > 0)
+        slMetrics[ch].serviceLevelPct = Math.floor(
+          (slMetrics[ch].handledTasksWithinSL / slMetrics[ch].handledTasks) * 100,
+        );
+    });
     return slMetrics;
-  }
+  };
 
   getSLTodayByGroup = (queues = [], group = '') => {
     let handledTasks = 0;

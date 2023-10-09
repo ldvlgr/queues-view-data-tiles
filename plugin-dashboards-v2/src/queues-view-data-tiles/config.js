@@ -1,36 +1,38 @@
 
 const config = {
-  activeTasksDataTile: false,
-  waitingTasksDataTile: false,
-  longestWaitTimeDataTile: false,
-  agentsByActivityBarChart: false,
+  queuesViewTiles: {
+    activeTasksDataTile: false,
+    waitingTasksDataTile: false,
+    longestWaitTimeDataTile: false,
+    agentsByActivityBarChart: false,
+    allChannelsDataTile: false,
+    enhancedAgentByActivityPieChart: true,
+    groupsChartTile: false,
+    groupsSummaryTile: true,
+  },
   channels: {
-    voice: {
+    Voice: {
       color: '#ADD8E6',
       SLADataTile: true,
       taskCountsDataTile: true
     },
-    chat: {
+    Chat: {
       color: '#87CEFA',
       SLADataTile: true,
       taskCountsDataTile: true
     },
-    sms: {
+    SMS: {
       color: '#59cef8',
       SLADataTile: false,
       taskCountsDataTile: false
     },
-    video: {
+    Video: {
       color: '#00FFFF',
       SLADataTile: true,
       taskCountsDataTile: true
     },
   },
-  allChannelsDataTile: false,
-  groupsChartTile: false,
-  groupsSummaryTile: true,
   queueGroups: ['Sales', 'Service', 'Magic'],
-  enhancedAgentByActivityPieChart: true,
   agentActivityConfiguration: {
     activities: {
       Available: { color: 'green', icon: 'Accept' },
@@ -50,69 +52,63 @@ const config = {
 
 
 export const isActiveTasksEnabled = () => {
-  return config.activeTasksDataTile;
+  return config.queuesViewTiles.activeTasksDataTile;
 };
 export const isWaitingTasksEnabled = () => {
-  return config.waitingTasksDataTile;
+  return config.queuesViewTiles.waitingTasksDataTile;
 };
 export const isLongestWaitTimeEnabled = () => {
-  return config.longestWaitTimeDataTile;
+  return config.queuesViewTiles.longestWaitTimeDataTile;
 };
 export const isAgentsByActivityEnabled = () => {
-  return config.agentsByActivityBarChart;
+  return config.queuesViewTiles.agentsByActivityBarChart;
 };
 export const getChannelColors = () => {
   const channelNames = Object.keys(config.channels);
   const colors = {};
   channelNames.forEach((ch) => {
-    colors[ch] = config.channels[ch].color;
+    colors[ch.toLowerCase()] = config.channels[ch].color;
   });
   return colors;
 };
-export const getChannelNames = () => {
-  return Object.keys(config.channels);
+export const getChannelsConfig = () => {
+  return config.channels;
 };
-export const getChannelVoice_Color = () => {
-  return config.channels.voice.color;
-};
-export const getChannelChat_Color = () => {
-  return config.channels.chat.color;
-};
-export const getChannelSMS_Color = () => {
-  return config.channels.sms.color;
-};
+// export const getChannelNames = () => {
+//   return Object.keys(config.channels);
+// };
 export const isChannelVoice_CountsEnabled = () => {
-  return config.channels.voice.taskCountsDataTile;
+  return config.channels?.Voice?.taskCountsDataTile;
 };
 export const isChannelChat_CountsEnabled = () => {
-  return config.channels.chat.taskCountsDataTile;
+  return config.channels?.Chat?.taskCountsDataTile;
 };
 export const isChannelSMS_CountsEnabled = () => {
-  return config.channels.sms.taskCountsDataTile;
+  return config.channels?.SMS?.taskCountsDataTile;
 };
 export const isChannelVoice_SLAEnabled = () => {
-  return config.channels.voice.SLADataTile;
+  return config.channels?.Voice?.SLADataTile;
 };
 export const isChannelChat_SLAEnabled = () => {
-  return config.channels.chat.SLADataTile;
+  return config.channels?.Chat?.SLADataTile;
 };
 export const isChannelSMS_SLAEnabled = () => {
-  return config.channels.sms.SLADataTile;
+  return config.channels?.SMS?.SLADataTile;
 };
 export const isAllChannels_SLAEnabled = () => {
-  return config.allChannelsDataTile;
+  return config.queuesViewTiles.allChannelsDataTile;
 };
 export const isQueueGroups_SLAEnabled = () => {
-  return config.groupsChartTile;
+  return config.queuesViewTiles.groupsChartTile;
 };
 export const isGroupsSummaryEnabled = () => {
-  return config.groupsSummaryTile;
+  return config.queuesViewTiles.groupsSummaryTile;
 };
 export const getQueueGroups = () => {
   return config.queueGroups;
 };
 export const isEnhancedAgentsByActivityPieChartEnabled = () => {
-  return config.enhancedAgentByActivityPieChart;
+  return config.queuesViewTiles.enhancedAgentByActivityPieChart;
 };
 export const getAgentActivityConfig = () => {
   return config.agentActivityConfiguration;

@@ -18,7 +18,7 @@ const QueueGroupSummaryTile = (props: ComponentProps) => {
     const queues = Object.values(state.flex.realtimeQueues.queuesList);
     return QueueDataUtil.getQueueGroupMetrics(queues, groups, filter);
   });
-  console.log('GROUP METRICS:', metrics);
+  // console.log('GROUP METRICS:', metrics);
   const groupNames = Object.keys(metrics);
   // Columns: Assigned, Wrapping, Waiting, Handled, SLA Today
   return (

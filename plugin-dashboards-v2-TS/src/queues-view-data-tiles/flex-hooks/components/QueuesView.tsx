@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Flex from '@twilio/flex-ui';
 import { WorkerQueue } from '@twilio/flex-ui/src/state/QueuesState';
-
 import ChannelTaskCountTile from '../../custom-components/ChannelTaskCountTile/ChannelTaskCountTile';
 import ChannelSLATile from '../../custom-components/ChannelSLATile/ChannelSLATile';
 import AllChannelsSLATile from '../../custom-components/AllChannelsSLATile/AllChannelsSLATile';
@@ -14,11 +13,8 @@ import {
   isWaitingTasksEnabled,
   isLongestWaitTimeEnabled,
   isAgentsByActivityEnabled,
-  getChannelNames,
+  getChannelsConfig,
   getChannelColors,
-  getChannelVoice_Color,
-  getChannelChat_Color,
-  getChannelSMS_Color,
   isChannelVoice_CountsEnabled,
   isChannelChat_CountsEnabled,
   isChannelSMS_CountsEnabled,
@@ -35,6 +31,8 @@ import {
   getQueueGroups
 } from '../../config';
 
+const colors = getChannelColors();
+const channelList = Object.keys(getChannelsConfig()).map((ch) => ch.toLowerCase());
 
 
 export default (manager: Flex.Manager) => {
@@ -51,47 +49,45 @@ const addTiles = () => {
       { sortOrder: -7 }
     );
   }
-
   if (isChannelVoice_CountsEnabled()) {
-    const options: Flex.ContentFragmentProps = { sortOrder: -6 };
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={getChannelVoice_Color()} channelList={getChannelNames()} />,
-      options
+      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={colors.voice} channelList={channelList} />,
+      { sortOrder: -6 }
     );
   }
   if (isChannelChat_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={getChannelChat_Color()} channelList={getChannelNames()} />,
+      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={colors.chat} channelList={channelList} />,
       { sortOrder: -5 }
     );
   }
   if (isChannelSMS_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={getChannelSMS_Color()} channelList={getChannelNames()} />,
+      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={colors.sms} channelList={channelList} />,
       { sortOrder: -4 }
     );
   }
   if (isChannelVoice_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='voice-sla-tile' channelName='Voice' channelList={getChannelNames()} />,
+      <ChannelSLATile key='voice-sla-tile' channelName='Voice' channelList={channelList} />,
       { sortOrder: -3 }
     );
   }
   if (isChannelChat_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='chat-sla-tile' channelName='Chat' channelList={getChannelNames()} />,
+      <ChannelSLATile key='chat-sla-tile' channelName='Chat' channelList={channelList} />,
       { sortOrder: -2 }
     );
   }
   if (isChannelSMS_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='sms-sla-tile' channelName='SMS' channelList={getChannelNames()} />,
+      <ChannelSLATile key='sms-sla-tile' channelName='SMS' channelList={channelList} />,
       { sortOrder: -1 }
     );
   }
   if (isAllChannels_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AllChannelsSLATile key='combo-data-tile' colors={getChannelColors()} channelList={getChannelNames()} />,
+      <AllChannelsSLATile key='combo-data-tile' colors={colors} channelList={channelList} />,
       { sortOrder: 0 }
     );
   }
@@ -103,7 +99,6 @@ const addTiles = () => {
       { sortOrder: 1 }
     );
   }
-
   if (isEnhancedAgentsByActivityPieChartEnabled()) {
     const agentActivityConfig = getAgentActivityConfig();
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
@@ -134,6 +129,7 @@ const customizeQueueStats = () => {
         key='assigned-tasks'
         header='Assigned'
         subHeader='Now'
+        description='The number of assigned tasks.'
         content={(queue: WorkerQueue) => {
           const assignedTasks = queue.tasks_by_status?.assigned || 0;
           return <span>{assignedTasks}</span>;
@@ -148,6 +144,7 @@ const customizeQueueStats = () => {
         key='wrapping-tasks'
         header='Wrapping'
         subHeader='Now'
+        description='The number of wrapping tasks.'
         content={(queue: WorkerQueue) => {
           const wrappingTasks = queue.tasks_by_status?.wrapping || 0;
           return <span>{wrappingTasks}</span>;

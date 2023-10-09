@@ -1,14 +1,16 @@
-export default interface QueuesViewDataTilesConfig {
+export default interface DataTilesConfig {
   enabled: boolean;
-  activeTasksDataTile: boolean;
-  waitingTasksDataTile: boolean;
-  longestWaitTimeDataTile: boolean;
-  agentsByActivityBarChart: boolean;
-  allChannelsDataTile: boolean;
-  groupsChartTile: boolean;
-  groupsSummaryTile: boolean;
+  queuesViewTiles: {
+    activeTasksDataTile: boolean;
+    waitingTasksDataTile: boolean;
+    longestWaitTimeDataTile: boolean;
+    agentsByActivityBarChart: boolean;
+    allChannelsDataTile: boolean;
+    enhancedAgentByActivityPieChart: boolean;
+    groupsChartTile: boolean;
+    groupsSummaryTile: boolean;
+  };
   queueGroups: string[];
-  enhancedAgentByActivityPieChart: boolean;
   channels: Channels;
   agentActivityConfiguration: {
     activities: {

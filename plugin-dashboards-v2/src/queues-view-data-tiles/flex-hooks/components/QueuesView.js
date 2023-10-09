@@ -1,8 +1,5 @@
 import * as Flex from '@twilio/flex-ui';
-
-import { ColumnDefinition } from '@twilio/flex-ui';
 import QueueFilters from '../../custom-components/QueueFilters/QueueFilters';
-
 import ChannelTaskCountTile from '../../custom-components/ChannelTaskCountTile/ChannelTaskCountTile';
 import ChannelSLATile from '../../custom-components/ChannelSLATile/ChannelSLATile';
 import AllChannelsSLATile from '../../custom-components/AllChannelsSLATile/AllChannelsSLATile';
@@ -16,11 +13,8 @@ import {
   isWaitingTasksEnabled,
   isLongestWaitTimeEnabled,
   isAgentsByActivityEnabled,
-  getChannelNames,
+  getChannelsConfig,
   getChannelColors,
-  getChannelVoice_Color,
-  getChannelChat_Color,
-  getChannelSMS_Color,
   isChannelVoice_CountsEnabled,
   isChannelChat_CountsEnabled,
   isChannelSMS_CountsEnabled,
@@ -37,27 +31,21 @@ import {
   getQueueGroups
 } from '../../config';
 
-const tileColors = {
-  'voice': getChannelVoice_Color(),
-  'chat': getChannelChat_Color(),
-  'sms': getChannelSMS_Color()
-}
+const colors = getChannelColors();
+const channelList = Object.keys(getChannelsConfig()).map((ch) => ch.toLowerCase());
 
 export default (manager) => {
   //setVisibleQueues(manager);
   customizeQueueStats();
-  console.log(PLUGIN_NAME, 'Adding Tiles');
   addTiles();
-  //addFilters();
 }
 
-const addFilters = () => {
-
-  Flex.QueuesStatsView.Content.add(<QueueFilters key='queue-filters' />, {
-    align: 'start',
-    sortOrder: 0,
-  })
-}
+// const addFilters = () => {
+//   Flex.QueuesStatsView.Content.add(<QueueFilters key='queue-filters' />, {
+//     align: 'start',
+//     sortOrder: 0,
+//   })
+// }
 
 
 const addTiles = () => {
@@ -71,43 +59,43 @@ const addTiles = () => {
   }
   if (isChannelVoice_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={tileColors.voice} />,
+      <ChannelTaskCountTile key='voice-tasks' channelName='Voice' bgColor={colors.voice} channelList={channelList} />,
       { sortOrder: -6 }
     );
   }
   if (isChannelChat_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={tileColors.chat} />,
+      <ChannelTaskCountTile key='chat-tasks' channelName='Chat' bgColor={colors.chat} channelList={channelList} />,
       { sortOrder: -5 }
     );
   }
   if (isChannelSMS_CountsEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={tileColors.sms} />,
+      <ChannelTaskCountTile key='sms-tasks' channelName='SMS' bgColor={colors.sms} channelList={channelList} />,
       { sortOrder: -4 }
     );
   }
   if (isChannelVoice_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='voice-sla-tile' channelName='Voice' />,
+      <ChannelSLATile key='voice-sla-tile' channelName='Voice' channelList={channelList} />,
       { sortOrder: -3 }
     );
   }
   if (isChannelChat_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='chat-sla-tile' channelName='Chat' />,
+      <ChannelSLATile key='chat-sla-tile' channelName='Chat' channelList={channelList} />,
       { sortOrder: -2 }
     );
   }
   if (isChannelSMS_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <ChannelSLATile key='sms-sla-tile' channelName='SMS' />,
+      <ChannelSLATile key='sms-sla-tile' channelName='SMS' channelList={channelList} />,
       { sortOrder: -1 }
     );
   }
   if (isAllChannels_SLAEnabled()) {
     Flex.QueuesStats.AggregatedQueuesDataTiles.Content.add(
-      <AllChannelsSLATile key='combo-data-tile' colors={getChannelColors()} channelList={getChannelNames()}/>,
+      <AllChannelsSLATile key='combo-data-tile' colors={colors} channelList={channelList}/>,
       { sortOrder: 0 }
     );
   }
@@ -170,10 +158,11 @@ const setVisibleQueues = (manager) => {
 const customizeQueueStats = () => {
   if (isAssignedTasksColumnEnabled()) {
     Flex.QueuesStats.QueuesDataTable.Content.add(
-      <ColumnDefinition
+      <Flex.ColumnDefinition
         key='assigned-tasks'
         header='Assigned'
         subHeader='Now'
+        description='The number of assigned tasks.'
         content={(queue) => {
           const assignedTasks = queue.tasks_by_status?.assigned || 0;
           return <span>{assignedTasks}</span>;
@@ -184,10 +173,11 @@ const customizeQueueStats = () => {
   }
   if (isWrappingTasksColumnEnabled()) {
     Flex.QueuesStats.QueuesDataTable.Content.add(
-      <ColumnDefinition
+      <Flex.ColumnDefinition
         key='wrapping-tasks'
         header='Wrapping'
         subHeader='Now'
+        description='The number of wrapping tasks.'
         content={(queue) => {
           const wrappingTasks = queue.tasks_by_status?.wrapping || 0;
           return <span>{wrappingTasks}</span>;

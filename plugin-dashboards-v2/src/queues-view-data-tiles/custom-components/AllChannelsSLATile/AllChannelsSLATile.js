@@ -1,20 +1,17 @@
-import { Icon } from '@twilio/flex-ui';
+import { Icon, useFlexSelector } from '@twilio/flex-ui';
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { getChannelIcon } from '../../utils/helpers';
 import { mockQueuesData } from '../../utils/mockQueuesData';
 import QueueDataUtil from '../../utils/QueueDataUtil';
 import { PieChart } from "react-minimal-pie-chart";
 import { TileWrapper, Title, Summary, Chart, Channel, Label, Metric, SLPct } from './AllChannelsSLATile.Components'
 
-const AllChannelsSLATile = connect((state) => {
-    const queues = Object.values(state.flex.realtimeQueues.queuesList);
-    const sla = QueueDataUtil.getSLTodayByChannel(queues);
-    return { sla }
-    //object returned from connect is merged into component props
-    //See https://react-redux.js.org/api/connect
-})((props) => {
-    const { channelList, colors, sla } = props;
+const AllChannelsSLATile = (props) => {
+    const { channelList, colors } = props;
+    const sla = useFlexSelector((state) => {
+        const queues = Object.values(state.flex.realtimeQueues.queuesList);
+        return QueueDataUtil.getSLTodayByChannel(queues, channelList);
+    });
     const data = [];
     channelList.forEach((ch) => {
         const handled = sla[ch]?.handledTasks || 0;
@@ -49,6 +46,6 @@ const AllChannelsSLATile = connect((state) => {
             </Chart>
         </TileWrapper>
     );
-});
+};
 
 export default AllChannelsSLATile;
